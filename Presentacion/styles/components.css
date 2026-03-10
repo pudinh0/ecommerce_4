@@ -23,19 +23,19 @@ nav form {
 
 .search-icon {
     position: absolute;
-    left: 15px; 
+    left: 15px;
     width: 20px;
     height: auto;
-    opacity: 0.5; 
+    opacity: 0.5;
 }
 
 nav input {
     width: 350px;
-    padding: 12px 20px 12px 45px; 
+    padding: 12px 20px 12px 45px;
     border-radius: 20px;
-    border: none;
-    background-color: var(--color-input);
-    font-family: "Quicksand", sans-serif;
+    border: 1px solid var(--color-borde);
+    background-color: var(--color-fondo-input);
+    font-family: var(--fuente-principal);
 }
 
 nav input:focus {
@@ -103,10 +103,10 @@ nav ul img {
 .categorias ul {
     display: flex;
     gap: 15px;
-    flex-wrap: nowrap; 
+    flex-wrap: nowrap;
     padding: 0;
     list-style: none;
-    overflow-x: auto; 
+    overflow-x: auto;
 }
 
 .categorias button {
@@ -117,11 +117,11 @@ nav ul img {
     border: 1px solid var(--color-borde);
     background-color: white;
     border-radius: 25px;
-    font-family: "Quicksand", sans-serif;
+    font-family: var(--fuente-principal);
     color: var(--color-texto-secundario);
     font-weight: 600;
     cursor: pointer;
-    white-space: nowrap; 
+    white-space: nowrap;
 }
 
 .categorias button img {
@@ -190,7 +190,7 @@ nav ul img {
 .precio {
     font-size: 1.3rem;
     font-weight: 800;
-    color: var(--color-primario);
+    color: var(--color-primario); 
     margin: 0;
 }
 
@@ -198,12 +198,13 @@ nav ul img {
     width: 35px;
     height: 35px;
     border-radius: 50%;
-    border: none;
+    border: 1px solid var(--color-borde); 
     background-color: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    padding: 6px;
 }
 
 .btn-agregar img {
@@ -229,12 +230,12 @@ nav ul img {
 .carrito header button {
     width: auto;
     margin: 0;
-    padding: 0; 
+    padding: 0;
     font-size: 0.85rem;
-    font-weight: 800; 
-    color: #eb4e87; 
-    background: transparent; 
-    border: none; 
+    font-weight: 800;
+    color: #eb4e87;
+    background: transparent;
+    border: none;
     text-transform: uppercase;
     cursor: pointer;
     font-family: "Quicksand", sans-serif;
@@ -342,11 +343,11 @@ nav ul img {
 }
 
 .carrito .btn-primary {
-    background-color: #eb4e87; 
-    color: white; 
-    border: none; 
-    padding: 15px; 
-    border-radius: 20px; 
+    background-color: #eb4e87;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 20px;
     cursor: pointer;
     width: 100%;
     font-weight: 700;
@@ -355,7 +356,7 @@ nav ul img {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px; 
+    gap: 10px;
     margin-top: 10px;
 }
 

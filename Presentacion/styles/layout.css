@@ -3,12 +3,10 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 5%;
+    padding: 10px 5%;
     position: sticky;
     top: 0;
     z-index: 1000;
-    background-color: white;
-    border-bottom: 1px solid var(--color-borde);
 }
 
 .contenedor-principal {
@@ -53,8 +51,7 @@ main {
         padding: 20px 5%;
     }
 
-    .menu-lateral,
-    .carrito {
+    .menu-lateral, .carrito {
         width: 100%;
     }
 }
