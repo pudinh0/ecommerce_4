@@ -4,10 +4,9 @@
     align-items: center;
     gap: 10px;
     text-decoration: none;
-    font-family: "Alan Sans", sans-serif;
     font-weight: 700;
     font-size: 1.5rem;
-    color: var(--color-texto);
+    color: var(--color-primario);
 }
 
 .logo img {
@@ -90,7 +89,6 @@ nav ul img {
 
 .menu-lateral a {
     text-decoration: none;
-    font-family: "Alan Sans", sans-serif;
     font-weight: 600;
     color: var(--color-texto-secundario);
 }
@@ -168,7 +166,6 @@ nav ul img {
 }
 
 .productos h3 {
-    font-family: "Alan Sans", sans-serif;
     font-size: 1.15rem;
     font-weight: 700;
     margin: 0 0 5px 0;
@@ -190,7 +187,7 @@ nav ul img {
 .precio {
     font-size: 1.3rem;
     font-weight: 800;
-    color: var(--color-primario); 
+    color: var(--color-primario);
     margin: 0;
 }
 
@@ -198,7 +195,7 @@ nav ul img {
     width: 35px;
     height: 35px;
     border-radius: 50%;
-    border: 1px solid var(--color-borde); 
+    border: 1px solid var(--color-borde);
     background-color: transparent;
     display: flex;
     align-items: center;
@@ -227,34 +224,9 @@ nav ul img {
     padding-bottom: 15px;
 }
 
-.carrito header button {
-    width: auto;
-    margin: 0;
-    padding: 0;
-    font-size: 0.85rem;
-    font-weight: 800;
-    color: #eb4e87;
-    background: transparent;
-    border: none;
-    text-transform: uppercase;
-    cursor: pointer;
-    font-family: "Quicksand", sans-serif;
-}
-
 .carrito h3 {
-    font-family: "Alan Sans", sans-serif;
     font-size: 1.4rem;
     margin: 0;
-}
-
-.btn-borrar {
-    color: var(--color-primario);
-    background: transparent;
-    border: none;
-    font-weight: 700;
-    font-size: 0.8rem;
-    cursor: pointer;
-    text-transform: uppercase;
 }
 
 .subtitulo-carrito {
@@ -298,7 +270,6 @@ nav ul img {
 
 .info-item-carrito strong {
     font-size: 0.9rem;
-    font-family: "Alan Sans", sans-serif;
 }
 
 .info-item-carrito p {
@@ -342,28 +313,6 @@ nav ul img {
     padding-top: 20px;
 }
 
-.carrito .btn-primary {
-    background-color: #eb4e87;
-    color: white;
-    border: none;
-    padding: 15px;
-    border-radius: 20px;
-    cursor: pointer;
-    width: 100%;
-    font-weight: 700;
-    font-size: 1.1rem;
-    font-family: "Quicksand", sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.total-precio {
-    color: #eb4e87;
-}
-
 .carrito footer div:first-child span:first-child {
     color: gray;
 }
@@ -386,23 +335,224 @@ nav ul img {
 
 .fila-total strong {
     font-size: 1.2rem;
-    font-family: "Alan Sans", sans-serif;
 }
 
 .total-precio {
     color: var(--color-primario);
 }
 
-.btn-comprar {
-    background-color: var(--color-primario);
-    color: white;
-    border: none;
-    padding: 15px;
+/* Componetes Pago */
+
+.tarjeta-blanca,
+.contenedor-articulos {
+    background-color: #ffffff;
     border-radius: 20px;
-    cursor: pointer;
-    width: 100%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+}
+
+.tarjeta-blanca {
+    padding: 25px;
+}
+
+.encabezado-carrito {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.encabezado-carrito h1 {
+    font-size: 2.2rem;
+    color: var(--color-texto);
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px 32px;
+    border: none;
+    border-radius: 20px;
+    font-family: var(--fuente-principal);
     font-weight: 700;
-    font-size: 1.1rem;
-    font-family: "Quicksand", sans-serif;
+    font-size: 1rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition:
+        background-color 0.3s ease,
+        transform 0.1s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.btn--primary {
+    background-color: var(--color-primario);
+    color: #ffffff;
+}
+
+.btn-secondary {
+    color: var(--color-primario);
+    background: transparent;
+    border: none;
+    font-weight: 800;
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-family: var(--fuente-principal);
+    padding: 0;
+}
+
+.btn--primary:hover {
+    background-color: #d14175;
+}
+
+.btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(235, 78, 135, 0.4);
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn img {
+    width: 22px;
+    height: auto;
+    object-fit: contain;
+}
+
+.btn-agregar-mas {
+    background-color: #fdecf2;
+    color: var(--color-primario);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-family: var(--fuente-principal);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.contenedor-articulos {
+    overflow: hidden;
+}
+
+.encabezado-lista {
+    background-color: #fff5f8;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 25px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-texto-secundario);
+    text-transform: uppercase;
+}
+
+.encabezado-lista span:last-child {
+    color: #f0a3c2;
+}
+
+.lista-articulos-vacia {
+    padding: 50px 20px;
+    text-align: center;
+    color: var(--color-texto-secundario);
+    font-weight: 600;
+}
+
+.metodo-pago h3,
+.resumen-compra h3 {
+    font-size: 1.2rem;
+    margin: 0 0 20px 0;
+}
+
+.opciones-pago {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.opcion-pago {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 20px;
+    border: 1px solid var(--color-borde);
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.opcion-pago.seleccionada {
+    border-color: var(--color-primario);
+}
+
+.radio-custom {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--color-borde);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.opcion-pago.seleccionada .radio-custom {
+    border-color: var(--color-primario);
+}
+
+.opcion-pago.seleccionada .radio-custom::after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background-color: var(--color-primario);
+    border-radius: 50%;
+}
+
+.opcion-pago img {
+    width: 20px;
+    height: auto;
+}
+
+.opcion-pago span {
+    font-weight: 600;
+    flex: 1;
+}
+
+.icono-check {
+    opacity: 0;
+}
+
+.opcion-pago.seleccionada .icono-check {
+    opacity: 1;
+}
+
+/* Resumen de Compra */
+.resumen-compra .fila {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    color: var(--color-texto-secundario);
+    font-weight: 600;
+}
+
+.resumen-compra .fila.descuento span:last-child {
+    color: #ff6b6b;
+}
+
+.resumen-compra .fila-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
     margin-top: 10px;
+    border-top: 2px dashed #f0e6eb;
+    margin-bottom: 20px;
+}
+
+.resumen-compra .fila-total strong:first-child {
+    font-size: 1.3rem;
+}
+
+.resumen-compra .fila-total .total-precio {
+    font-size: 1.8rem;
+    font-weight: 800;
 }

@@ -1,13 +1,16 @@
 /*Pues es la base de la pagina y donde esta el root con colores para reutilizar*/
 :root {
-    --color-primario: #eb4e87; 
+    --color-primario: #eb4e87;
+    --color-fondo: #ffffff;
     --color-texto: #333333;
     --color-texto-secundario: gray;
-    --color-borde: #eaeaea; 
+    --color-borde: #eaeaea;
     --color-fondo-input: #f4f5f7;
     --fuente-principal: "Quicksand", sans-serif;
     --fuente-titulos: "Alan Sans", sans-serif;
-} /*para agarrar los colores y reutilizarse*/
+}
+
+/*para agarrar los colores y reutilizarse*/
 
 * {
     box-sizing: border-box;
@@ -16,8 +19,23 @@
 }
 
 body {
-    font-family: "Quicksand", sans-serif; /*La fuente no la encontre, de momento puse esa*/
+    font-family: var(--fuente-principal);
+    /*La fuente no la encontre, de momento puse esa*/
     line-height: 1.6;
     background-color: var(--color-fondo);
     color: var(--color-texto);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+strong {
+    font-family: var(--fuente-titulos);
+}
+
+.fondo-gris {
+    background-color: #f7f8fa;
 }
