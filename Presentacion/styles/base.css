@@ -1,3 +1,13 @@
+/*Pues es la base de la pagina y donde esta el root con colores para reutilizar*/
+:root {
+    --color-primario: #eb4e87;
+    --color-fondo: #ffffff;
+    --color-texto: #333333;
+    --color-texto-secundario: #888888;
+    --color-borde: #eaeaea;
+    --color-input: #f4f5f7;
+} /*para agarrar los colores y reutilizarse*/
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -5,6 +15,8 @@
 }
 
 body {
-    font-family: "Quicksand", sans-serif;
+    font-family: "Quicksand", sans-serif; /*La fuente no la encontre, de momento puse esa*/
     line-height: 1.6;
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
 }
