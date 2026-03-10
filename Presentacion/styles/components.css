@@ -1,0 +1,281 @@
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    font-family: "Alan Sans", sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: black;
+}
+
+.logo img {
+    width: 40px;
+    height: auto;
+}
+
+nav input {
+    width: 300px;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid;
+    font-family: "Quicksand", sans-serif;
+}
+
+nav input:focus {
+    outline: none;
+}
+
+nav ul {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    list-style: none;
+}
+
+nav ul img {
+    width: 30px;
+    height: auto;
+}
+
+/* --- MENU LATERAL --- */
+.menu-lateral ul {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0;
+    list-style: none;
+}
+
+.menu-lateral li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.menu-lateral li img {
+    width: 24px;
+    height: auto;
+}
+
+.menu-lateral a {
+    text-decoration: none;
+    font-family: "Alan Sans", sans-serif;
+    font-weight: 600;
+    color: gray;
+}
+
+/* --- CATEGORIAS --- */
+.categorias ul {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    padding: 0;
+    list-style: none;
+}
+
+.categorias button {
+    width: auto;
+    padding: 8px 20px;
+    margin-top: 0;
+    border: 1px solid;
+    border-radius: 20px;
+    font-family: "Quicksand", sans-serif;
+    cursor: pointer;
+}
+
+/* --- TARJETAS DE PRODUCTOS --- */
+.productos article {
+    padding: 20px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid;
+}
+
+.productos figure {
+    width: 100%;
+    margin: 0;
+}
+
+.productos figure img {
+    width: 100%;
+    height: 180px;
+    border-radius: 8px;
+    object-fit: cover;
+    object-position: center;
+    margin-bottom: 15px;
+}
+
+/* Contenedor del texto dentro de la tarjeta */
+.productos article div {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.productos h3 {
+    font-family: "Alan Sans", sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    text-align: left;
+    margin: 0 0 5px 0;
+    width: 100%;
+}
+
+.productos p {
+    font-size: 0.9rem;
+    margin: 0 0 10px 0;
+    text-align: left;
+    width: 100%;
+}
+
+.precio {
+    font-size: 1.3rem;
+    font-weight: 800;
+    margin: 0;
+    width: auto !important;
+}
+
+.productos button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.productos button img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    margin: 0;
+}
+
+/* --- CARRITO --- */
+.carrito {
+    padding: 25px;
+    border-radius: 20px;
+    border: 1px solid;
+}
+
+.carrito header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    border-bottom: 1px solid;
+    padding-bottom: 10px;
+}
+
+.carrito h3 {
+    font-family: "Alan Sans", sans-serif;
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.carrito header button {
+    width: auto;
+    margin: 0;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    border: 1px solid;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.carrito header p {
+    width: 100%;
+    font-size: 0.85rem;
+    margin: 5px 0 0 0;
+}
+
+.lista-carrito {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.lista-carrito article {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.lista-carrito img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.lista-carrito div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.lista-carrito strong {
+    font-size: 0.95rem;
+}
+
+.lista-carrito p {
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.lista-carrito div:last-child {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    width: auto;
+}
+
+.lista-carrito button {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    margin: 0;
+    border-radius: 5px;
+    border: 1px solid;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carrito footer {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid;
+}
+
+.carrito footer div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.carrito footer strong {
+    font-size: 1.2rem;
+}
+
+.carrito .btn-primary {
+    border: 1px solid;
+    padding: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 100%;
+}

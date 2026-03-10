@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>SoftFriends</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="styles/base.css" />
+    <link rel="stylesheet" type="text/css" href="styles/components.css" />
+    <link rel="stylesheet" type="text/css" href="styles/layout.css" />
+</head>
+
+<body>
+
+    <nav>
+        <a class="logo" href="./index.html">
+            <img src="img/logo.png" alt="Logo SoftFriends">
+            <span>SoftFriends</span>
+        </a>
+
+        <form name="form_busqueda">
+            <input id="txt_buscar" name="txt_buscar" type="text" placeholder="Search">
+        </form>
+
+        <ul>
+            <li>
+                <img src="img/configuracion.png" alt="Icono de configuracion">
+            </li>
+            <li>
+                <img src="img/iconoUsuario.png" alt="Icono de usuario">
+            </li>
+        </ul>
+    </nav>
+
+    <div class="contenedor-principal">
+
+        <nav class="menu-lateral">
+            <ul>
+                <li>
+                    <img src="img/iconoCatalago.png" alt="Icono catalogo">
+                    <a href="#">Catalogo</a>
+                </li>
+                <li>
+                    <img src="img/iconoFiltro.png" alt="Icono filtros">
+                    <a href="#">Filtros</a>
+                </li>
+            </ul>
+        </nav>
+
+        <main>
+            <section class="categorias">
+                <ul>
+                    <li><button class="btn-primary">Todo</button></li>
+                    <li><button>Marino</button></li>
+                    <li><button>Osos</button></li>
+                    <li><button>Mistico</button></li>
+                    <li><button>Dinosaurios</button></li>
+                </ul>
+            </section>
+
+            <section class="productos">
+
+                <article>
+                    <figure>
+                        <img src="img/goldenRetriever.png" alt="Golden Retriever">
+                    </figure>
+                    <div>
+                        <h3>Golden Retriever</h3>
+                        <p>Perros • Grande</p>
+                        <p class="precio">$499.99</p>
+                        <button><img src="img/IconoAgregarCarrito.png" alt="Agregar al carrito"></button>
+                    </div>
+                </article>
+
+                <article>
+                    <figure>
+                        <img src="img/conejoRosa.png" alt="Conejito Rosa">
+                    </figure>
+                    <div>
+                        <h3>Conejito Rosa</h3>
+                        <p>Bosque • Mediano</p>
+                        <p class="precio">$299.99</p>
+                        <button><img src="img/IconoAgregarCarrito.png" alt="Agregar al carrito"></button>
+                    </div>
+                </article>
+
+                <article>
+                    <figure>
+                        <img src="img/panda.png" alt="Panda Gigante">
+                    </figure>
+                    <div>
+                        <h3>Panda Gigante</h3>
+                        <p>Bosque • Extra Grande</p>
+                        <p class="precio">$799.99</p>
+                        <button><img src="img/IconoAgregarCarrito.png" alt="Agregar al carrito"></button>
+                    </div>
+                </article>
+
+                <article>
+                    <figure>
+                        <img src="img/ajolote.png" alt="Axolotl">
+                    </figure>
+                    <div>
+                        <h3>Axolotl</h3>
+                        <p>Marino • Mediano</p>
+                        <p class="precio">$349.99</p>
+                        <button><img src="img/IconoAgregarCarrito.png" alt="Agregar al carrito"></button>
+                    </div>
+                </article>
+
+                <article>
+                    <figure>
+                        <img src="img/ballena.png" alt="Ballena Azul">
+                    </figure>
+                    <div>
+                        <h3>Ballena Azul</h3>
+                        <p>Marino • Grande</p>
+                        <p class="precio">$499.99</p>
+                        <button><img src="img/IconoAgregarCarrito.png" alt="Agregar al carrito"></button>
+                    </div>
+                </article>
+
+                <article>
+                    <figure>
+                        <img src="img/oso.png" alt="Teddy Bear Clasico">
+                    </figure>
+                    <div>
+                        <h3>Teddy Bear Clasico</h3>
+                        <p>Osos • Pequeno</p>
+                        <p class="precio">$199.99</p>
+                        <button><img src="img/IconoAgregarCarrito.png" alt="Agregar al carrito"></button>
+                    </div>
+                </article>
+
+                <article>
+                    <figure>
+                        <img src="img/unicornio.png" alt="Unicornio Magico">
+                    </figure>
+                    <div>
+                        <h3>Unicornio Magico</h3>
+                        <p>Mistico • Mediano</p>
+                        <p class="precio">$349.99</p>
+                        <button><img src="img/IconoAgregarCarrito.png" alt="Agregar al carrito"></button>
+                    </div>
+                </article>
+
+                <article>
+                    <figure>
+                        <img src="img/rex.png" alt="Tiranosaurio Rex">
+                    </figure>
+                    <div>
+                        <h3>Tiranosaurio Rex</h3>
+                        <p>Dinosaurios • Mediano</p>
+                        <p class="precio">$349.99</p>
+                        <button><img src="img/IconoAgregarCarrito.png" alt="Agregar al carrito"></button>
+                    </div>
+                </article>
+
+            </section>
+        </main>
+
+        <section class="carrito">
+            <header>
+                <h3>Carrito</h3>
+                <button class="btn-secondary">BORRAR TODO</button>
+                <p>2 articulos</p>
+            </header>
+
+            <div class="lista-carrito">
+                <article>
+                    <img src="img/oso.png" alt="Teddy Bear Clasico mini">
+                    <div>
+                        <strong>Teddy Bear Clasico</strong>
+                        <p>$199.99</p>
+                    </div>
+                    <div>
+                        <button>-</button>
+                        <span>1</span>
+                        <button>+</button>
+                    </div>
+                </article>
+
+                <article>
+                    <img src="img/ballena.png" alt="Ballena Azul mini">
+                    <div>
+                        <strong>Ballena Azul</strong>
+                        <p>$499.99</p>
+                    </div>
+                    <div>
+                        <button>-</button>
+                        <span>1</span>
+                        <button>+</button>
+                    </div>
+                </article>
+            </div>
+
+            <footer>
+                <div>
+                    <span>Subtotal</span>
+                    <span>$699.98</span>
+                </div>
+                <div>
+                    <strong>Total</strong>
+                    <strong>$699.98</strong>
+                </div>
+                <button class="btn-primary">Comprar</button>
+            </footer>
+        </section>
+
+    </div>
+
+</body>
+
+</html>
