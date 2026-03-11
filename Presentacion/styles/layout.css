@@ -7,7 +7,7 @@ nav {
     position: sticky;
     top: 0;
     z-index: 1000;
-    background-color: #ffffff; 
+    background-color: #ffffff;
     border-bottom: 1px solid var(--color-borde);
 }
 
@@ -69,7 +69,67 @@ main {
     gap: 20px;
 }
 
+/* index */
+.hero {
+    text-align: center;
+    padding: 80px 20px;
+    margin-bottom: 40px;
+}
+
+.hero h1 {
+    margin-bottom: 15px;
+}
+
+.hero p {
+    margin-bottom: 30px;
+}
+
+.btn-hero {
+    max-width: 250px;
+    margin: 0 auto;
+}
+
+.seccion-destacados h2 {
+    margin-bottom: 20px;
+}
+
+/* registro y iniciar-sesion */
+.auth-layout {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+@media (max-width: 480px) {
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+}
+
 @media (max-width: 768px) {
+    nav {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    nav form {
+        order: 3;
+        max-width: 100%;
+        margin: 0;
+    }
+
     .contenedor-principal {
         flex-direction: column;
         padding: 20px 5%;
