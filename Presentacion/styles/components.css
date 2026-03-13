@@ -6,7 +6,7 @@
     text-decoration: none;
     font-weight: 700;
     font-size: 1.5rem;
-    color: var(--color-primario);
+    color: var(--color-texto);
 }
 
 .logo img {
@@ -379,7 +379,6 @@ nav ul img {
     font-family: var(--fuente-principal);
     font-weight: 700;
     font-size: 1rem;
-    text-transform: uppercase;
     cursor: pointer;
     transition:
         background-color 0.3s ease,
@@ -694,3 +693,33 @@ nav ul img {
 .btn-toggle-password:hover {
     transform: scale(1.1);
 }
+
+.seccionIzquierda h1{
+    color: var(--color-primario);
+}
+
+.seccionIzquierda p{
+    max-width: 350px;
+    text-align: center;
+}
+
+.textoIniciarSesion{
+    margin-bottom: 28px;
+    text-align: left;
+}
+
+.textoIniciarSesion h2{
+    font-size: 32px;
+    margin-bottom: 5px;
+}
+
+.lblPassword a{
+    color: var(--color-primario);
+    font-family: var(--fuente-titulos);
+    font-weight: 550;
+    font-size: 14px;
+
+}
+
+
+

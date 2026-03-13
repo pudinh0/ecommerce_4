@@ -102,6 +102,66 @@ main {
     padding: 20px;
 }
 
+.iniciarSesion{
+    display: flex;   
+    flex-direction: row;
+    min-height: 100vh;
+}
+
+.seccionIzquierda{
+    background-color: #FFF2FF ;
+    display: flex;   
+    flex-direction: column;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.seccionDerecha{
+    flex-direction: column;
+    align-items: center;
+    display: flex;   
+    flex: 1;
+    justify-content: center;
+    padding: 40px;
+    
+}
+
+.seccionIzquierda h1{
+    font-size: 40px;
+}
+
+.seccionIzquierda p{
+    font-size: 18px;
+}
+.seccionIzquierda img{
+    width: 55%;
+    border-radius: 10%;
+    margin: 40px;
+
+}
+
+.tarjetaIniciarSesion{
+    max-width: 450px;
+    width: 100%;
+}
+
+.logo{
+    margin-bottom: 25px;
+}
+
+.lblPassword{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+
+
+
 .form-row {
     display: flex;
     gap: 15px;
