@@ -3,7 +3,7 @@
     Created on : 30 mar 2026, 2:17:24 p.m.
     Author     : Usuario
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
@@ -12,21 +12,21 @@
         <title>Pago - SoftFriends</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="styles/base.css" />
-        <link rel="stylesheet" type="text/css" href="styles/layout.css" />
-        <link rel="stylesheet" type="text/css" href="styles/components.css" />
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/styles/base.css" />
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/styles/components.css" />
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/styles/layout.css" />
     </head>
 
     <body class="fondo-gris">
 
         <nav>
-            <a class="logo" href="./index.html">
-                <img src="img/logo.png" alt="Logo SoftFriends">
+            <a class="logo" href="./index.jsp">
+                <img src="${pageContext.request.contextPath}/assets/img/logo.png" alt="Logo SoftFriends">
                 <span>SoftFriends</span>
             </a>
 
             <ul>
-                <li><img src="img/configuracion.png" alt="Icono de configuracion"></li>
+                <li><img src="${pageContext.request.contextPath}/assets/img/configuracion.png" alt="Icono de configuracion"></li>
                 <li><img src="img/iconoUsuario.png" alt="Icono de usuario"></li>
             </ul>
         </nav>
@@ -59,20 +59,20 @@
 
                         <div class="opcion-pago seleccionada">
                             <div class="radio-custom"></div>
-                            <img src="img/iconoTarjeta.png" alt="Tarjeta">
+                            <img src="${pageContext.request.contextPath}/assets/img/iconoTarjeta.png" alt="Tarjeta">
                             <span>Tarjeta de Credito/Débito</span>
-                            <img src="img/palomitaRosa.png" class="icono-check" alt="Check">
+                            <img src="${pageContext.request.contextPath}/assets/img/palomitaRosa.png" class="icono-check" alt="Check">
                         </div>
 
                         <div class="opcion-pago">
                             <div class="radio-custom"></div>
-                            <img src="img/iconoEfectivo.png" alt="Efectivo">
+                            <img src="${pageContext.request.contextPath}/assets/img/iconoEfectivo.png" alt="Efectivo">
                             <span>Efectivo</span>
                         </div>
 
                         <div class="opcion-pago">
                             <div class="radio-custom"></div>
-                            <img src="img/iconoWallet.png" alt="Wallet">
+                            <img src="${pageContext.request.contextPath}/assets/img/iconoWallet.png" alt="Wallet">
                             <span>Wallet Digital</span>
                         </div>
 
@@ -97,7 +97,7 @@
                     </div>
 
                     <button class="btn btn--primary" type="button">
-                        <img src="img/iconoComprar.png" alt="" aria-hidden="true">
+                        <img src="${pageContext.request.contextPath}/assets/img/iconoComprar.png" alt="" aria-hidden="true">
                         COMPRAR
                     </button>
                 </div>

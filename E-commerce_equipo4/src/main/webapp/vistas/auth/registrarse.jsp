@@ -3,7 +3,7 @@
     Created on : 30 mar 2026, 2:17:57 p.m.
     Author     : Usuario
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
@@ -14,9 +14,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="Crea una cuenta nueva en SoftFriends: ">
 
-        <link rel="stylesheet" type="text/css" href="styles/base.css" />
-        <link rel="stylesheet" type="text/css" href="styles/components.css" />
-        <link rel="stylesheet" type="text/css" href="styles/layout.css" />
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/styles/base.css" />
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/styles/components.css" />
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/styles/layout.css" />
     </head>
 
     <body class="fondo-gris">
@@ -24,12 +24,12 @@
         <main class="auth-layout">
 
             <section class="tarjeta-auth" style="max-width: 500px;">
-                <a class="logo" href="./index.html">
-                    <img src="img/logo.png" alt="Logo SoftFriends">
+                <a class="logo" href="./index.jsp">
+                    <img src="${pageContext.request.contextPath}/assets/img/logo.png" alt="Logo SoftFriends">
                     <span>SoftFriends</span>
                 </a>
 
-                <form action="iniciar-sesion.html" method="GET">
+                <form action="iniciar-sesion.jsp" method="GET">
 
                     <div class="form-row">
                         <div class="form-group">
@@ -65,7 +65,7 @@
                 </form>
 
                 <div class="auth-links">
-                    <p>¿Ya tienes una cuenta? <a href="iniciar-sesion.html">Inicia sesion aqui</a></p>
+                    <p>¿Ya tienes una cuenta? <a href="iniciar-sesion.jsp">Inicia sesion aqui</a></p>
                 </div>
 
             </section>

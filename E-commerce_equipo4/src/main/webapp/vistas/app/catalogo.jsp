@@ -3,7 +3,7 @@
     Created on : 30 mar 2026, 2:07:34 p.m.
     Author     : Usuario
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
@@ -12,30 +12,30 @@
         <title>SoftFriends</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="styles/base.css" />
-        <link rel="stylesheet" type="text/css" href="styles/components.css" />
-        <link rel="stylesheet" type="text/css" href="styles/layout.css" />
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/styles/base.css" />
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/styles/components.css" />
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/styles/layout.css" />
     </head>
 
     <body>
 
         <nav>
-            <a class="logo" href="./index.html">
-                <img src="img/logo.png" alt="Logo SoftFriends">
+            <a class="logo" href="./index.jsp">
+                <img src="${pageContext.request.contextPath}/assets/img/logo.png" alt="Logo SoftFriends">
                 <span>SoftFriends</span>
             </a>
 
             <form name="form_busqueda">
-                <img src="img/iconoBuscar.png" alt="Icono de búsqueda" class="search-icon">
+                <img src="${pageContext.request.contextPath}/assets/img/iconoBuscar.png" alt="Icono de búsqueda" class="search-icon">
                 <input id="txt_buscar" name="txt_buscar" type="text" placeholder="Search">
             </form>
 
             <ul>
                 <li>
-                    <img src="img/configuracion.png" alt="Icono de configuracion">
+                    <img src="${pageContext.request.contextPath}/assets/img/configuracion.png" alt="Icono de configuracion">
                 </li>
                 <li>
-                    <img src="img/iconoUsuario.png" alt="Icono de usuario">
+                    <img src="${pageContext.request.contextPath}/assets/img/iconoUsuario.png" alt="Icono de usuario">
                 </li>
             </ul>
         </nav>
@@ -45,11 +45,11 @@
             <nav class="menu-lateral">
                 <ul>
                     <li>
-                        <img src="img/iconoCatalago.png" alt="Icono catalogo">
+                        <img src="${pageContext.request.contextPath}/assets/img/iconoCatalago.png" alt="Icono catalogo">
                         <a href="#">Catálogo</a>
                     </li>
                     <li>
-                        <img src="img/iconoFiltro.png" alt="Icono filtros">
+                        <img src="${pageContext.request.contextPath}/assets/img/iconoFiltro.png" alt="Icono filtros">
                         <a href="#">Filtros</a>
                     </li>
                 </ul>
@@ -61,25 +61,25 @@
                         <li><button class="active">Todo</button></li>
                         <li>
                             <button>
-                                <img src="img/gota.png" alt="Icono gota">
+                                <img src="${pageContext.request.contextPath}/assets/img/gota.png" alt="Icono gota">
                                 Marino
                             </button>
                         </li>
                         <li>
                             <button>
-                                <img src="img/pinos.png" alt="Icono pinos">
+                                <img src="${pageContext.request.contextPath}/assets/img/pinos.png" alt="Icono pinos">
                                 Osos
                             </button>
                         </li>
                         <li>
                             <button>
-                                <img src="img/brillos.png" alt="Icono brillos">
+                                <img src="${pageContext.request.contextPath}/assets/img/brillos.png" alt="Icono brillos">
                                 Místico
                             </button>
                         </li>
                         <li>
                             <button>
-                                <img src="img/gota.png" alt="Icono dinosaurios">
+                                <img src="${pageContext.request.contextPath}/assets/img/gota.png" alt="Icono dinosaurios">
                                 Dinosaurios
                             </button>
                         </li>
@@ -90,7 +90,7 @@
 
                     <article>
                         <figure>
-                            <img src="img/goldenRetriever.png" alt="Golden Retriever" loading="lazy" decoding="async">
+                            <img src="${pageContext.request.contextPath}/assets/img/goldenRetriever.png" alt="Golden Retriever" loading="lazy" decoding="async">
                         </figure>
                         <div class="info-producto">
                             <h3>Golden Retriever</h3>
@@ -98,7 +98,7 @@
 
                             <div class="precio-carrito">
                                 <p class="precio">$499.99</p>
-                                <button class="btn-agregar"><img src="img/IconoAgregarCarrito.png"
+                                <button class="btn-agregar"><img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png"
                                                                  alt="Agregar al carrito"></button>
                             </div>
                         </div>
@@ -106,14 +106,14 @@
 
                     <article>
                         <figure>
-                            <img src="img/conejoRosa.png" alt="Conejito Rosa" loading="lazy" decoding="async">
+                            <img src="${pageContext.request.contextPath}/assets/img/conejoRosa.png" alt="Conejito Rosa" loading="lazy" decoding="async">
                         </figure>
                         <div class="info-producto">
                             <h3>Conejito Rosa</h3>
                             <p class="categoria">Bosque • Mediano</p>
                             <div class="precio-carrito">
                                 <p class="precio">$299.99</p>
-                                <button class="btn-agregar"><img src="img/IconoAgregarCarrito.png"
+                                <button class="btn-agregar"><img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png"
                                                                  alt="Agregar al carrito"></button>
                             </div>
                         </div>
@@ -121,14 +121,14 @@
 
                     <article>
                         <figure>
-                            <img src="img/panda.png" alt="Panda Gigante" loading="lazy" decoding="async">
+                            <img src="${pageContext.request.contextPath}/assets/img/panda.png" alt="Panda Gigante" loading="lazy" decoding="async">
                         </figure>
                         <div class="info-producto">
                             <h3>Panda Gigante</h3>
                             <p class="categoria">Bosque • Extra Grande</p>
                             <div class="precio-carrito">
                                 <p class="precio">$799.99</p>
-                                <button class="btn-agregar"><img src="img/IconoAgregarCarrito.png"
+                                <button class="btn-agregar"><img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png"
                                                                  alt="Agregar al carrito"></button>
                             </div>
                         </div>
@@ -136,14 +136,14 @@
 
                     <article>
                         <figure>
-                            <img src="img/ajolote.png" alt="Axolotl" loading="lazy" decoding="async">
+                            <img src="${pageContext.request.contextPath}/assets/img/ajolote.png" alt="Axolotl" loading="lazy" decoding="async">
                         </figure>
                         <div class="info-producto">
                             <h3>Axolotl</h3>
                             <p class="categoria">Marino • Mediano</p>
                             <div class="precio-carrito">
                                 <p class="precio">$349.99</p>
-                                <button class="btn-agregar"><img src="img/IconoAgregarCarrito.png"
+                                <button class="btn-agregar"><img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png"
                                                                  alt="Agregar al carrito"></button>
                             </div>
                         </div>
@@ -151,14 +151,14 @@
 
                     <article>
                         <figure>
-                            <img src="img/ballena.png" alt="Ballena Azul" loading="lazy" decoding="async">
+                            <img src="${pageContext.request.contextPath}/assets/img/ballena.png" alt="Ballena Azul" loading="lazy" decoding="async">
                         </figure>
                         <div class="info-producto">
                             <h3>Ballena Azul</h3>
                             <p class="categoria">Marino • Grande</p>
                             <div class="precio-carrito">
                                 <p class="precio">$499.99</p>
-                                <button class="btn-agregar"><img src="img/IconoAgregarCarrito.png"
+                                <button class="btn-agregar"><img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png"
                                                                  alt="Agregar al carrito"></button>
                             </div>
                         </div>
@@ -166,14 +166,14 @@
 
                     <article>
                         <figure>
-                            <img src="img/oso.png" alt="Teddy Bear Clasico" loading="lazy" decoding="async">
+                            <img src="${pageContext.request.contextPath}/assets/img/oso.png" alt="Teddy Bear Clasico" loading="lazy" decoding="async">
                         </figure>
                         <div class="info-producto">
                             <h3>Teddy Bear Clasico</h3>
                             <p class="categoria">Osos • Pequeno</p>
                             <div class="precio-carrito">
                                 <p class="precio">$199.99</p>
-                                <button class="btn-agregar"><img src="img/IconoAgregarCarrito.png"
+                                <button class="btn-agregar"><img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png"
                                                                  alt="Agregar al carrito"></button>
                             </div>
                         </div>
@@ -181,14 +181,14 @@
 
                     <article>
                         <figure>
-                            <img src="img/unicornio.png" alt="Unicornio Magico" loading="lazy" decoding="async">
+                            <img src="${pageContext.request.contextPath}/assets/img/unicornio.png" alt="Unicornio Magico" loading="lazy" decoding="async">
                         </figure>
                         <div class="info-producto">
                             <h3>Unicornio Magico</h3>
                             <p class="categoria">Mistico • Mediano</p>
                             <div class="precio-carrito">
                                 <p class="precio">$349.99</p>
-                                <button class="btn-agregar"><img src="img/IconoAgregarCarrito.png"
+                                <button class="btn-agregar"><img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png"
                                                                  alt="Agregar al carrito"></button>
                             </div>
                         </div>
@@ -196,14 +196,14 @@
 
                     <article>
                         <figure>
-                            <img src="img/rex.png" alt="Tiranosaurio Rex" loading="lazy" decoding="async">
+                            <img src="${pageContext.request.contextPath}/assets/img/rex.png" alt="Tiranosaurio Rex" loading="lazy" decoding="async">
                         </figure>
                         <div class="info-producto">
                             <h3>Tiranosaurio Rex</h3>
                             <p class="categoria">Dinosaurios • Mediano</p>
                             <div class="precio-carrito">
                                 <p class="precio">$349.99</p>
-                                <button class="btn-agregar"><img src="img/IconoAgregarCarrito.png"
+                                <button class="btn-agregar"><img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png"
                                                                  alt="Agregar al carrito"></button>
                             </div>
                         </div>
@@ -221,7 +221,7 @@
 
                 <div class="lista-carrito">
                     <article>
-                        <img src="img/oso.png" alt="Teddy Bear Clásico mini">
+                        <img src="${pageContext.request.contextPath}/assets/img/oso.png" alt="Teddy Bear Clásico mini">
                         <div>
                             <strong>Teddy Bear Clásico</strong>
                             <p>$199.99</p>
@@ -234,7 +234,7 @@
                     </article>
 
                     <article>
-                        <img src="img/ballena.png" alt="Ballena Azul mini">
+                        <img src="${pageContext.request.contextPath}/assets/img/ballena.png" alt="Ballena Azul mini">
                         <div>
                             <strong>Ballena Azul</strong>
                             <p>$499.99</p>
@@ -257,7 +257,7 @@
                         <strong class="total-precio">$699.98</strong>
                     </div>
                     <button class="btn btn--primary" type="button">
-                        <img src="img/IconoAgregarCarrito.png" alt="" aria-hidden="true">
+                        <img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png" alt="" aria-hidden="true">
                         COMPRAR
                     </button>
                 </footer>
