@@ -1,0 +1,21 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<nav>
+    <a class="logo" href="${pageContext.request.contextPath}/index.jsp">
+        <span>SoftFriends</span>
+    </a>
+
+    <form name="form_busqueda" action="${pageContext.request.contextPath}/vistas/app/catalogo.jsp" method="GET">
+        <img src="${pageContext.request.contextPath}/assets/img/iconoBuscar.png" alt="Icono de búsqueda" class="search-icon">
+        <input id="txt_buscar" name="txt_buscar" type="text" placeholder="Search">
+    </form>
+
+    <ul>
+        <li>
+            <a href="#"><img src="${pageContext.request.contextPath}/assets/img/configuracion.png" alt="Configuracion de la cuenta"></a>
+        </li>
+        <li>
+            <a href="#"><img src="${pageContext.request.contextPath}/assets/img/iconoUsuario.png" alt="Perfil de usuario"></a>
+        </li>
+    </ul>
+</nav>

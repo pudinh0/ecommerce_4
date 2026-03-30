@@ -10,13 +10,9 @@
 
     <head>
         <title>Registrarse - SoftFriends</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Crea una cuenta nueva en SoftFriends: ">
+        <meta name="description" content="Crea una cuenta nueva en SoftFriends.">
 
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/styles/base.css" />
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/styles/components.css" />
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/styles/layout.css" />
+        <%@ include file="/fragments/styles.jspf" %>
     </head>
 
     <body class="fondo-gris">
@@ -24,12 +20,12 @@
         <main class="auth-layout">
 
             <section class="tarjeta-auth" style="max-width: 500px;">
-                <a class="logo" href="./index.jsp">
+                <a class="logo" href="${pageContext.request.contextPath}/index.jsp">
                     <img src="${pageContext.request.contextPath}/assets/img/logo.png" alt="Logo SoftFriends">
                     <span>SoftFriends</span>
                 </a>
 
-                <form action="iniciar-sesion.jsp" method="GET">
+                <form action="${pageContext.request.contextPath}/vistas/auth/iniciar-sesion.jsp" method="GET">
 
                     <div class="form-row">
                         <div class="form-group">
@@ -65,7 +61,7 @@
                 </form>
 
                 <div class="auth-links">
-                    <p>¿Ya tienes una cuenta? <a href="iniciar-sesion.jsp">Inicia sesion aqui</a></p>
+                    <p>¿Ya tienes una cuenta? <a href="${pageContext.request.contextPath}/vistas/auth/iniciar-sesion.jsp">Inicia sesion aqui</a></p>
                 </div>
 
             </section>
@@ -73,5 +69,4 @@
         </main>
 
     </body>
-
 </html>

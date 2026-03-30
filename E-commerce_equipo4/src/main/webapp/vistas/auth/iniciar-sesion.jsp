@@ -10,13 +10,9 @@
 
     <head>
         <title>Iniciar Sesión - SoftFriends</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="Inicia sesión en tu cuenta de SoftFriends.">
 
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/styles/base.css" />
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/styles/components.css" />
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/styles/layout.css" />
+       <%@ include file="/fragments/styles.jspf" %>
     </head>
 
     <body>
@@ -27,12 +23,11 @@
                 <img src="https://i.pinimg.com/1200x/1e/15/69/1e1569b92ca23215289d100df2c517e0.jpg" alt="fotoPeluche"> 
                 <h1> Bienvenido a SoftFriends </h1>
                 <p> Donde cada peluche tiene su historia y cada amigo es para siempre </p>
-
             </div>       
 
             <div class="seccionDerecha">
                 <div class="tarjetaIniciarSesion">           
-                    <a class="logo" href="./index.jsp">
+                    <a class="logo" href="${pageContext.request.contextPath}/index.jsp">
                         <img src="${pageContext.request.contextPath}/assets/img/logo.png" alt="Logo SoftFriends">
                         <span>SoftFriends</span>
                     </a>
@@ -42,7 +37,7 @@
                         <p> Que alegría verte por aquí! </p>
                     </div>
 
-                    <form action="index.jsp" method="POST">
+                    <form action="${pageContext.request.contextPath}/index.jsp" method="POST">
 
                         <div class="form-group">
                             <label for="correo">Correo Electronico</label>
@@ -64,16 +59,12 @@
                     </form>
 
                     <div class="auth-links">
-
-                        <p>¿No tienes una cuenta? <a href="registrarse.jsp">Regístrate aqui</a></p>
+                        <p>¿No tienes una cuenta? <a href="${pageContext.request.contextPath}/vistas/auth/registrarse.jsp">Regístrate aqui</a></p>
                     </div>
                 </div>
             </div>
 
-
-
         </main>
 
     </body>
-
 </html>

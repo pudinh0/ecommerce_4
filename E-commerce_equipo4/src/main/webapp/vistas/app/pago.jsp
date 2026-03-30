@@ -10,24 +10,25 @@
 
     <head>
         <title>Pago - SoftFriends</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/styles/base.css" />
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/styles/components.css" />
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/styles/layout.css" />
+        
+        <%@ include file="/fragments/styles.jspf" %>
     </head>
 
     <body class="fondo-gris">
 
         <nav>
-            <a class="logo" href="./index.jsp">
+            <a class="logo" href="${pageContext.request.contextPath}/index.jsp">
                 <img src="${pageContext.request.contextPath}/assets/img/logo.png" alt="Logo SoftFriends">
                 <span>SoftFriends</span>
             </a>
 
             <ul>
-                <li><img src="${pageContext.request.contextPath}/assets/img/configuracion.png" alt="Icono de configuracion"></li>
-                <li><img src="img/iconoUsuario.png" alt="Icono de usuario"></li>
+                <li>
+                    <a href="#"><img src="${pageContext.request.contextPath}/assets/img/configuracion.png" alt="Icono de configuracion"></a>
+                </li>
+                <li>
+                    <a href="#"><img src="${pageContext.request.contextPath}/assets/img/iconoUsuario.png" alt="Icono de usuario"></a>
+                </li>
             </ul>
         </nav>
 
@@ -36,17 +37,17 @@
             <main class="seccion-carrito-detalle">
                 <header class="encabezado-carrito">
                     <h1>Carrito</h1>
-                    <button class="btn-agregar-mas">+ Agregar</button>
+                    <button class="btn-agregar-mas" onclick="window.location.href='${pageContext.request.contextPath}/vistas/app/catalogo.jsp'">+ Agregar</button>
                 </header>
 
                 <div class="contenedor-articulos">
                     <div class="encabezado-lista">
-                        <span>Articulos (0)</span>
+                        <span>Artículos (0)</span>
                         <span>Precio</span>
                     </div>
 
                     <div class="lista-articulos-vacia">
-                        <p>No hay articulos en el carrito por el momento.</p>
+                        <p>No hay artículos en el carrito por el momento.</p>
                     </div>
                 </div>
             </main>
@@ -54,13 +55,13 @@
             <aside class="seccion-pago-resumen">
 
                 <div class="tarjeta-blanca metodo-pago">
-                    <h3>Metodo de Pago</h3>
+                    <h3>Método de Pago</h3>
                     <div class="opciones-pago">
 
                         <div class="opcion-pago seleccionada">
                             <div class="radio-custom"></div>
                             <img src="${pageContext.request.contextPath}/assets/img/iconoTarjeta.png" alt="Tarjeta">
-                            <span>Tarjeta de Credito/Débito</span>
+                            <span>Tarjeta de Crédito/Débito</span>
                             <img src="${pageContext.request.contextPath}/assets/img/palomitaRosa.png" class="icono-check" alt="Check">
                         </div>
 
@@ -97,7 +98,7 @@
                     </div>
 
                     <button class="btn btn--primary" type="button">
-                        <img src="${pageContext.request.contextPath}/assets/img/iconoComprar.png" alt="" aria-hidden="true">
+                        <img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png" alt="" aria-hidden="true">
                         COMPRAR
                     </button>
                 </div>
@@ -107,5 +108,4 @@
         </div>
 
     </body>
-
 </html>

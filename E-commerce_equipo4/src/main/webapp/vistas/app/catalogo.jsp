@@ -9,36 +9,15 @@
 <html lang="es">
 
     <head>
-        <title>SoftFriends</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/styles/base.css" />
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/styles/components.css" />
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/styles/layout.css" />
+        <title>Catálogo - SoftFriends</title>
+        <meta name="description" content="Explora nuestro catálogo de peluches adorables.">
+        
+        <%@ include file="/fragments/styles.jspf" %>
     </head>
 
     <body>
 
-        <nav>
-            <a class="logo" href="./index.jsp">
-                <img src="${pageContext.request.contextPath}/assets/img/logo.png" alt="Logo SoftFriends">
-                <span>SoftFriends</span>
-            </a>
-
-            <form name="form_busqueda">
-                <img src="${pageContext.request.contextPath}/assets/img/iconoBuscar.png" alt="Icono de búsqueda" class="search-icon">
-                <input id="txt_buscar" name="txt_buscar" type="text" placeholder="Search">
-            </form>
-
-            <ul>
-                <li>
-                    <img src="${pageContext.request.contextPath}/assets/img/configuracion.png" alt="Icono de configuracion">
-                </li>
-                <li>
-                    <img src="${pageContext.request.contextPath}/assets/img/iconoUsuario.png" alt="Icono de usuario">
-                </li>
-            </ul>
-        </nav>
+        <%@ include file="/fragments/navBar.jspf" %>
 
         <div class="contenedor-principal">
 
@@ -87,7 +66,6 @@
                 </section>
 
                 <section class="productos">
-
                     <article>
                         <figure>
                             <img src="${pageContext.request.contextPath}/assets/img/goldenRetriever.png" alt="Golden Retriever" loading="lazy" decoding="async">
@@ -95,11 +73,9 @@
                         <div class="info-producto">
                             <h3>Golden Retriever</h3>
                             <p class="categoria">Perros • Grande</p>
-
                             <div class="precio-carrito">
                                 <p class="precio">$499.99</p>
-                                <button class="btn-agregar"><img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png"
-                                                                 alt="Agregar al carrito"></button>
+                                <button class="btn-agregar"><img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png" alt="Agregar al carrito"></button>
                             </div>
                         </div>
                     </article>
@@ -113,8 +89,7 @@
                             <p class="categoria">Bosque • Mediano</p>
                             <div class="precio-carrito">
                                 <p class="precio">$299.99</p>
-                                <button class="btn-agregar"><img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png"
-                                                                 alt="Agregar al carrito"></button>
+                                <button class="btn-agregar"><img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png" alt="Agregar al carrito"></button>
                             </div>
                         </div>
                     </article>
@@ -128,8 +103,7 @@
                             <p class="categoria">Bosque • Extra Grande</p>
                             <div class="precio-carrito">
                                 <p class="precio">$799.99</p>
-                                <button class="btn-agregar"><img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png"
-                                                                 alt="Agregar al carrito"></button>
+                                <button class="btn-agregar"><img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png" alt="Agregar al carrito"></button>
                             </div>
                         </div>
                     </article>
@@ -143,8 +117,7 @@
                             <p class="categoria">Marino • Mediano</p>
                             <div class="precio-carrito">
                                 <p class="precio">$349.99</p>
-                                <button class="btn-agregar"><img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png"
-                                                                 alt="Agregar al carrito"></button>
+                                <button class="btn-agregar"><img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png" alt="Agregar al carrito"></button>
                             </div>
                         </div>
                     </article>
@@ -158,8 +131,7 @@
                             <p class="categoria">Marino • Grande</p>
                             <div class="precio-carrito">
                                 <p class="precio">$499.99</p>
-                                <button class="btn-agregar"><img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png"
-                                                                 alt="Agregar al carrito"></button>
+                                <button class="btn-agregar"><img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png" alt="Agregar al carrito"></button>
                             </div>
                         </div>
                     </article>
@@ -173,8 +145,7 @@
                             <p class="categoria">Osos • Pequeno</p>
                             <div class="precio-carrito">
                                 <p class="precio">$199.99</p>
-                                <button class="btn-agregar"><img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png"
-                                                                 alt="Agregar al carrito"></button>
+                                <button class="btn-agregar"><img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png" alt="Agregar al carrito"></button>
                             </div>
                         </div>
                     </article>
@@ -188,8 +159,7 @@
                             <p class="categoria">Mistico • Mediano</p>
                             <div class="precio-carrito">
                                 <p class="precio">$349.99</p>
-                                <button class="btn-agregar"><img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png"
-                                                                 alt="Agregar al carrito"></button>
+                                <button class="btn-agregar"><img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png" alt="Agregar al carrito"></button>
                             </div>
                         </div>
                     </article>
@@ -203,8 +173,7 @@
                             <p class="categoria">Dinosaurios • Mediano</p>
                             <div class="precio-carrito">
                                 <p class="precio">$349.99</p>
-                                <button class="btn-agregar"><img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png"
-                                                                 alt="Agregar al carrito"></button>
+                                <button class="btn-agregar"><img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png" alt="Agregar al carrito"></button>
                             </div>
                         </div>
                     </article>
@@ -256,7 +225,7 @@
                         <strong>Total</strong>
                         <strong class="total-precio">$699.98</strong>
                     </div>
-                    <button class="btn btn--primary" type="button">
+                    <button class="btn btn--primary" type="button" onclick="window.location.href='${pageContext.request.contextPath}/vistas/app/pago.jsp'">
                         <img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png" alt="" aria-hidden="true">
                         COMPRAR
                     </button>
@@ -266,5 +235,4 @@
         </div>
 
     </body>
-
 </html>

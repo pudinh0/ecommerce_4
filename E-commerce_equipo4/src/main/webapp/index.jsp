@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : index
     Created on : 30 mar 2026, 2:09:16 p.m.
     Author     : Usuario
@@ -10,37 +10,14 @@
 
     <head>
         <title>Inicio - SoftFriends</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="SoftFriends - Encuentra los mejores peluches">
 
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/styles/base.css" />
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/styles/components.css" />
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/styles/layout.css" />
+        <%@ include file="/fragments/styles.jspf" %>
     </head>
 
     <body>
 
-        <nav>
-            <a class="logo" href="./index.jsp">
-                <!-- <img src="img/logo.png" alt="Logo SoftFriends"> -->
-                <span>SoftFriends</span>
-            </a>
-
-            <form name="form_busqueda" action="catalago.jsp" method="GET">
-                <img src="${pageContext.request.contextPath}/assets/img/iconoBuscar.png" alt="Icono de búsqueda" class="search-icon">
-                <input id="txt_buscar" name="txt_buscar" type="text" placeholder="Search">
-            </form>
-
-            <ul>
-                <li>
-                    <a href="#"><img src="${pageContext.request.contextPath}/assets/img/configuracion.png" alt="Configuracion de la cuenta"></a>
-                </li>
-                <li>
-                    <a href="#"><img src="${pageContext.request.contextPath}/assets/img/iconoUsuario.png" alt="Perfil de usuario"></a>
-                </li>
-            </ul>
-        </nav>
+        <%@ include file="/fragments/navBar.jspf" %>
 
         <div class="contenedor-principal">
 
@@ -48,8 +25,8 @@
 
                 <section class="hero">
                     <h1>Bienvenidos a SoftFriends</h1>
-                    <p>Encuentra tu nuevo mejor amigo. Los peluches más suaves y adorables a un solo clic de distancia.</p>
-                    <a href="catalago.jsp" class="btn btn--primary btn-hero">
+                    <p>Encuentra tu nuevo mejor amigo. Los peluches mas suaves y adorables a un solo clic de distancia.</p>
+                    <a href="${pageContext.request.contextPath}/vistas/app/catalogo.jsp" class="btn btn--primary btn-hero">
                         VER CATÁLOGO
                     </a>
                 </section>
@@ -113,5 +90,4 @@
         </div>
 
     </body>
-
 </html>
