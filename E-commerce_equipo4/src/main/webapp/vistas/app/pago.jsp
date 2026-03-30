@@ -1,0 +1,111 @@
+<%-- 
+    Document   : pago
+    Created on : 30 mar 2026, 2:17:24 p.m.
+    Author     : Usuario
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="es">
+
+    <head>
+        <title>Pago - SoftFriends</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="styles/base.css" />
+        <link rel="stylesheet" type="text/css" href="styles/layout.css" />
+        <link rel="stylesheet" type="text/css" href="styles/components.css" />
+    </head>
+
+    <body class="fondo-gris">
+
+        <nav>
+            <a class="logo" href="./index.html">
+                <img src="img/logo.png" alt="Logo SoftFriends">
+                <span>SoftFriends</span>
+            </a>
+
+            <ul>
+                <li><img src="img/configuracion.png" alt="Icono de configuracion"></li>
+                <li><img src="img/iconoUsuario.png" alt="Icono de usuario"></li>
+            </ul>
+        </nav>
+
+        <div class="contenedor-principal pago-layout">
+
+            <main class="seccion-carrito-detalle">
+                <header class="encabezado-carrito">
+                    <h1>Carrito</h1>
+                    <button class="btn-agregar-mas">+ Agregar</button>
+                </header>
+
+                <div class="contenedor-articulos">
+                    <div class="encabezado-lista">
+                        <span>Articulos (0)</span>
+                        <span>Precio</span>
+                    </div>
+
+                    <div class="lista-articulos-vacia">
+                        <p>No hay articulos en el carrito por el momento.</p>
+                    </div>
+                </div>
+            </main>
+
+            <aside class="seccion-pago-resumen">
+
+                <div class="tarjeta-blanca metodo-pago">
+                    <h3>Metodo de Pago</h3>
+                    <div class="opciones-pago">
+
+                        <div class="opcion-pago seleccionada">
+                            <div class="radio-custom"></div>
+                            <img src="img/iconoTarjeta.png" alt="Tarjeta">
+                            <span>Tarjeta de Credito/Débito</span>
+                            <img src="img/palomitaRosa.png" class="icono-check" alt="Check">
+                        </div>
+
+                        <div class="opcion-pago">
+                            <div class="radio-custom"></div>
+                            <img src="img/iconoEfectivo.png" alt="Efectivo">
+                            <span>Efectivo</span>
+                        </div>
+
+                        <div class="opcion-pago">
+                            <div class="radio-custom"></div>
+                            <img src="img/iconoWallet.png" alt="Wallet">
+                            <span>Wallet Digital</span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="tarjeta-blanca resumen-compra">
+                    <h3>Resumen de Compra</h3>
+
+                    <div class="fila">
+                        <span>Subtotal</span>
+                        <span>$0.00</span>
+                    </div>
+                    <div class="fila descuento">
+                        <span>Descuento</span>
+                        <span>-$0.00</span>
+                    </div>
+
+                    <div class="fila-total">
+                        <strong>Total</strong>
+                        <strong class="total-precio">$0.00</strong>
+                    </div>
+
+                    <button class="btn btn--primary" type="button">
+                        <img src="img/iconoComprar.png" alt="" aria-hidden="true">
+                        COMPRAR
+                    </button>
+                </div>
+
+            </aside>
+
+        </div>
+
+    </body>
+
+</html>
