@@ -1,5 +1,6 @@
 package service;
 
+import dto.UsuarioDTO;
 import java.util.List;
 import models.Usuario;
 
@@ -11,21 +12,21 @@ public interface IUsuarioService {
                           String correo,
                           String contrasenia);
 
-    Usuario autenticar(String correo, String contrasenia);
+    UsuarioDTO autenticar(String correo, String contrasenia);
 
-    Usuario buscarPorId(Long id);
+    UsuarioDTO buscarPorId(Long id);
 
-    Usuario buscarPorCorreo(String correo);
+    UsuarioDTO buscarPorCorreo(String correo);
 
-    List<Usuario> listarTodos();
+    List<UsuarioDTO> listarTodos();
 
     void actualizarUsuario(Usuario usuario);
 
     void eliminarUsuario(Long id);
     
-    List<Usuario> listaTop(int limite);
+    List<UsuarioDTO> listaTop(int limite);
     
-    List<Usuario> listarPaginado(int pagina, int tamañoPag);
+    List<UsuarioDTO> listarPaginado(int pagina, int tamañoPag);
     
     long contarUsuarios();
 }

@@ -5,31 +5,37 @@
 package controllers;
 
 import dto.UsuarioDTO;
+import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.io.IOException;
 import service.IUsuarioService;
 import service.UsuarioService;
 
 /**
  *
- * @author Usuario
+ * @author Abraham Coronel
  */
-@WebServlet(name = "AutenticacionServlet", urlPatterns = {"/autenticacion"})
-public class AutenticacionServlet extends HttpServlet {
+@WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
+public class LoginServlet extends HttpServlet {
 
     private final IUsuarioService usuarioService = new UsuarioService();
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.getRequestDispatcher("/vistas/auth/iniciar-sesion.jsp").forward(request, response);
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String correo = request.getParameter("correo");
-        String contra = request.getParameter("contrasenia");
+        String correo = request.getParameter("txt_correo");
+        String contra = request.getParameter("txt_contrasenia");
 
         if (correo == null || correo.trim().isEmpty() || contra == null || contra.trim().isEmpty()) {
             request.setAttribute("error", "El correo y la contraseña son obligatorios.");
@@ -40,21 +46,21 @@ public class AutenticacionServlet extends HttpServlet {
         try {
             UsuarioDTO usuarioLogueado = usuarioService.autenticar(correo, contra);
 
-            HttpSession sesionAnterior = request.getSession(false);
-            if (sesionAnterior != null) {
-                sesionAnterior.invalidate();
+            if (usuarioLogueado != null) {
+                HttpSession session = request.getSession();
+                session.setAttribute("usuarioSession", usuarioLogueado);
+                response.sendRedirect(request.getContextPath() + "/index.jsp");
+            } else {
+                request.setAttribute("error", "Correo o contraseña incorrectos.");
+                request.getRequestDispatcher("/vistas/auth/iniciar-sesion.jsp").forward(request, response);
             }
-            HttpSession sesion = request.getSession(true);
-
-            sesion.setAttribute("usuario", usuarioLogueado);
-
-            response.sendRedirect(request.getContextPath() + "/index.jsp");
 
         } catch (IllegalArgumentException e) {
             request.setAttribute("error", e.getMessage());
             request.getRequestDispatcher("/vistas/auth/iniciar-sesion.jsp").forward(request, response);
-        } catch (IOException e) {
-            throw new ServletException("Error al autenticar al usuario", e);
+        } catch (ServletException | IOException e) {
+            request.setAttribute("error", "Error interno en el servidor. Intenta más tarde.");
+            request.getRequestDispatcher("/vistas/auth/iniciar-sesion.jsp").forward(request, response);
         }
     }
 

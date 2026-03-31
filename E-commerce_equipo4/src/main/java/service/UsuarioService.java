@@ -2,25 +2,29 @@ package service;
 
 import dao.IUsuarioDAO;
 import dao.UsuarioDAO;
+import dto.UsuarioDTO;
 import java.util.List;
+import java.util.stream.Collectors;
+import mapper.UsuarioMapper;
 import models.Usuario;
 
-public class UsuarioService implements IUsuarioService{
+public class UsuarioService implements IUsuarioService {
 
     private final IUsuarioDAO usuarioDAO = new UsuarioDAO();
+    private final UsuarioMapper usuarioMapper = new UsuarioMapper();
 
     @Override
     public void registrar(String nombres,
-                          String primerApellido,
-                          String segundoApellido,
-                          String correo,
-                          String contrasenia) {
+            String primerApellido,
+            String segundoApellido,
+            String correo,
+            String contrasenia) {
 
         validarNombre(nombres);
         validarApellido(primerApellido);
         validarCorreo(correo);
         validarContrasenia(contrasenia);
-        
+
         if (usuarioDAO.buscarPorCorreo(correo) != null) {
             throw new IllegalArgumentException("El correo ya está registrado.");
         }
@@ -35,7 +39,7 @@ public class UsuarioService implements IUsuarioService{
     }
 
     @Override
-    public Usuario autenticar(String correo, String contrasenia) {
+    public UsuarioDTO autenticar(String correo, String contrasenia) {
         if (correo == null || correo.trim().isEmpty()) {
             throw new IllegalArgumentException("El correo es obligatorio.");
         }
@@ -53,28 +57,36 @@ public class UsuarioService implements IUsuarioService{
             throw new IllegalArgumentException("Correo o contraseña incorrectos.");
         }
 
-        return usuario;
+        return usuarioMapper.toDTO(usuario);
     }
 
     @Override
-    public Usuario buscarPorId(Long id) {
+    public UsuarioDTO buscarPorId(Long id) {
         if (id == null || id <= 0) {
             throw new IllegalArgumentException("El id del usuario no es válido.");
         }
-        return usuarioDAO.buscarPorId(id);
+
+        Usuario usuario = usuarioDAO.buscarPorId(id);
+        return usuario != null ? usuarioMapper.toDTO(usuario) : null;
     }
 
     @Override
-    public Usuario buscarPorCorreo(String correo) {
+    public UsuarioDTO buscarPorCorreo(String correo) {
         if (correo == null || correo.trim().isEmpty()) {
             throw new IllegalArgumentException("El correo es obligatorio.");
         }
-        return usuarioDAO.buscarPorCorreo(correo.trim().toLowerCase());
+
+        Usuario usuario = usuarioDAO.buscarPorCorreo(correo.trim().toLowerCase());
+        return usuario != null ? usuarioMapper.toDTO(usuario) : null;
     }
 
     @Override
-    public List<Usuario> listarTodos() {
-        return usuarioDAO.listarTodos();
+    public List<UsuarioDTO> listarTodos() {
+        List<Usuario> usuarios = usuarioDAO.listarTodos();
+
+        return usuarios.stream()
+                .map(usuarioMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -83,7 +95,7 @@ public class UsuarioService implements IUsuarioService{
             throw new IllegalArgumentException("El usuario no puede ser nulo.");
         }
 
-        if (usuario.getIdUsuario()== null || usuario.getIdUsuario()<= 0) {
+        if (usuario.getIdUsuario() == null || usuario.getIdUsuario() <= 0) {
             throw new IllegalArgumentException("El id del usuario no es válido.");
         }
 
@@ -112,7 +124,7 @@ public class UsuarioService implements IUsuarioService{
             throw new IllegalArgumentException("El nombre debe tener entre 10 y 100 caracteres.");
         }
     }
-    
+
     private void validarApellido(String primerApellido) {
         if (primerApellido == null || primerApellido.trim().isEmpty()) {
             throw new IllegalArgumentException("El primer apellido es obligatorio.");
@@ -154,7 +166,7 @@ public class UsuarioService implements IUsuarioService{
             throw new IllegalArgumentException("La contraseña no puede exceder 100 caracteres.");
         }
     }
-    
+
     private void validarTelefono(String telefono) {
         String regex = "^[7-9][0-9]{9}$";
         if (telefono == null || telefono.trim().isEmpty()) {
@@ -166,26 +178,34 @@ public class UsuarioService implements IUsuarioService{
     }
 
     @Override
-    public List<Usuario> listaTop(int limite) {
+    public List<UsuarioDTO> listaTop(int limite) {
         if (limite < 0) {
             limite = 10;
         }
-        return usuarioDAO.listaTop(limite);
+        List<Usuario> usuarios = usuarioDAO.listaTop(limite);
+
+        return usuarios.stream()
+                .map(usuarioMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<Usuario> listarPaginado(int pagina, int tamañoPag) {
+    public List<UsuarioDTO> listarPaginado(int pagina, int tamañoPag) {
         if (pagina < 0) {
             pagina = 1;
-        }if (tamañoPag < 0) {
+        }
+        if (tamañoPag < 0) {
             tamañoPag = 10;
         }
-        return usuarioDAO.listarPaginado(pagina, tamañoPag);
+        List<Usuario> usuarios = usuarioDAO.listarPaginado(pagina, tamañoPag);
+
+        return usuarios.stream()
+                .map(usuarioMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
     public long contarUsuarios() {
         return usuarioDAO.contarUsuarios();
     }
-} 
-
+}

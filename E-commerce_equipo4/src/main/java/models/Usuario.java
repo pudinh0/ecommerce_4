@@ -117,6 +117,7 @@ public class Usuario implements Serializable {
         this.segundoApellido = segundoApellido;
     }
 
+    
     public String getNombres() {
         return nombres;
     }
