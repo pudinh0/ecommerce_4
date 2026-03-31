@@ -1,7 +1,7 @@
 <%--
     Document   : index
     Created on : 30 mar 2026, 2:09:16 p.m.
-    Author     : Usuario
+    Author     : Camila Zubía
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -11,12 +11,10 @@
     <head>
         <title>Inicio - SoftFriends</title>
         <meta name="description" content="SoftFriends - Encuentra los mejores peluches">
-
         <%@ include file="/fragments/styles.jspf" %>
     </head>
 
     <body>
-
         <%@ include file="/fragments/navBar.jspf" %>
 
         <div class="contenedor-principal">

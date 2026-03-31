@@ -1,7 +1,7 @@
 <%-- 
     Document   : iniciar-sesion
     Created on : 30 mar 2026, 2:16:46 p.m.
-    Author     : Usuario
+    Author     : Camila Zubía
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -16,7 +16,6 @@
     </head>
 
     <body>
-
         <main class="iniciarSesion">
 
             <div class="seccionIzquierda">

@@ -1,7 +1,7 @@
 <%-- 
     Document   : pago
     Created on : 30 mar 2026, 2:17:24 p.m.
-    Author     : Usuario
+    Author     : Camila Zubía 
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -15,7 +15,11 @@
     </head>
 
     <body class="fondo-gris">
-
+        <%
+            if (session.getAttribute("usuario") == null) {
+                response.sendRedirect("/iniciar-sesion.jsp");
+            }
+        %>
         <nav>
             <a class="logo" href="${pageContext.request.contextPath}/index.jsp">
                 <img src="${pageContext.request.contextPath}/assets/img/logo.png" alt="Logo SoftFriends">

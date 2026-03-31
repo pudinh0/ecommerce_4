@@ -1,7 +1,7 @@
 <%-- 
     Document   : registrarse
     Created on : 30 mar 2026, 2:17:57 p.m.
-    Author     : Usuario
+    Author     : Camila Zubía
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -16,7 +16,6 @@
     </head>
 
     <body class="fondo-gris">
-
         <main class="auth-layout">
 
             <section class="tarjeta-auth" style="max-width: 500px;">

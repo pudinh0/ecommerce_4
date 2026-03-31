@@ -13,6 +13,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -76,6 +77,22 @@ public class Usuario implements Serializable {
         this.pedidos = pedidos;
     }
 
+    public Usuario(String primerApellido, String segundoApellido, String nombres, String correo, String contrasenia, String telefono, Direccion direccion, TipoUsuarioEnum tipoUsuario) {
+        this.primerApellido = primerApellido;
+        this.segundoApellido = segundoApellido;
+        this.nombres = nombres;
+        this.correo = correo;
+        this.contrasenia = contrasenia;
+        this.telefono = telefono;
+        this.direcciones = new ArrayList<>();
+        this.direcciones.add(direccion);
+        this.tipoUsuario = tipoUsuario;
+        this.carrito = new Carrito();
+        this.resenias = new ArrayList<>();
+    }
+
+    
+    
     public Long getIdUsuario() {
         return idUsuario;
     }

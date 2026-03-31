@@ -5,12 +5,16 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <class>models.Usuario</class>
+        <class>models.Carrito</class>
+        <class>models.Direccion</class>
+        <class>models.Resenia</class>
+        <class>models.Pedido</class>
 
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/softfriends_db?useSSL=false&amp;serverTimezone=UTC&amp;allowPublicKeyRetrieval=true"/>
             <property name="jakarta.persistence.jdbc.user" value="root"/>
-            <property name="jakarta.persistence.jdbc.password" value=""/>
+            <property name="jakarta.persistence.jdbc.password" value="Camila1504"/>
 
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
