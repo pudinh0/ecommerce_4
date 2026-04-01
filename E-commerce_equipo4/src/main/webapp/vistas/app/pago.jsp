@@ -41,7 +41,7 @@
             <main class="seccion-carrito-detalle">
                 <header class="encabezado-carrito">
                     <h1>Carrito</h1>
-                    <button class="btn-agregar-mas" onclick="window.location.href='${pageContext.request.contextPath}/vistas/app/catalogo.jsp'">+ Agregar</button>
+                    <button class="btn-agregar-mas" onclick="window.location.href='${pageContext.request.contextPath}/catalogo'">+ Agregar</button>
                 </header>
 
                 <div class="contenedor-articulos">

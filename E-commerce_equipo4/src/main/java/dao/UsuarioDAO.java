@@ -96,30 +96,6 @@ public class UsuarioDAO implements IUsuarioDAO {
         }
     }
 
-    @Override
-    public Usuario buscarPorPseudonimo(String pseudonimo) {
-
-        EntityManager em = JPAUtil.getInstance().getEntityManager();
-
-        try {
-
-            TypedQuery<Usuario> query = em.createQuery(
-                    "SELECT u FROM Usuario u WHERE u.pseudonimo = :pseudonimo",
-                    Usuario.class
-            );
-
-            query.setParameter("pseudonimo", pseudonimo);
-
-            return query.getSingleResult();
-
-        } catch (NoResultException e) {
-
-            return null;
-
-        } finally {
-            em.close();
-        }
-    }
 
     @Override
     public List<Usuario> listarTodos() {
@@ -199,10 +175,10 @@ public class UsuarioDAO implements IUsuarioDAO {
         EntityManager em = JPAUtil.getInstance().getEntityManager();
 
         try {
-            TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario ORDER BY u.id DESC", Usuario.class);
+            TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u ORDER BY u.idUsuario DESC", Usuario.class);
             query.setMaxResults(limite);
             return query.getResultList();
-        }catch(Exception e){
+        } catch (Exception e) {
             throw e;
         } finally {
             em.close();
@@ -215,11 +191,11 @@ public class UsuarioDAO implements IUsuarioDAO {
 
         try {
             int inicio = (pagina - 1) * tamañoPag;
-            TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario ORDER BY u.id DESC", Usuario.class);
+            TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u ORDER BY u.idUsuario DESC", Usuario.class);
             query.setFirstResult(inicio);
             query.setMaxResults(tamañoPag);
             return query.getResultList();
-        }catch(Exception e){
+        } catch (Exception e) {
             throw e;
         } finally {
             em.close();
@@ -229,11 +205,10 @@ public class UsuarioDAO implements IUsuarioDAO {
     @Override
     public long contarUsuarios() {
         EntityManager em = JPAUtil.getInstance().getEntityManager();
-
         try {
-            TypedQuery<Usuario> query = em.createQuery("SELECT COUNT (u) FROM Usuario", Usuario.class);
-            return query.getFirstResult();
-        }catch(Exception e){
+            TypedQuery<Long> query = em.createQuery("SELECT COUNT(u) FROM Usuario u", Long.class);
+            return query.getSingleResult();
+        } catch (Exception e) {
             throw e;
         } finally {
             em.close();

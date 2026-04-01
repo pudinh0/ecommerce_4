@@ -13,7 +13,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,75 +23,62 @@ public class Usuario implements Serializable {
     @Column(name = "idUsuario")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUsuario;
-    
+
     @Column(name = "primerApellido", nullable = false, length = 100)
     private String primerApellido;
-    
-    @Column(name="segundoApellido", nullable = true, length = 100)
+
+    @Column(name = "segundoApellido", nullable = true, length = 100)
     private String segundoApellido;
-    
+
     @Column(name = "nombres", nullable = false, length = 150)
     private String nombres;
-    
+
     @Column(name = "correo", nullable = false, length = 100, unique = true)
     private String correo;
-    
-    @Column(name="contrasenia", nullable = false, length = 60)
+
+    @Column(name = "contrasenia", nullable = false, length = 60)
     private String contrasenia;
-    
-    @Column(name="telefono", nullable = false, length = 10)
-    private String telefono;
-    
-    @Enumerated(EnumType.STRING)
-    @Column(name="tipoUsuario", nullable = false)
-    private TipoUsuarioEnum tipoUsuario;
-    
+
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     private Carrito carrito;
-    
+
     @OneToMany(mappedBy = "usuario")
     private List<Direccion> direcciones;
 
     @OneToMany(mappedBy = "usuario")
     private List<Resenia> resenias;
-    
+
     @OneToMany(mappedBy = "usuario")
     private List<Pedido> pedidos;
-    
+
     public Usuario() {
     }
 
-    public Usuario(Long idUsuario, String primerApellido, String segundoApellido, String nombres, String correo, String contrasenia, String telefono, TipoUsuarioEnum tipoUsuario, Carrito carrito, List<Direccion> direcciones, List<Resenia> resenias, List<Pedido> pedidos) {
+    public Usuario(Long idUsuario, String primerApellido, String segundoApellido, String nombres, String correo, String contrasenia, Carrito carrito, List<Direccion> direcciones, List<Resenia> resenias, List<Pedido> pedidos) {
         this.idUsuario = idUsuario;
         this.primerApellido = primerApellido;
         this.segundoApellido = segundoApellido;
         this.nombres = nombres;
         this.correo = correo;
         this.contrasenia = contrasenia;
-        this.telefono = telefono;
-        this.tipoUsuario = tipoUsuario;
         this.carrito = carrito;
         this.direcciones = direcciones;
         this.resenias = resenias;
         this.pedidos = pedidos;
     }
 
-    public Usuario(String primerApellido, String segundoApellido, String nombres, String correo, String contrasenia, String telefono, Direccion direccion, TipoUsuarioEnum tipoUsuario) {
+    public Usuario(String primerApellido, String segundoApellido, String nombres, String correo, String contrasenia, Carrito carrito, List<Direccion> direcciones, List<Resenia> resenias, List<Pedido> pedidos) {
         this.primerApellido = primerApellido;
         this.segundoApellido = segundoApellido;
         this.nombres = nombres;
         this.correo = correo;
         this.contrasenia = contrasenia;
-        this.telefono = telefono;
-        this.direcciones = new ArrayList<>();
-        this.direcciones.add(direccion);
-        this.tipoUsuario = tipoUsuario;
-        this.carrito = new Carrito();
-        this.resenias = new ArrayList<>();
+        this.carrito = carrito;
+        this.direcciones = direcciones;
+        this.resenias = resenias;
+        this.pedidos = pedidos;
     }
 
-    
-    
     public Long getIdUsuario() {
         return idUsuario;
     }
@@ -117,7 +103,6 @@ public class Usuario implements Serializable {
         this.segundoApellido = segundoApellido;
     }
 
-    
     public String getNombres() {
         return nombres;
     }
@@ -140,22 +125,6 @@ public class Usuario implements Serializable {
 
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public TipoUsuarioEnum getTipoUsuario() {
-        return tipoUsuario;
-    }
-
-    public void setTipoUsuario(TipoUsuarioEnum tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
     }
 
     public Carrito getCarrito() {
@@ -189,5 +158,5 @@ public class Usuario implements Serializable {
     public void setPedidos(List<Pedido> pedidos) {
         this.pedidos = pedidos;
     }
-   
+
 }

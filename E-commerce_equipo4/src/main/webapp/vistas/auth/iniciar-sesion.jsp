@@ -12,7 +12,7 @@
         <title>Iniciar Sesión - SoftFriends</title>
         <meta name="description" content="Inicia sesión en tu cuenta de SoftFriends.">
 
-       <%@ include file="/fragments/styles.jspf" %>
+        <%@ include file="/fragments/styles.jspf" %>
     </head>
 
     <body>
@@ -36,7 +36,7 @@
                         <p> Que alegría verte por aquí! </p>
                     </div>
 
-                    <form action="${pageContext.request.contextPath}/index.jsp" method="POST">
+                    <form action="${pageContext.request.contextPath}/autenticacion" method="POST">
 
                         <div class="form-group">
                             <label for="correo">Correo Electronico</label>
@@ -48,7 +48,7 @@
                                 <label for="password">Contraseña</label>
                                 <a href="#">¿Olvidaste tu contraseña?</a>
                             </div>
-                            <input type="password" id="password" name="password" class="form-control" placeholder="Ingresa tu contraseña" required autocomplete="current-password">
+                            <input type="password" id="password" name="contrasenia" class="form-control" placeholder="Ingresa tu contraseña" required autocomplete="current-password">
                         </div>
 
                         <button type="submit" class="btn btn--primary btn-auth">

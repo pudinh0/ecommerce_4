@@ -120,8 +120,8 @@ public class UsuarioService implements IUsuarioService {
 
         String nombreLimpio = nombre.trim();
 
-        if (nombreLimpio.length() < 10 || nombreLimpio.length() > 100) {
-            throw new IllegalArgumentException("El nombre debe tener entre 10 y 100 caracteres.");
+        if (nombreLimpio.length() < 2 || nombreLimpio.length() > 100) {
+            throw new IllegalArgumentException("El nombre debe tener entre 2 y 100 caracteres.");
         }
     }
 
@@ -132,8 +132,8 @@ public class UsuarioService implements IUsuarioService {
 
         String apellidoLimpio = primerApellido.trim();
 
-        if (apellidoLimpio.length() < 10 || apellidoLimpio.length() > 100) {
-            throw new IllegalArgumentException("El apellido debe tener entre 10 y 100 caracteres.");
+        if (apellidoLimpio.length() < 2 || apellidoLimpio.length() > 100) {
+            throw new IllegalArgumentException("El apellido debe tener entre 2 y 100 caracteres.");
         }
     }
 

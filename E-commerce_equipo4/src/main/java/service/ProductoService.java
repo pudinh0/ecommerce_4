@@ -14,13 +14,13 @@ import models.Producto;
  *
  * @author Usuario
  */
-public class ProductoService implements IProductoServicio{
-    
+public class ProductoService implements IProductoServicio {
+
     private final IProductoDAO productoDAO = new ProductoDAO();
 
     @Override
     public void crearProducto(Producto producto) {
-        
+
         if (producto == null) {
             throw new IllegalArgumentException("El producto no puede ser nulo");
         }
@@ -37,7 +37,7 @@ public class ProductoService implements IProductoServicio{
             throw new IllegalArgumentException("La descripción es obligatoria");
         }
 
-        if (producto.getRutaImagen() == null ||producto.getRutaImagen().trim().isEmpty()) {
+        if (producto.getRutaImagen() == null || producto.getRutaImagen().trim().isEmpty()) {
             throw new IllegalArgumentException("La imagen es obligatoria");
         }
         productoDAO.crearProducto(producto);
@@ -45,7 +45,7 @@ public class ProductoService implements IProductoServicio{
 
     @Override
     public void actualizarProducto(Producto producto, Long idAdmin) {
-        
+
         if (producto == null) {
             throw new IllegalArgumentException("El producto no puede ser nulo");
         }
@@ -103,12 +103,33 @@ public class ProductoService implements IProductoServicio{
         }
         List<ProductoDTO> productos = (List<ProductoDTO>) productoDAO.obtenerTodosProductos().stream().map((p) -> {
             ProductoDTO productoDTO = new ProductoDTO();
+            productoDTO.setId(p.getIdProducto());
             productoDTO.setNombre(p.getNombre());
             productoDTO.setPrecio(p.getPrecio());
             productoDTO.setDescripcion(p.getDescripcion());
+            productoDTO.setRutaImagen(p.getRutaImagen());
             return productoDTO;
-        });
+        }).toList();
+
         return productos;
     }
-    
+
+    @Override
+    public List<ProductoDTO> listarProductosPublicos() {
+
+        List<Producto> productosBD = productoDAO.obtenerTodosProductos();
+
+        List<ProductoDTO> listaPublica = productosBD.stream().map(p -> {
+            ProductoDTO dto = new ProductoDTO();
+            dto.setId(p.getIdProducto());
+            dto.setNombre(p.getNombre());
+            dto.setPrecio(p.getPrecio());
+            dto.setDescripcion(p.getDescripcion());
+            dto.setRutaImagen(p.getRutaImagen());
+            return dto;
+        }).toList();
+
+        return listaPublica;
+    }
+
 }

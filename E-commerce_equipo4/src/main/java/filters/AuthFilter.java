@@ -22,13 +22,14 @@ import util.JWTUtil;
  */
 @WebFilter(filterName = "AuthFilter", urlPatterns = {"/*"})
 public class AuthFilter implements Filter {
+
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException{
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-        
+
         String path = req.getRequestURI();
-        
+
         String authHeader = req.getHeader("Autorization");
         boolean tokenValido = false;
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
@@ -41,10 +42,14 @@ public class AuthFilter implements Filter {
                 tokenValido = false;
             }
         }
-        
+
         HttpSession sesion = req.getSession(false);
         boolean loggedIn = (sesion != null && sesion.getAttribute("usuario") != null);
-        boolean loginRequest = path.contains("iniciar-sesion.jsp") || path.contains("registrarse.jsp") || path.contains("autenticacion") || path.contains("/registro");
+        boolean loginRequest = path.contains("iniciar-sesion.jsp")
+                || path.contains("registrarse.jsp")
+                || path.contains("autenticacion")
+                || path.contains("/registro")
+                || path.contains("error.jsp");
         boolean apiRequest = path.startsWith("/api/");
         boolean resourceStaticRequest = path.contains("/assets/") || path.contains("styles") || path.contains("img");
         if (path.startsWith(req.getContextPath() + "/api/")) {
@@ -64,8 +69,8 @@ public class AuthFilter implements Filter {
         }
         if (loggedIn) {
             chain.doFilter(request, response);
-        }else{
-            res.sendRedirect(req.getContextPath() + "/views/auth/iniciar-sesion.jsp");
+        } else {
+            res.sendRedirect(req.getContextPath() + "/vistas/auth/iniciar-sesion.jsp");
         }
     }
 }

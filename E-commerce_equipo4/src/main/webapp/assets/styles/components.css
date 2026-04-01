@@ -721,5 +721,36 @@ nav ul img {
 
 }
 
+.tarjeta-error {
+    text-align: center;
+    max-width: 600px;
+}
+
+.tarjeta-error img {
+    width: 150px;
+    margin-bottom: 20px;
+}
+
+.tarjeta-error h1 {
+    color: var(--color-primario, #333);
+    margin-bottom: 10px;
+}
+
+.tarjeta-error p {
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.mensaje-error-banner {
+    background-color: #ffe6e6;
+    color: #cc0000;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: bold;
+    border: 1px solid #ffcccc;
+}
+
 
 

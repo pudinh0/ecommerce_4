@@ -24,7 +24,7 @@
                 <section class="hero">
                     <h1>Bienvenidos a SoftFriends</h1>
                     <p>Encuentra tu nuevo mejor amigo. Los peluches mas suaves y adorables a un solo clic de distancia.</p>
-                    <a href="${pageContext.request.contextPath}/vistas/app/catalogo.jsp" class="btn btn--primary btn-hero">
+                    <a href="${pageContext.request.contextPath}/catalogo" class="btn btn--primary btn-hero">
                         VER CATÁLOGO
                     </a>
                 </section>

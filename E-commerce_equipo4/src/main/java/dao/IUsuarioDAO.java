@@ -13,8 +13,6 @@ public interface IUsuarioDAO {
 
     Usuario buscarPorCorreoYContrasenia(String correo, String contrasenia);
 
-    Usuario buscarPorPseudonimo(String pseudonimo);
-
     List<Usuario> listarTodos();
 
     void actualizar(Usuario usuario);

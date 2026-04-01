@@ -24,4 +24,6 @@ public interface IProductoServicio {
     
     List<ProductoDTO> obtenerTodosProductos(Long idAdmin);
     
+    List<ProductoDTO> listarProductosPublicos();
+    
 }

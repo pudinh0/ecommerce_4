@@ -19,6 +19,7 @@ import service.UsuarioService;
  */
 @WebServlet(name = "RegistroServlet", urlPatterns = {"/registro"})
 public class RegistroServlet extends HttpServlet {
+
     private final IUsuarioService usuarioService = new UsuarioService();
 
     @Override
@@ -36,7 +37,7 @@ public class RegistroServlet extends HttpServlet {
 
         } catch (IllegalArgumentException e) {
             request.setAttribute("error", e.getMessage());
-            request.getRequestDispatcher("/views/auth/registro.jsp").forward(request, response);
+            request.getRequestDispatcher("/vistas/auth/registrarse.jsp").forward(request, response);
         } catch (ServletException | IOException e) {
             throw new ServletException("Error al registrar usuario", e);
         }

@@ -11,7 +11,7 @@
     <head>
         <title>Catálogo - SoftFriends</title>
         <meta name="description" content="Explora nuestro catálogo de peluches adorables.">
-        
+
         <%@ include file="/fragments/styles.jspf" %>
     </head>
 
@@ -25,7 +25,7 @@
                 <ul>
                     <li>
                         <img src="${pageContext.request.contextPath}/assets/img/iconoCatalago.png" alt="Icono catalogo">
-                        <a href="#">Catálogo</a>
+                        <a href="${pageContext.request.contextPath}/catalogo">Catálogo</a>
                     </li>
                     <li>
                         <img src="${pageContext.request.contextPath}/assets/img/iconoFiltro.png" alt="Icono filtros">
@@ -225,7 +225,7 @@
                         <strong>Total</strong>
                         <strong class="total-precio">$699.98</strong>
                     </div>
-                    <button class="btn btn--primary" type="button" onclick="window.location.href='${pageContext.request.contextPath}/vistas/app/pago.jsp'">
+                    <button class="btn btn--primary" type="button" onclick="window.location.href = '${pageContext.request.contextPath}/vistas/app/pago.jsp'">
                         <img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png" alt="" aria-hidden="true">
                         COMPRAR
                     </button>

@@ -24,39 +24,42 @@
                     <span>SoftFriends</span>
                 </a>
 
-                <form action="${pageContext.request.contextPath}/vistas/auth/iniciar-sesion.jsp" method="GET">
+                <c:if test="${not empty error}">
+                    <div class="mensaje-error-banner">
+                        ${error}
+                    </div>
+                </c:if>
+
+                <form action="${pageContext.request.contextPath}/registro" method="POST">
 
                     <div class="form-row">
                         <div class="form-group">
                             <label for="nombre">Nombre</label>
-                            <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Tu nombre" required autocomplete="given-name">
+                            <input type="text" id="nombre" name="txt_nombres" class="form-control" placeholder="Tu nombre" required autocomplete="given-name">
                         </div>
 
                         <div class="form-group">
                             <label for="apellido">Apellido</label>
-                            <input type="text" id="apellido" name="apellido" class="form-control" placeholder="Tu apellido" required autocomplete="family-name">
+                            <input type="text" id="apellido" name="txt_primerApellido" class="form-control" placeholder="Tu apellido" required autocomplete="family-name">
                         </div>
                     </div>
 
                     <div class="form-group">
+                        <label for="segundo_apellido">Segundo Apellido</label>
+                        <input type="text" id="segundo_apellido" name="txt_segundoApellido" class="form-control" placeholder="Opcional">
+                    </div>
+
+                    <div class="form-group">
                         <label for="correo">Correo Electrónico</label>
-                        <input type="email" id="correo" name="correo" class="form-control" placeholder="ejemplo@correo.com" required autocomplete="email">
+                        <input type="email" id="correo" name="txt_correo" class="form-control" placeholder="ejemplo@correo.com" required autocomplete="email">
                     </div>
 
                     <div class="form-group">
                         <label for="password">Contraseña</label>
-                        <input type="password" id="password" name="password" class="form-control" placeholder="Crea una contraseña" required minlength="8" autocomplete="new-password">
+                        <input type="password" id="password" name="txt_contrasenia" class="form-control" placeholder="Crea una contraseña" required minlength="8" autocomplete="new-password">
                     </div>
 
-                    <div class="form-group">
-                        <label for="confirm_password">Confirmar Contraseña</label>
-                        <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="Repite tu contraseña" required minlength="8" autocomplete="new-password">
-                    </div>
-
-                    <button type="submit" class="btn btn--primary btn-auth">
-                        CREAR CUENTA
-                    </button>
-
+                    <button type="submit" class="btn btn--primary btn-auth">CREAR CUENTA</button>
                 </form>
 
                 <div class="auth-links">
