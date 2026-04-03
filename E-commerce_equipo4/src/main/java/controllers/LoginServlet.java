@@ -5,13 +5,13 @@
 package controllers;
 
 import dto.UsuarioDTO;
-import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.io.IOException;
 import service.IUsuarioService;
 import service.UsuarioService;
 
@@ -34,8 +34,8 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String correo = request.getParameter("txt_correo");
-        String contra = request.getParameter("txt_contrasenia");
+        String correo = request.getParameter("correo");
+        String contra = request.getParameter("contrasenia");
 
         if (correo == null || correo.trim().isEmpty() || contra == null || contra.trim().isEmpty()) {
             request.setAttribute("error", "El correo y la contraseña son obligatorios.");
@@ -48,7 +48,7 @@ public class LoginServlet extends HttpServlet {
 
             if (usuarioLogueado != null) {
                 HttpSession session = request.getSession();
-                session.setAttribute("usuarioSession", usuarioLogueado);
+                session.setAttribute("usuario", usuarioLogueado);
                 response.sendRedirect(request.getContextPath() + "/index.jsp");
             } else {
                 request.setAttribute("error", "Correo o contraseña incorrectos.");

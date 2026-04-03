@@ -36,7 +36,7 @@
                         <p> Que alegría verte por aquí! </p>
                     </div>
 
-                    <form action="${pageContext.request.contextPath}/autenticacion" method="POST">
+                    <form action="${pageContext.request.contextPath}/login" method="POST">
 
                         <div class="form-group">
                             <label for="correo">Correo Electronico</label>

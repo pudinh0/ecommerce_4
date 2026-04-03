@@ -3,6 +3,7 @@
     Created on : 30 mar 2026, 2:07:34 p.m.
     Author     : Camila Zubía
 --%>
+<%@page import="models.TipoUsuarioEnum"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -25,12 +26,18 @@
                 <ul>
                     <li>
                         <img src="${pageContext.request.contextPath}/assets/img/iconoCatalago.png" alt="Icono catalogo">
-                        <a href="${pageContext.request.contextPath}/catalogo">Catálogo</a>
+                        <a href="${pageContext.request.contextPath}/vistas/app/catalogo.jsp">Catálogo</a>
                     </li>
                     <li>
                         <img src="${pageContext.request.contextPath}/assets/img/iconoFiltro.png" alt="Icono filtros">
                         <a href="#">Filtros</a>
                     </li>
+                    <c:if test="${sessionScope.usuario.tipoUsuario eq 'ADMINISTRADOR'}">
+                        <li>
+                            <img src="${pageContext.request.contextPath}/assets/img/iconoFiltro.png" alt="Icono inventario">
+                            <a href="${pageContext.request.contextPath}/vistas/admin/inventario">Inventario</a>
+                        </li>
+                    </c:if>
                 </ul>
             </nav>
 

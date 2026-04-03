@@ -15,16 +15,18 @@ public class UsuarioDTO {
     private String primerApellido;
     private String segundoApellido;
     private String correo;
+    private TipoUsuarioDTO tipoUsuario;
 
     public UsuarioDTO() {
     }
 
-    public UsuarioDTO(Long id, String nombres, String primerApellido, String segundoApellido, String correo) {
+    public UsuarioDTO(Long id, String nombres, String primerApellido, String segundoApellido, String correo, TipoUsuarioDTO tipoUsuario) {
         this.id = id;
         this.nombres = nombres;
         this.primerApellido = primerApellido;
         this.segundoApellido = segundoApellido;
         this.correo = correo;
+        this.tipoUsuario = tipoUsuario;
     }
 
     public Long getId() {
@@ -67,4 +69,11 @@ public class UsuarioDTO {
         this.correo = correo;
     }
 
+    public TipoUsuarioDTO getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(TipoUsuarioDTO tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
+    }
 }

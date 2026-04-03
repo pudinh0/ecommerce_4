@@ -30,7 +30,7 @@ public class AuthFilter implements Filter {
 
         String path = req.getRequestURI();
 
-        String authHeader = req.getHeader("Autorization");
+        String authHeader = req.getHeader("Authorization");
         boolean tokenValido = false;
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
@@ -47,7 +47,7 @@ public class AuthFilter implements Filter {
         boolean loggedIn = (sesion != null && sesion.getAttribute("usuario") != null);
         boolean loginRequest = path.contains("iniciar-sesion.jsp")
                 || path.contains("registrarse.jsp")
-                || path.contains("autenticacion")
+                || path.contains("login")
                 || path.contains("/registro")
                 || path.contains("error.jsp");
         boolean apiRequest = path.startsWith("/api/");

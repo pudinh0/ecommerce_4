@@ -38,6 +38,10 @@ public class Usuario implements Serializable {
 
     @Column(name = "contrasenia", nullable = false, length = 60)
     private String contrasenia;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipoUsuario", nullable = false)
+    private TipoUsuarioEnum tipoUsuario;
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     private Carrito carrito;
@@ -54,25 +58,27 @@ public class Usuario implements Serializable {
     public Usuario() {
     }
 
-    public Usuario(Long idUsuario, String primerApellido, String segundoApellido, String nombres, String correo, String contrasenia, Carrito carrito, List<Direccion> direcciones, List<Resenia> resenias, List<Pedido> pedidos) {
+    public Usuario(Long idUsuario, String primerApellido, String segundoApellido, String nombres, String correo, String contrasenia, TipoUsuarioEnum tipoUsuario, Carrito carrito, List<Direccion> direcciones, List<Resenia> resenias, List<Pedido> pedidos) {
         this.idUsuario = idUsuario;
         this.primerApellido = primerApellido;
         this.segundoApellido = segundoApellido;
         this.nombres = nombres;
         this.correo = correo;
         this.contrasenia = contrasenia;
+        this.tipoUsuario = tipoUsuario;
         this.carrito = carrito;
         this.direcciones = direcciones;
         this.resenias = resenias;
         this.pedidos = pedidos;
     }
 
-    public Usuario(String primerApellido, String segundoApellido, String nombres, String correo, String contrasenia, Carrito carrito, List<Direccion> direcciones, List<Resenia> resenias, List<Pedido> pedidos) {
+    public Usuario(String primerApellido, String segundoApellido, String nombres, String correo, String contrasenia, TipoUsuarioEnum tipoUsuario, Carrito carrito, List<Direccion> direcciones, List<Resenia> resenias, List<Pedido> pedidos) {
         this.primerApellido = primerApellido;
         this.segundoApellido = segundoApellido;
         this.nombres = nombres;
         this.correo = correo;
         this.contrasenia = contrasenia;
+        this.tipoUsuario = TipoUsuarioEnum.CLIENTE;
         this.carrito = carrito;
         this.direcciones = direcciones;
         this.resenias = resenias;
@@ -125,6 +131,14 @@ public class Usuario implements Serializable {
 
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
+    }
+
+    public TipoUsuarioEnum getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(TipoUsuarioEnum tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
     }
 
     public Carrito getCarrito() {

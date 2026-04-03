@@ -4,6 +4,8 @@
  */
 package dto;
 
+import java.util.List;
+
 /**
  *
  * @author Usuario
@@ -15,16 +17,20 @@ public class ProductoDTO {
     public double precio;
     public String descripcion;
     public String rutaImagen;
+    public CategoriaDTO categoria;
+    public List<ReseniaDTO> resenias;
+    
 
     public ProductoDTO() {
     }
 
-    public ProductoDTO(Long id, String nombre, double precio, String descripcion, String rutaImagen) {
+    public ProductoDTO(Long id, String nombre, double precio, String descripcion, String rutaImagen, CategoriaDTO categoria) {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
         this.descripcion = descripcion;
         this.rutaImagen = rutaImagen;
+        this.categoria = categoria;
     }
 
     public String getRutaImagen() {
@@ -65,6 +71,14 @@ public class ProductoDTO {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public CategoriaDTO getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(CategoriaDTO categoria) {
+        this.categoria = categoria;
     }
 
 }

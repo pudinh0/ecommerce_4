@@ -4,6 +4,7 @@
  */
 package mapper;
 
+import dto.TipoUsuarioDTO;
 import dto.UsuarioDTO;
 import models.Usuario;
 
@@ -24,6 +25,7 @@ public class UsuarioMapper {
         dto.setPrimerApellido(usuario.getPrimerApellido());
         dto.setSegundoApellido(usuario.getSegundoApellido());
         dto.setCorreo(usuario.getCorreo());
+        dto.setTipoUsuario(TipoUsuarioDTO.valueOf(usuario.getTipoUsuario().name()));
 
         return dto;
     }
