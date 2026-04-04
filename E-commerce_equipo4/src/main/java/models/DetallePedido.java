@@ -85,4 +85,11 @@ public class DetallePedido {
         this.producto = producto;
     }
     
+    public Double getSubtotal() {
+        if (this.cantidad != null && this.precioVenta != null) {
+            return this.cantidad * this.precioVenta;
+        }
+        return 0.0;
+    }
+    
 }

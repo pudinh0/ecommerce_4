@@ -74,4 +74,11 @@ public class ItemCarrito {
         this.producto = producto;
     }
     
+    public double getSubtotal() {
+        if (this.producto != null && this.cantidad != null) {
+            return this.producto.getPrecio() * this.cantidad;
+        }
+        return 0.0;
+    }
+    
 }

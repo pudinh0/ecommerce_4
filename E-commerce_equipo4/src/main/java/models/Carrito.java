@@ -76,4 +76,14 @@ public class Carrito {
         this.usuario = usuario;
     }
     
+    public double getTotal() {
+        double total = 0.0;
+        if (this.itemsCarrito != null) {
+            for (ItemCarrito item : this.itemsCarrito) {
+                total += item.getSubtotal();
+            }
+        }
+        return total;
+    }
+    
 }
