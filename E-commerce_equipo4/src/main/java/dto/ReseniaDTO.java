@@ -11,19 +11,23 @@ import java.time.LocalDate;
  * @author Usuario
  */
 public class ReseniaDTO {
-    
+
     public String comentario;
     public Integer calificacion;
     public LocalDate fecha;
+    public Long id;
+    public Long idProducto;
     public UsuarioDTO usuario;
 
     public ReseniaDTO() {
     }
 
-    public ReseniaDTO(String comentario, Integer calificacion, LocalDate fecha, UsuarioDTO usuario) {
+    public ReseniaDTO(String comentario, Integer calificacion, LocalDate fecha, Long id, Long idProducto, UsuarioDTO usuario) {
         this.comentario = comentario;
         this.calificacion = calificacion;
         this.fecha = fecha;
+        this.id = id;
+        this.idProducto = idProducto;
         this.usuario = usuario;
     }
 
@@ -58,5 +62,21 @@ public class ReseniaDTO {
     public void setUsuario(UsuarioDTO usuario) {
         this.usuario = usuario;
     }
-    
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getIdProducto() {
+        return idProducto;
+    }
+
+    public void setIdProducto(Long idProducto) {
+        this.idProducto = idProducto;
+    }
+
 }
