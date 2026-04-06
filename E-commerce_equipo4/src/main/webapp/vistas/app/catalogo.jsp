@@ -25,7 +25,7 @@
             <nav class="menu-lateral">
                 <ul>
                     <li class="active">
-                        <img src="${pageContext.request.contextPath}/assets/img/iconoCatalago.png" alt="Icono catalogo">
+                        <img src="${pageContext.request.contextPath}/assets/img/iconoCatalogo.png" alt="Icono catalogo">
                         <a href="${pageContext.request.contextPath}/vistas/app/catalogo.jsp">Catálogo</a>
                     </li>
                     <li>

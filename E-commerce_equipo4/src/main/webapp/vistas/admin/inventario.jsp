@@ -19,7 +19,7 @@
             <nav class="menu-lateral">
                 <ul>
                     <li>
-                        <img src="${pageContext.request.contextPath}/assets/img/iconoCatalago.png" alt="Icono opciones">
+                        <img src="${pageContext.request.contextPath}/assets/img/iconoCatalogo.png" alt="Icono opciones">
                         <a href="#">Opciones</a>
                     </li>
                     <li class="active">
