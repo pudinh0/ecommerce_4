@@ -4,84 +4,75 @@
  */
 package controllers;
 
+import dto.UsuarioDTO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
+import service.IUsuarioService;
+import service.UsuarioService;
+import util.JSONMapper;
 
 /**
  *
  * @author Abraham Coronel
  */
-@WebServlet(name = "PerfilServlet", urlPatterns = {"/perfil"})
+@WebServlet(name = "PerfilServlet", urlPatterns = {"/api/usuarios/*"})
 public class PerfilServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet PerfilServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet PerfilServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
+    private final IUsuarioService usuarioService = new UsuarioService();
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        try {
+            String pathInfo = request.getPathInfo();
+
+            if (pathInfo != null && pathInfo.equals("/perfil")) {
+                
+                HttpSession session = request.getSession(false);
+                if (session == null || session.getAttribute("usuario") == null) {
+                    enviarError(response, HttpServletResponse.SC_UNAUTHORIZED, "Debes iniciar sesión para ver tu perfil.");
+                    return;
+                }
+
+                String correoUsuario = (String) session.getAttribute("usuario");
+
+                UsuarioDTO perfil = usuarioService.buscarPorCorreo(correoUsuario);
+
+                if (perfil != null) {
+                    response.setStatus(HttpServletResponse.SC_OK);
+                    JSONMapper.mapper.writeValue(response.getWriter(), perfil);
+                } else {
+                    enviarError(response, HttpServletResponse.SC_NOT_FOUND, "Usuario no encontrado en el sistema.");
+                }
+                
+            } else {
+                enviarError(response, HttpServletResponse.SC_BAD_REQUEST, "Ruta de usuario no valida.");
+            }
+
+        } catch (IOException e) {
+            enviarError(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error al cargar el perfil: " + e.getMessage());
+        }
     }
 
     /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * Método auxiliar para mandar los errores limpios en JSON
      */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    private void enviarError(HttpServletResponse response, int statusCode, String mensaje) throws IOException {
+        response.setStatus(statusCode);
+        Map<String, String> error = new HashMap<>();
+        error.put("error", mensaje);
+        JSONMapper.mapper.writeValue(response.getWriter(), error);
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
 }

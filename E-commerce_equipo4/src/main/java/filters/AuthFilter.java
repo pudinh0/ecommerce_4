@@ -28,49 +28,68 @@ public class AuthFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
-        String path = req.getRequestURI();
+        String path = req.getRequestURI().substring(req.getContextPath().length());
 
-        String authHeader = req.getHeader("Authorization");
-        boolean tokenValido = false;
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            String token = authHeader.substring(7);
-            try {
-                String usuario = JWTUtil.validarToken(token);
-                req.setAttribute("usuario", usuario);
-                tokenValido = true;
-            } catch (Exception e) {
-                tokenValido = false;
+        //Rutas Públicas (Recursos estaticos, login, registro y catalogo publico)
+        boolean isStaticResource = path.startsWith("/assets/") || path.contains("styles") || path.contains("img");
+        boolean isAuthRequest = path.contains("iniciar-sesion") || path.contains("registrarse") || path.contains("/login") || path.contains("/registro");
+
+        boolean isPublicApi = path.equals("/api/productos") || (path.startsWith("/api/productos/") && req.getMethod().equals("GET"));
+
+        if (isStaticResource || isAuthRequest || isPublicApi) {
+            chain.doFilter(request, response);
+            return;
+        }
+
+        if (path.startsWith("/api/")) {
+            boolean tokenValido = false;
+            String authHeader = req.getHeader("Authorization");
+
+            if (authHeader != null && authHeader.startsWith("Bearer ")) {
+                String token = authHeader.substring(7);
+                try {
+                    String usuario = JWTUtil.validarToken(token);
+                    req.setAttribute("usuario", usuario);
+                    tokenValido = true;
+                } catch (Exception e) {
+                    tokenValido = false;
+                }
             }
-        }
 
-        HttpSession sesion = req.getSession(false);
-        boolean loggedIn = (sesion != null && sesion.getAttribute("usuario") != null);
-        boolean loginRequest = path.contains("iniciar-sesion.jsp")
-                || path.contains("registrarse.jsp")
-                || path.contains("login")
-                || path.contains("/registro")
-                || path.contains("error.jsp");
-        boolean apiRequest = path.startsWith("/api/");
-        boolean resourceStaticRequest = path.contains("/assets/") || path.contains("styles") || path.contains("img");
-        if (path.startsWith(req.getContextPath() + "/api/")) {
-            chain.doFilter(request, response);
-            return;
-        }
-        if (loginRequest || resourceStaticRequest) {
-            chain.doFilter(request, response);
-            return;
-        }
-        if (apiRequest) {
-            if (!tokenValido) {
+            //Tambien permitimos acceso a la API si tienen una sesión activa
+            HttpSession sesion = req.getSession(false);
+            boolean loggedIn = (sesion != null && sesion.getAttribute("usuario") != null);
+
+            if (!tokenValido && !loggedIn) {
                 res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                res.getWriter().write("No autorizado");
+                res.setContentType("application/json");
+                res.getWriter().write("{\"error\": \"No autorizado para acceder a la API\"}");
                 return;
             }
-        }
-        if (loggedIn) {
+
             chain.doFilter(request, response);
-        } else {
-            res.sendRedirect(req.getContextPath() + "/vistas/auth/iniciar-sesion.jsp");
+            return;
         }
+
+        //Seguridad para el Panel de Administracion
+        boolean isAdminRequest = path.startsWith("/vistas/admin/") || path.equals("/inventario") || path.equals("/pedidos-admin"); 
+
+        HttpSession sesion = req.getSession(false);
+        boolean isLoggedIn = (sesion != null && sesion.getAttribute("usuario") != null);
+
+        if (isAdminRequest) {
+            String rolUsuario = (sesion != null) ? (String) sesion.getAttribute("rol") : null;
+            boolean isAdmin = "ADMINISTRADOR".equals(rolUsuario);
+
+            if (!isLoggedIn || !isAdmin) {
+                res.sendRedirect(req.getContextPath() + "/vistas/auth/iniciar-sesion.jsp?error=acceso-denegado");
+                return;
+            }
+        } else if (!isLoggedIn) {
+            res.sendRedirect(req.getContextPath() + "/vistas/auth/iniciar-sesion.jsp");
+            return;
+        }
+
+        chain.doFilter(request, response);
     }
 }

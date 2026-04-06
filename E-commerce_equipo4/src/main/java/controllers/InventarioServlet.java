@@ -5,7 +5,6 @@
 package controllers;
 
 import dto.ProductoDTO;
-import dto.UsuarioDTO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -29,16 +28,66 @@ public class InventarioServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession sesion = request.getSession(false);
-        UsuarioDTO usuario =(UsuarioDTO) sesion.getAttribute("usuario");
-        List<ProductoDTO> listaProductos = productoServicio.obtenerTodosProductos(usuario.getId());
-        request.setAttribute("productos", listaProductos);
-        request.getRequestDispatcher("/vistas/admin/inventario.jsp").forward(request, response);
+        try {
+            HttpSession session = request.getSession(false);
+            Long idAdmin = (Long) session.getAttribute("idUsuario");
+            
+            List<ProductoDTO> productos = productoServicio.obtenerTodosProductos(idAdmin); 
+            
+            request.setAttribute("listaProductos", productos);
+            request.getRequestDispatcher("/vistas/admin/inventario.jsp").forward(request, response);
+            
+        } catch (ServletException | IOException e) {
+            request.setAttribute("error", "Error al cargar el inventario: " + e.getMessage());
+            request.getRequestDispatcher("/vistas/errores/error.jsp").forward(request, response);
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        String accion = request.getParameter("accion");
+        
+        try {
+            HttpSession session = request.getSession(false);
+            Long idAdmin = (Long) session.getAttribute("idUsuario");
 
+            if ("eliminar".equals(accion)) {
+                
+                Long idProducto = Long.valueOf(request.getParameter("idProducto"));
+                productoServicio.eliminarProducto(idProducto, idAdmin);
+                
+            } else {
+                
+
+                ProductoDTO dto = new ProductoDTO();
+                dto.setNombre(request.getParameter("nombre"));
+                dto.setPrecio(Double.parseDouble(request.getParameter("precio")));
+                dto.setDescripcion(request.getParameter("descripcion"));
+                dto.setStock(Integer.parseInt(request.getParameter("stock")));
+                dto.setRutaImagen(request.getParameter("rutaImagen"));
+
+                if ("crear".equals(accion)) {
+                    productoServicio.crearProducto(dto);
+                    
+                } else if ("actualizar".equals(accion)) {
+                    dto.setId(Long.valueOf(request.getParameter("idProducto")));
+                    productoServicio.actualizarProducto(dto, idAdmin);
+                    
+                } else {
+                    throw new IllegalArgumentException("Acción no reconocida.");
+                }
+            }
+            
+            response.sendRedirect(request.getContextPath() + "/inventario?exito=true");
+            
+        } catch (NumberFormatException e) {
+            response.sendRedirect(request.getContextPath() + "/inventario?error=Datos numéricos invalidos en el formulario.");
+        } catch (IOException | IllegalArgumentException e) {
+            response.sendRedirect(request.getContextPath() + "/inventario?error=" + e.getMessage());
+        }
     }
+    
+    
 }

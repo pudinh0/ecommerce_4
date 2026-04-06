@@ -8,6 +8,8 @@ import dao.IProductoDAO;
 import dao.ProductoDAO;
 import dto.ProductoDTO;
 import java.util.List;
+import java.util.stream.Collectors;
+import mapper.ProductoMapper;
 import models.Producto;
 
 /**
@@ -17,54 +19,61 @@ import models.Producto;
 public class ProductoService implements IProductoServicio {
 
     private final IProductoDAO productoDAO = new ProductoDAO();
+    private final ProductoMapper productoMapper = new ProductoMapper();
 
     @Override
-    public void crearProducto(Producto producto) {
+    public void crearProducto(ProductoDTO productoDTO) {
 
-        if (producto == null) {
+        if (productoDTO == null) {
             throw new IllegalArgumentException("El producto no puede ser nulo");
         }
-        if (producto.getNombre() == null || producto.getNombre().trim().isEmpty()) {
+        if (productoDTO.getNombre() == null || productoDTO.getNombre().trim().isEmpty()) {
             throw new IllegalArgumentException("El nombre es obligatorio");
         }
-        if (producto.getPrecio() <= 0) {
+        if (productoDTO.getPrecio() <= 0) {
             throw new IllegalArgumentException("El precio debe de ser mayor a 0");
         }
-        if (producto.getStock() <= 0) {
-            throw new IllegalArgumentException("El sstock del producto debe de sser mayor a 0");
+        if (productoDTO.getStock() <= 0) {
+            throw new IllegalArgumentException("El stock del producto debe de ser mayor a 0");
         }
-        if (producto.getDescripcion() == null || producto.getDescripcion().trim().isEmpty()) {
+        if (productoDTO.getDescripcion() == null || productoDTO.getDescripcion().trim().isEmpty()) {
             throw new IllegalArgumentException("La descripción es obligatoria");
         }
-
-        if (producto.getRutaImagen() == null || producto.getRutaImagen().trim().isEmpty()) {
+        if (productoDTO.getRutaImagen() == null || productoDTO.getRutaImagen().trim().isEmpty()) {
             throw new IllegalArgumentException("La imagen es obligatoria");
         }
+
+        Producto producto = productoMapper.toEntity(productoDTO);
+        
         productoDAO.crearProducto(producto);
     }
 
     @Override
-    public void actualizarProducto(Producto producto, Long idAdmin) {
+    public void actualizarProducto(ProductoDTO productoDTO, Long idAdmin) {
 
-        if (producto == null) {
+        if (productoDTO == null) {
             throw new IllegalArgumentException("El producto no puede ser nulo");
         }
-        if (producto.getNombre() == null || producto.getNombre().trim().isEmpty()) {
+        if (productoDTO.getId() == null || productoDTO.getId() <= 0) {
+            throw new IllegalArgumentException("El ID del producto es inválido o no fue proporcionado");
+        }
+        if (productoDTO.getNombre() == null || productoDTO.getNombre().trim().isEmpty()) {
             throw new IllegalArgumentException("El nombre es obligatorio");
         }
-        if (producto.getPrecio() <= 0) {
+        if (productoDTO.getPrecio() <= 0) {
             throw new IllegalArgumentException("El precio debe de ser mayor a 0");
         }
-        if (producto.getStock() <= 0) {
-            throw new IllegalArgumentException("El sstock del producto debe de sser mayor a 0");
+        if (productoDTO.getStock() <= 0) {
+            throw new IllegalArgumentException("El stock del producto debe de ser mayor a 0");
         }
-        if (producto.getDescripcion() == null || producto.getDescripcion().trim().isEmpty()) {
+        if (productoDTO.getDescripcion() == null || productoDTO.getDescripcion().trim().isEmpty()) {
             throw new IllegalArgumentException("La descripción es obligatoria");
         }
-
-        if (producto.getRutaImagen() == null || producto.getRutaImagen().trim().isEmpty()) {
+        if (productoDTO.getRutaImagen() == null || productoDTO.getRutaImagen().trim().isEmpty()) {
             throw new IllegalArgumentException("La imagen es obligatoria");
         }
+
+        Producto producto = productoMapper.toEntity(productoDTO);
         productoDAO.actualizarProducto(producto);
     }
 
@@ -89,11 +98,8 @@ public class ProductoService implements IProductoServicio {
         if (producto == null) {
             throw new IllegalArgumentException("El producto no existe");
         }
-        ProductoDTO productoDTO = new ProductoDTO();
-        productoDTO.setNombre(producto.getNombre());
-        productoDTO.setPrecio(producto.getPrecio());
-        productoDTO.setDescripcion(producto.getDescripcion());
-        return productoDTO;
+        
+        return productoMapper.toDTO(producto);
     }
 
     @Override
@@ -101,35 +107,22 @@ public class ProductoService implements IProductoServicio {
         if (idAdmin == null) {
             throw new IllegalArgumentException("Usuario inválido");
         }
-        List<ProductoDTO> productos = (List<ProductoDTO>) productoDAO.obtenerTodosProductos().stream().map((p) -> {
-            ProductoDTO productoDTO = new ProductoDTO();
-            productoDTO.setId(p.getIdProducto());
-            productoDTO.setNombre(p.getNombre());
-            productoDTO.setPrecio(p.getPrecio());
-            productoDTO.setDescripcion(p.getDescripcion());
-            productoDTO.setRutaImagen(p.getRutaImagen());
-            return productoDTO;
-        }).toList();
-
-        return productos;
+        
+        List<Producto> productosBD = productoDAO.obtenerTodosProductos();
+        
+        return productosBD.stream()
+                .map(productoMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<ProductoDTO> listarProductosPublicos() {
-
+        
         List<Producto> productosBD = productoDAO.obtenerTodosProductos();
 
-        List<ProductoDTO> listaPublica = productosBD.stream().map(p -> {
-            ProductoDTO dto = new ProductoDTO();
-            dto.setId(p.getIdProducto());
-            dto.setNombre(p.getNombre());
-            dto.setPrecio(p.getPrecio());
-            dto.setDescripcion(p.getDescripcion());
-            dto.setRutaImagen(p.getRutaImagen());
-            return dto;
-        }).toList();
-
-        return listaPublica;
+        return productosBD.stream()
+                .map(productoMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
 }

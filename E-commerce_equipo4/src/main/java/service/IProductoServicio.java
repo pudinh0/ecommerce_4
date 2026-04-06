@@ -6,7 +6,7 @@ package service;
 
 import dto.ProductoDTO;
 import java.util.List;
-import models.Producto;
+
 
 /**
  *
@@ -14,9 +14,9 @@ import models.Producto;
  */
 public interface IProductoServicio {
     
-    void crearProducto(Producto producto);
+    void crearProducto(ProductoDTO producto);
     
-    void actualizarProducto(Producto producto, Long idAdmin);
+    void actualizarProducto(ProductoDTO producto, Long idAdmin);
     
     void eliminarProducto(Long idProducto, Long idAdmin);
     

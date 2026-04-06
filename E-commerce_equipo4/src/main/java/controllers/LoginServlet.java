@@ -4,7 +4,6 @@
  */
 package controllers;
 
-import dto.TipoUsuarioDTO;
 import dto.UsuarioDTO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -48,23 +47,24 @@ public class LoginServlet extends HttpServlet {
             UsuarioDTO usuarioLogueado = usuarioService.autenticar(correo, contra);
 
             if (usuarioLogueado != null) {
-                HttpSession session = request.getSession();
-                session.setAttribute("usuario", usuarioLogueado);
-                
-                if (TipoUsuarioDTO.ADMINISTRADOR == usuarioLogueado.getTipoUsuario()) {
+                HttpSession session = request.getSession(true);
+
+                session.setAttribute("usuario", usuarioLogueado.getCorreo());
+                session.setAttribute("rol", usuarioLogueado.getTipoUsuario().name());
+
+                session.setAttribute("idUsuario", usuarioLogueado.getId());
+
+                if ("ADMINISTRADOR".equals(usuarioLogueado.getTipoUsuario().name())) {
                     response.sendRedirect(request.getContextPath() + "/inventario");
                 } else {
                     response.sendRedirect(request.getContextPath() + "/index.jsp");
                 }
-            } else {
-                request.setAttribute("error", "Correo o contraseña incorrectos.");
-                request.getRequestDispatcher("/vistas/auth/iniciar-sesion.jsp").forward(request, response);
             }
 
         } catch (IllegalArgumentException e) {
             request.setAttribute("error", e.getMessage());
             request.getRequestDispatcher("/vistas/auth/iniciar-sesion.jsp").forward(request, response);
-        } catch (ServletException | IOException e) {
+        } catch (IOException e) {
             request.setAttribute("error", "Error interno en el servidor. Intenta más tarde.");
             request.getRequestDispatcher("/vistas/auth/iniciar-sesion.jsp").forward(request, response);
         }

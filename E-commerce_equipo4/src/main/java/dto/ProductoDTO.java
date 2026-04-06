@@ -18,19 +18,21 @@ public class ProductoDTO {
     public String descripcion;
     public String rutaImagen;
     public CategoriaDTO categoria;
+    public int stock;
     public List<ReseniaDTO> resenias;
-    
 
     public ProductoDTO() {
     }
 
-    public ProductoDTO(Long id, String nombre, double precio, String descripcion, String rutaImagen, CategoriaDTO categoria) {
+    public ProductoDTO(Long id, String nombre, double precio, String descripcion, String rutaImagen, CategoriaDTO categoria, int stock, List<ReseniaDTO> resenias) {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
         this.descripcion = descripcion;
         this.rutaImagen = rutaImagen;
         this.categoria = categoria;
+        this.stock = stock;
+        this.resenias = resenias;
     }
 
     public String getRutaImagen() {
@@ -79,6 +81,22 @@ public class ProductoDTO {
 
     public void setCategoria(CategoriaDTO categoria) {
         this.categoria = categoria;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public List<ReseniaDTO> getResenias() {
+        return resenias;
+    }
+
+    public void setResenias(List<ReseniaDTO> resenias) {
+        this.resenias = resenias;
     }
 
 }
