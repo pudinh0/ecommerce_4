@@ -4,6 +4,7 @@
 
 <nav>
     <a class="logo" href="${pageContext.request.contextPath}/index.jsp">
+        <img src="${pageContext.request.contextPath}/assets/img/logo.png" alt="Logo SoftFriends">
         <span>SoftFriends</span>
     </a>
 

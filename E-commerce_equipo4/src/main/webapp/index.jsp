@@ -5,6 +5,14 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="dto.UsuarioDTO"%>
+<%
+    UsuarioDTO usuarioDTO = (UsuarioDTO) session.getAttribute("usuario");
+    if (usuarioDTO != null && "ADMINISTRADOR".equals(usuarioDTO.getTipoUsuario())) {
+        response.sendRedirect(request.getContextPath() + "/inventario");
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html lang="es">
 

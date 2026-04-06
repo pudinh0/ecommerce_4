@@ -24,7 +24,7 @@
 
             <nav class="menu-lateral">
                 <ul>
-                    <li>
+                    <li class="active">
                         <img src="${pageContext.request.contextPath}/assets/img/iconoCatalago.png" alt="Icono catalogo">
                         <a href="${pageContext.request.contextPath}/vistas/app/catalogo.jsp">Catálogo</a>
                     </li>
@@ -32,12 +32,6 @@
                         <img src="${pageContext.request.contextPath}/assets/img/iconoFiltro.png" alt="Icono filtros">
                         <a href="#">Filtros</a>
                     </li>
-                    <c:if test="${sessionScope.usuario.tipoUsuario eq 'ADMINISTRADOR'}">
-                        <li>
-                            <img src="${pageContext.request.contextPath}/assets/img/iconoFiltro.png" alt="Icono inventario">
-                            <a href="${pageContext.request.contextPath}/vistas/admin/inventario">Inventario</a>
-                        </li>
-                    </c:if>
                 </ul>
             </nav>
 

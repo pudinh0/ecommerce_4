@@ -3,7 +3,7 @@
     Created on : 2 abr 2026, 1:15:16 p.m.
     Author     : Camila Zubía
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
@@ -12,46 +12,44 @@
         <meta name="description" content="Inventario de stock.">
         <%@ include file="/fragments/styles.jspf" %>
     </head>
-    <body>
+    <body class="fondo-gris">
         <%@ include file="/fragments/navBar.jspf" %>
-        <div class="contenedor-principal">
+                    
+        <div class="contenedor-principal inventario-layout">
             <nav class="menu-lateral">
                 <ul>
                     <li>
                         <img src="${pageContext.request.contextPath}/assets/img/iconoCatalago.png" alt="Icono opciones">
-                        <a href="${pageContext.request.contextPath}/catalogo">Opciones</a>
+                        <a href="#">Opciones</a>
                     </li>
-                    <li>
+                    <li class="active">
                         <img src="${pageContext.request.contextPath}/assets/img/iconoFiltro.png" alt="Icono inventario">
                         <a href="#">Inventario</a>
                     </li>
                     <li>
-                        <img src="${pageContext.request.contextPath}/assets/img/iconoFiltro.png" alt="Icono pedidos">
+                        <img src="${pageContext.request.contextPath}/assets/img/IconPedidos.png" alt="Icono pedidos">
                         <a href="#">Pedidos</a>
                     </li>
                     <li>
-                        <img src="${pageContext.request.contextPath}/assets/img/iconoFiltro.png" alt="Icono reseñas">
+                        <img src="${pageContext.request.contextPath}/assets/img/IconReseñas.png" alt="Icono reseñas">
                         <a href="#">Reseñas</a>
                     </li>
                 </ul>
-            </nav>
-
-            <main>
-                <div>
-                    <div>
-                        <h1>Gestión del Inventario</h1>
-                    </div>
-                    <button><span>agregar</span>Agregar producto</button>
-                </div>
-                <div>
-                    <div>
+            </nav> 
+            <main class="inventario-detalle">
+                <header class="encabezado-inventario">
+                    <h1>Gestión del Inventario</h1>
+                    <button class="btn-agregar-mas-productos" onclick="window.location.href='${pageContext.request.contextPath}">+ Agregar Producto</button>
+                </header>
+                <div class="contenedor-inventario">
+                    <div class="opciones-inventario">
                         <button>Todo</button>
                         <button>Bajo</button>
                         <button>Categorías</button>
                     </div>
                     <div>
                         <table>
-                            <thead>
+                            <thead class="encabezado-tabla-inventario">
                                 <tr>
                                     <th>ID</th>
                                     <th>Producto</th>
@@ -63,26 +61,24 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!--
-                                for (Object elem : col) {
-                                        <tr>
-                                            <td>
+                                <c:forEach items="${requestScope.productos}" var="producto">
+                                    <tr>
+                                        <td>${producto.id}</td>
+                                        <td>
+                                            <div>
                                                 <div>
-                                                    <div>
-                                                        <img/>
-                                                    </div>
-                                                    <span>Nombre del producto</span>
+                                                    <img src="${pageContext.request.contextPath}${producto.rutaImagen}" alt="Imagen" width="40"/>
                                                 </div>
-                                            </td>
-                                            <td>id</td>
-                                            <td>categoria</td>
-                                            <td>stock</td>
-                                            <td>precio</td>
-                                            <td><span>Estatus</span></td>
-                                            <td><button>Editar</button></td>
-                                        </tr>
-                                    }
-                                -->
+                                                <span>${producto.nombre}</span>
+                                            </div>
+                                        </td>
+                                        <td>${producto.categoria.nombre}</td>
+                                        <td>${producto.stock}</td>
+                                        <td>$${producto.precio}</td>
+                                        <td><span>Activo</span></td>
+                                        <td><button><img src="${pageContext.request.contextPath}/assets/img/IconEditar.png" alt="Editar"/></button></td>
+                                    </tr>
+                                </c:forEach>
                             </tbody>
                         </table>
                     </div>

@@ -76,10 +76,6 @@ nav ul img {
     cursor: pointer;
 }
 
-.menu-lateral li.active {
-    background-color: var(--color-primario);
-}
-
 .menu-lateral li img {
     width: 20px;
     height: auto;
@@ -90,14 +86,20 @@ nav ul img {
     /* Convierte el icono a blanco */
 }
 
-.menu-lateral a {
+.menu-lateral li a {
     text-decoration: none;
     font-weight: 600;
+    font-size: 14px;
     color: var(--color-texto-secundario);
 }
 
+.menu-lateral li.active {
+    background-color: var(--color-primario);
+    box-shadow: 0px 4px 6px -4px rgba(230, 76, 153, 0.2);
+}
+
 .menu-lateral li.active a {
-    color: white;
+    color: #FFFFFF;
 }
 
 /* --- CATEGORIAS --- */
@@ -752,5 +754,121 @@ nav ul img {
     border: 1px solid #ffcccc;
 }
 
+/** Inventario **/
+
+.encabezado-inventario {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.encabezado-inventario h1 {
+    font-weight: 800;
+    font-size: 30px;
+    color: #0F172A;
+    margin: 0;
+    letter-spacing: -0.75px;
+}
+
+.btn-agregar-mas-productos {
+    background: #E64C99;
+    color: #FFFFFF;
+    border-radius: 24px;
+    padding: 12px 24px;
+    border: none;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0px 10px 15px -3px rgba(230, 76, 153, 0.3);
+    transition: transform 0.2s ease;
+}
+
+.btn-agregar-mas-productos:hover {
+    transform: translateY(-2px);
+}
+
+.contenedor-inventario {
+    background: #FFFFFF;
+    border: 1px solid rgba(230, 76, 153, 0.1);
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+    border-radius: 16px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.contenedor-inventario table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.encabezado-tabla-inventario th {
+    background: #F8FAFC;
+    padding: 16px 24px;
+    font-weight: 700;
+    font-size: 14px;
+    color: #475569;
+}
+
+.contenedor-inventario tbody tr {
+    border-top: 1px solid rgba(230, 76, 153, 0.05);
+    height: 72px;
+}
+
+.contenedor-inventario tbody td {
+    padding: 12px 24px;
+    font-size: 14px;
+    color: #64748B;
+    vertical-align: middle;
+}
+
+.contenedor-inventario tbody td:nth-child(2) div {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.contenedor-inventario tbody td:nth-child(2) span {
+    font-weight: 600;
+    font-size: 16px;
+    color: #0F172A;
+}
 
 
+.opciones-inventario {
+    display: flex;
+    border-bottom: 1px solid rgba(230, 76, 153, 0.1);
+}
+
+.opciones-inventario button {
+    background: transparent;
+    border: none;
+    padding: 16px 24px;
+    font-weight: 500;
+    font-size: 14px;
+    color: #64748B;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.opciones-inventario button:first-child {
+    font-weight: 700;
+    color: #E64C99;
+    border-bottom: 2px solid #E64C99;
+}
+
+.encabezado-tabla-inventario{
+    background-color: #F8FAFC;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 25px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #475569;
+    text-transform: uppercase;
+}
+
+.opciones-inventario span:last-child {
+    color: #f0a3c2;
+}

@@ -201,3 +201,19 @@ main {
         width: 100%;
     }
 }
+
+
+/* INVENTARIO */
+
+.inventario-layout {
+    justify-content: center;
+    gap: 40px;
+    max-width: 1200px;
+}
+
+.inventario-detalle {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

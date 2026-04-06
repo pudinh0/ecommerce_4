@@ -4,6 +4,7 @@
  */
 package controllers;
 
+import dto.TipoUsuarioDTO;
 import dto.UsuarioDTO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -49,7 +50,12 @@ public class LoginServlet extends HttpServlet {
             if (usuarioLogueado != null) {
                 HttpSession session = request.getSession();
                 session.setAttribute("usuario", usuarioLogueado);
-                response.sendRedirect(request.getContextPath() + "/index.jsp");
+                
+                if (TipoUsuarioDTO.ADMINISTRADOR == usuarioLogueado.getTipoUsuario()) {
+                    response.sendRedirect(request.getContextPath() + "/inventario");
+                } else {
+                    response.sendRedirect(request.getContextPath() + "/index.jsp");
+                }
             } else {
                 request.setAttribute("error", "Correo o contraseña incorrectos.");
                 request.getRequestDispatcher("/vistas/auth/iniciar-sesion.jsp").forward(request, response);
