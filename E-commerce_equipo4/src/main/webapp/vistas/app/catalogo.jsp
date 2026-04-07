@@ -67,169 +67,108 @@
                 </section>
 
                 <section class="productos">
-                    <article>
-                        <figure>
-                            <img src="${pageContext.request.contextPath}/assets/img/goldenRetriever.png" alt="Golden Retriever" loading="lazy" decoding="async">
-                        </figure>
-                        <div class="info-producto">
-                            <h3>Golden Retriever</h3>
-                            <p class="categoria">Perros • Grande</p>
-                            <div class="precio-carrito">
-                                <p class="precio">$499.99</p>
-                                <button class="btn-agregar"><img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png" alt="Agregar al carrito"></button>
-                            </div>
-                        </div>
-                    </article>
+                    <c:forEach items="${requestScope.listaProductos}" var="producto">
+                        <article>
+                            <figure>
+                                <img src="${pageContext.request.contextPath}/${producto.rutaImagen}" 
+                                     alt="${producto.nombre}" 
+                                     loading="lazy" 
+                                     decoding="async" 
+                                     style="width: 100%; height: 200px; object-fit: cover;">
+                            </figure>
+                            <div class="info-producto">
+                                <h3>${producto.nombre}</h3>
 
-                    <article>
-                        <figure>
-                            <img src="${pageContext.request.contextPath}/assets/img/conejoRosa.png" alt="Conejito Rosa" loading="lazy" decoding="async">
-                        </figure>
-                        <div class="info-producto">
-                            <h3>Conejito Rosa</h3>
-                            <p class="categoria">Bosque • Mediano</p>
-                            <div class="precio-carrito">
-                                <p class="precio">$299.99</p>
-                                <button class="btn-agregar"><img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png" alt="Agregar al carrito"></button>
-                            </div>
-                        </div>
-                    </article>
+                                <p class="categoria" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                    ${producto.descripcion}
+                                </p>
 
-                    <article>
-                        <figure>
-                            <img src="${pageContext.request.contextPath}/assets/img/panda.png" alt="Panda Gigante" loading="lazy" decoding="async">
-                        </figure>
-                        <div class="info-producto">
-                            <h3>Panda Gigante</h3>
-                            <p class="categoria">Bosque • Extra Grande</p>
-                            <div class="precio-carrito">
-                                <p class="precio">$799.99</p>
-                                <button class="btn-agregar"><img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png" alt="Agregar al carrito"></button>
-                            </div>
-                        </div>
-                    </article>
+                                <div class="precio-carrito">
+                                    <p class="precio">$${producto.precio}</p>
 
-                    <article>
-                        <figure>
-                            <img src="${pageContext.request.contextPath}/assets/img/ajolote.png" alt="Axolotl" loading="lazy" decoding="async">
-                        </figure>
-                        <div class="info-producto">
-                            <h3>Axolotl</h3>
-                            <p class="categoria">Marino • Mediano</p>
-                            <div class="precio-carrito">
-                                <p class="precio">$349.99</p>
-                                <button class="btn-agregar"><img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png" alt="Agregar al carrito"></button>
+                                    <button class="btn-agregar">
+                                        <img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png" alt="Agregar al carrito">
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    </article>
+                        </article>
+                    </c:forEach>
 
-                    <article>
-                        <figure>
-                            <img src="${pageContext.request.contextPath}/assets/img/ballena.png" alt="Ballena Azul" loading="lazy" decoding="async">
-                        </figure>
-                        <div class="info-producto">
-                            <h3>Ballena Azul</h3>
-                            <p class="categoria">Marino • Grande</p>
-                            <div class="precio-carrito">
-                                <p class="precio">$499.99</p>
-                                <button class="btn-agregar"><img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png" alt="Agregar al carrito"></button>
-                            </div>
+                    <c:if test="${empty requestScope.listaProductos}">
+                        <div style="grid-column: 1 / -1; text-align: center; padding: 50px;">
+                            <h2>No hay productos disponibles por el momento.</h2>
+                            <p>Vuelve más tarde para ver nuestras novedades.</p>
                         </div>
-                    </article>
-
-                    <article>
-                        <figure>
-                            <img src="${pageContext.request.contextPath}/assets/img/oso.png" alt="Teddy Bear Clasico" loading="lazy" decoding="async">
-                        </figure>
-                        <div class="info-producto">
-                            <h3>Teddy Bear Clasico</h3>
-                            <p class="categoria">Osos • Pequeno</p>
-                            <div class="precio-carrito">
-                                <p class="precio">$199.99</p>
-                                <button class="btn-agregar"><img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png" alt="Agregar al carrito"></button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article>
-                        <figure>
-                            <img src="${pageContext.request.contextPath}/assets/img/unicornio.png" alt="Unicornio Magico" loading="lazy" decoding="async">
-                        </figure>
-                        <div class="info-producto">
-                            <h3>Unicornio Magico</h3>
-                            <p class="categoria">Mistico • Mediano</p>
-                            <div class="precio-carrito">
-                                <p class="precio">$349.99</p>
-                                <button class="btn-agregar"><img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png" alt="Agregar al carrito"></button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article>
-                        <figure>
-                            <img src="${pageContext.request.contextPath}/assets/img/rex.png" alt="Tiranosaurio Rex" loading="lazy" decoding="async">
-                        </figure>
-                        <div class="info-producto">
-                            <h3>Tiranosaurio Rex</h3>
-                            <p class="categoria">Dinosaurios • Mediano</p>
-                            <div class="precio-carrito">
-                                <p class="precio">$349.99</p>
-                                <button class="btn-agregar"><img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png" alt="Agregar al carrito"></button>
-                            </div>
-                        </div>
-                    </article>
-
+                    </c:if>
                 </section>
             </main>
 
             <section class="carrito">
                 <header>
                     <h3>Carrito</h3>
-                    <button class="btn-secondary">BORRAR TODO</button>
-                    <p>2 artículos</p>
+
+                    <c:if test="${not empty requestScope.carrito and not empty requestScope.carrito.items}">
+                        <form action="${pageContext.request.contextPath}/carrito-mvc" method="POST" style="margin: 0;">
+                            <input type="hidden" name="accion" value="vaciar">
+                            <button type="submit" class="btn-secondary" style="border: none; background: none; color: #ff6b6b; cursor: pointer; text-decoration: underline;">BORRAR TODO</button>
+                        </form>
+                    </c:if>
+
+                    <p>${empty requestScope.carrito ? 0 : requestScope.carrito.items.size()} artículos</p>
                 </header>
 
                 <div class="lista-carrito">
-                    <article>
-                        <img src="${pageContext.request.contextPath}/assets/img/oso.png" alt="Teddy Bear Clásico mini">
-                        <div>
-                            <strong>Teddy Bear Clásico</strong>
-                            <p>$199.99</p>
-                        </div>
-                        <div>
-                            <button>-</button>
-                            <span>1</span>
-                            <button>+</button>
-                        </div>
-                    </article>
+                    <c:choose>
+                        <c:when test="${empty requestScope.carrito or empty requestScope.carrito.items}">
+                            <p style="text-align: center; padding: 20px; color: #888;">
+                                Tu carrito está vacío. ¡Agrega algunos peluches!
+                            </p>
+                        </c:when>
+                        <c:otherwise>
+                            <c:forEach items="${requestScope.carrito.items}" var="item">
+                                <article>
+                                    <img src="${pageContext.request.contextPath}/${item.producto.rutaImagen}" alt="${item.producto.nombre} mini">
+                                    <div>
+                                        <strong>${item.producto.nombre}</strong>
+                                        <p>$${item.producto.precio}</p>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 5px;">
+                                        <form action="${pageContext.request.contextPath}/carrito-mvc" method="POST" style="margin:0;">
+                                            <input type="hidden" name="accion" value="disminuir">
+                                            <input type="hidden" name="idProducto" value="${item.producto.id}">
+                                            <button type="submit">-</button>
+                                        </form>
 
-                    <article>
-                        <img src="${pageContext.request.contextPath}/assets/img/ballena.png" alt="Ballena Azul mini">
-                        <div>
-                            <strong>Ballena Azul</strong>
-                            <p>$499.99</p>
-                        </div>
-                        <div>
-                            <button>-</button>
-                            <span>1</span>
-                            <button>+</button>
-                        </div>
-                    </article>
+                                        <span>${item.cantidad}</span>
+
+                                        <form action="${pageContext.request.contextPath}/carrito-mvc" method="POST" style="margin:0;">
+                                            <input type="hidden" name="accion" value="aumentar">
+                                            <input type="hidden" name="idProducto" value="${item.producto.id}">
+                                            <button type="submit">+</button>
+                                        </form>
+                                    </div>
+                                </article>
+                            </c:forEach>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
 
                 <footer>
                     <div>
                         <span>Subtotal</span>
-                        <span>$699.98</span>
+                        <span>$${empty requestScope.carrito ? '0.00' : requestScope.carrito.total}</span>
                     </div>
                     <div>
                         <strong>Total</strong>
-                        <strong class="total-precio">$699.98</strong>
+                        <strong class="total-precio">$${empty requestScope.carrito ? '0.00' : requestScope.carrito.total}</strong>
                     </div>
-                    <button class="btn btn--primary" type="button" onclick="window.location.href = '${pageContext.request.contextPath}/vistas/app/pago.jsp'">
-                        <img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png" alt="" aria-hidden="true">
-                        COMPRAR
-                    </button>
+
+                    <c:if test="${not empty requestScope.carrito and not empty requestScope.carrito.items}">
+                        <button class="btn btn--primary" type="button" onclick="window.location.href = '${pageContext.request.contextPath}/vistas/app/pago.jsp'">
+                            <img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png" alt="" aria-hidden="true">
+                            COMPRAR
+                        </button>
+                    </c:if>
                 </footer>
             </section>
 

@@ -945,3 +945,94 @@ nav ul img {
 .btn-eliminar:hover {
     background-color: #c82333;
 }
+
+.panel-formulario {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 25px;
+}
+.panel-formulario h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+.formulario-crear {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+.form-grupo {
+    display: flex;
+    flex-direction: column;
+}
+.form-grupo label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+.form-grupo input, .form-grupo textarea {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: inherit;
+}
+.form-grupo.completo {
+    grid-column: 1 / -1;
+}
+.btn-guardar {
+    grid-column: 1 / -1;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.btn-guardar:hover {
+    background-color: #0056b3;
+}
+
+.contenedor-tabla-scroll {
+    overflow-x: auto;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.img-miniatura {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+.badge-stock {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 14px;
+}
+.badge-stock-ok {
+    background-color: #e2e3e5;
+    color: #383d41;
+}
+.badge-stock-bajo {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+.desc-corta {
+    text-align: left;
+    max-width: 250px;
+    font-size: 13px;
+}
+.msg-vacio {
+    padding: 30px;
+    color: #666;
+    text-align: center;
+}
+.texto-nombre-prod {
+    font-weight: 500;
+}
