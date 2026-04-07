@@ -6,6 +6,7 @@ import dto.UsuarioDTO;
 import java.util.List;
 import java.util.stream.Collectors;
 import mapper.UsuarioMapper;
+import models.TipoUsuarioEnum;
 import models.Usuario;
 
 public class UsuarioService implements IUsuarioService {
@@ -35,6 +36,9 @@ public class UsuarioService implements IUsuarioService {
         usuario.setSegundoApellido(segundoApellido);
         usuario.setCorreo(correo.trim().toLowerCase());
         usuario.setContrasenia(contrasenia);
+
+        usuario.setTipoUsuario(TipoUsuarioEnum.CLIENTE);
+
         usuarioDAO.guardar(usuario);
     }
 

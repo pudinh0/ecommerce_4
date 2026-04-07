@@ -92,4 +92,18 @@ public class PedidoDAO implements IPedidoDAO {
         }
     }
 
+    @Override
+    public List<Pedido> obtenerTodos() {
+        EntityManager em = JPAUtil.getInstance().getEntityManager();
+        try {
+            TypedQuery<Pedido> query = em.createQuery(
+                    "SELECT p FROM Pedido p ORDER BY p.fechaCompra DESC",
+                    Pedido.class
+            );
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
 }

@@ -20,4 +20,6 @@ public interface IPedidoDAO {
     List<Pedido> buscarPorCorreoUsuario(String correoUsuario);
 
     void actualizar(Pedido pedido);
+    
+    List<Pedido> obtenerTodos();
 }

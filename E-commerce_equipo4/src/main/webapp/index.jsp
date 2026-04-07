@@ -7,8 +7,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="dto.UsuarioDTO"%>
 <%
-    UsuarioDTO usuarioDTO = (UsuarioDTO) session.getAttribute("usuario");
-    if (usuarioDTO != null && "ADMINISTRADOR".equals(usuarioDTO.getTipoUsuario())) {
+    String rolUsuario = (String) session.getAttribute("rol");
+
+    if ("ADMINISTRADOR".equals(rolUsuario)) {
         response.sendRedirect(request.getContextPath() + "/inventario");
         return;
     }

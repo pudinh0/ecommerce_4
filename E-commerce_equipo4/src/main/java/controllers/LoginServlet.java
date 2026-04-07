@@ -48,11 +48,10 @@ public class LoginServlet extends HttpServlet {
 
             if (usuarioLogueado != null) {
                 HttpSession session = request.getSession(true);
-
                 session.setAttribute("usuario", usuarioLogueado.getCorreo());
                 session.setAttribute("rol", usuarioLogueado.getTipoUsuario().name());
-
                 session.setAttribute("idUsuario", usuarioLogueado.getId());
+                session.setAttribute("nombreUsuario", usuarioLogueado.getNombres());
 
                 if ("ADMINISTRADOR".equals(usuarioLogueado.getTipoUsuario().name())) {
                     response.sendRedirect(request.getContextPath() + "/inventario");

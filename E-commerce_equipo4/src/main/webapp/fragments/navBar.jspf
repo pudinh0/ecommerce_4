@@ -17,7 +17,7 @@
         <c:choose>
             <c:when test="${not empty sessionScope.usuario}">
                 <li style="color: white; font-weight: bold; margin-right: 15px;">
-                    Hola, ${sessionScope.usuario.nombres}
+                    Hola, ${sessionScope.nombreUsuario}
                 </li>
                 <li>
                     <a href="#"><img src="${pageContext.request.contextPath}/assets/img/configuracion.png" alt="Configuracion de la cuenta"></a>
@@ -28,7 +28,7 @@
                     </a>
                 </li>
             </c:when>
-            
+
             <c:otherwise>
                 <li>
                     <a href="${pageContext.request.contextPath}/vistas/auth/iniciar-sesion.jsp">

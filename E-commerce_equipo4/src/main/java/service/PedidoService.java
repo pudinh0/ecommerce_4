@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 import mapper.PedidoMapper;
 import models.Carrito;
 import models.DetallePedido;
+import models.EstadoPedidoEnum;
 import models.ItemCarrito;
 import models.Pedido;
 import models.Producto;
@@ -107,6 +108,42 @@ public class PedidoService implements IPedidoService {
         return pedidosBD.stream()
                 .map(pedidoMapper::toDTO)
                 .collect(Collectors.toList());
+    }
+    
+    @Override
+    public List<PedidoDTO> obtenerTodosLosPedidos() {
+        List<Pedido> todosLosPedidos = pedidoDAO.obtenerTodos();
+        
+        return todosLosPedidos.stream()
+                .map(pedidoMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void actualizarEstadoPedido(Long idPedido, String nuevoEstado, Long idAdmin) {
+        if (idAdmin == null) {
+            throw new IllegalArgumentException("Acceso denegado: Se requiere ser administrador.");
+        }
+        if (idPedido == null || idPedido <= 0) {
+            throw new IllegalArgumentException("ID de pedido inválido.");
+        }
+        if (nuevoEstado == null || nuevoEstado.trim().isEmpty()) {
+            throw new IllegalArgumentException("El nuevo estado no puede estar vacío.");
+        }
+
+        Pedido pedido = pedidoDAO.buscarPorId(idPedido);
+        if (pedido == null) {
+            throw new IllegalArgumentException("El pedido solicitado no existe.");
+        }
+
+        try {
+            EstadoPedidoEnum estadoEnum = EstadoPedidoEnum.valueOf(nuevoEstado.toUpperCase());
+            pedido.setEstado(estadoEnum);
+            pedidoDAO.actualizar(pedido);
+            
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("El estado proporcionado no es válido.");
+        }
     }
 
 }
