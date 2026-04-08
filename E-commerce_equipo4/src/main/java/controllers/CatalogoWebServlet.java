@@ -27,7 +27,6 @@ import service.ProductoService;
 public class CatalogoWebServlet extends HttpServlet {
 
     private final IProductoServicio productoServicio = new ProductoService();
-    // Instanciamos el servicio del carrito
     private final ICarritoService carritoService = new CarritoService();
 
     @Override
@@ -42,8 +41,12 @@ public class CatalogoWebServlet extends HttpServlet {
 
                 String correoUsuario = (String) session.getAttribute("usuario");
 
-                CarritoDTO carrito = carritoService.obtenerCarrito(correoUsuario);
-                request.setAttribute("carrito", carrito);
+                try {
+                    CarritoDTO carrito = carritoService.obtenerCarrito(correoUsuario);
+                    request.setAttribute("carrito", carrito);
+                } catch (Exception e) {
+                    request.setAttribute("carrito", null);
+                }
             }
 
             request.getRequestDispatcher("/vistas/app/catalogo.jsp").forward(request, response);
