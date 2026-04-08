@@ -22,33 +22,14 @@ public class LogoutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        procesarCierreSesion(request, response);
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        procesarCierreSesion(request, response);
-    }
-
-    private void procesarCierreSesion(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
-
-        HttpSession sesion = request.getSession(false);
-
-        if (sesion != null) {
-            sesion.invalidate();
+        
+        HttpSession session = request.getSession(false);
+        
+        if (session != null) {
+            session.invalidate();
         }
-
-        response.sendRedirect(request.getContextPath() + "/index.jsp");
+        
+        response.sendRedirect(request.getContextPath() + "/inicio");
     }
 
 }

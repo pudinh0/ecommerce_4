@@ -56,7 +56,7 @@ public class LoginServlet extends HttpServlet {
                 if ("ADMINISTRADOR".equals(usuarioLogueado.getTipoUsuario().name())) {
                     response.sendRedirect(request.getContextPath() + "/inventario");
                 } else {
-                    response.sendRedirect(request.getContextPath() + "/index.jsp");
+                    response.sendRedirect(request.getContextPath() + "/inicio");
                 }
             }
 

@@ -5,6 +5,7 @@
 --%>
 <%@page import="models.TipoUsuarioEnum"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
@@ -26,7 +27,7 @@
                 <ul>
                     <li class="active">
                         <img src="${pageContext.request.contextPath}/assets/img/iconoCatalogo.png" alt="Icono catalogo">
-                        <a href="${pageContext.request.contextPath}/vistas/app/catalogo.jsp">Catálogo</a>
+                        <a href="${pageContext.request.contextPath}/catalogo">Catálogo</a>
                     </li>
                     <li>
                         <img src="${pageContext.request.contextPath}/assets/img/iconoFiltro.png" alt="Icono filtros">
@@ -67,39 +68,51 @@
                 </section>
 
                 <section class="productos">
-                    <c:forEach items="${requestScope.listaProductos}" var="producto">
-                        <article>
-                            <figure>
-                                <img src="${pageContext.request.contextPath}/${producto.rutaImagen}" 
-                                     alt="${producto.nombre}" 
-                                     loading="lazy" 
-                                     decoding="async" 
-                                     style="width: 100%; height: 200px; object-fit: cover;">
-                            </figure>
-                            <div class="info-producto">
-                                <h3>${producto.nombre}</h3>
 
-                                <p class="categoria" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                    ${producto.descripcion}
-                                </p>
-
-                                <div class="precio-carrito">
-                                    <p class="precio">$${producto.precio}</p>
-
-                                    <button class="btn-agregar">
-                                        <img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png" alt="Agregar al carrito">
-                                    </button>
-                                </div>
+                    <c:choose>
+                        <c:when test="${empty requestScope.listaProductos}">
+                            <div class="msg-vacio">
+                                <h2>No hay productos disponibles por el momento.</h2>
+                                <p>Vuelve más tarde para ver nuestras novedades.</p>
                             </div>
-                        </article>
-                    </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <c:forEach items="${requestScope.listaProductos}" var="producto">
+                                <article>
+                                    <figure>
+                                        <c:choose>
+                                            <c:when test="${fn:startsWith(producto.rutaImagen, 'http')}">
+                                                <img src="${producto.rutaImagen}" alt="${producto.nombre}" loading="lazy" decoding="async" class="img-producto-estandar">
+                                            </c:when>
+                                            <c:otherwise>
+                                                <img src="${pageContext.request.contextPath}/${producto.rutaImagen}" alt="${producto.nombre}" loading="lazy" decoding="async" class="img-producto-estandar">
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </figure>
 
-                    <c:if test="${empty requestScope.listaProductos}">
-                        <div style="grid-column: 1 / -1; text-align: center; padding: 50px;">
-                            <h2>No hay productos disponibles por el momento.</h2>
-                            <p>Vuelve más tarde para ver nuestras novedades.</p>
-                        </div>
-                    </c:if>
+                                    <div class="info-producto">
+                                        <h3>${producto.nombre}</h3>
+
+                                        <p class="categoria">
+                                            ${producto.descripcion}
+                                        </p>
+
+                                        <div class="precio-carrito">
+                                            <p class="precio">$${producto.precio}</p>
+
+                                            <form action="${pageContext.request.contextPath}/carrito-mvc" method="POST">
+                                                <input type="hidden" name="accion" value="agregar">
+                                                <input type="hidden" name="idProducto" value="${producto.id}">
+                                                <button type="submit" class="btn-agregar" aria-label="Agregar al carrito">
+                                                    <img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png" alt="Agregar al carrito">
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </article>
+                            </c:forEach>
+                        </c:otherwise>
+                    </c:choose>
                 </section>
             </main>
 
@@ -107,33 +120,51 @@
                 <header>
                     <h3>Carrito</h3>
 
-                    <c:if test="${not empty requestScope.carrito and not empty requestScope.carrito.items}">
-                        <form action="${pageContext.request.contextPath}/carrito-mvc" method="POST" style="margin: 0;">
+                    <c:if test="${not empty requestScope.carrito and not empty requestScope.carrito.itemsCarrito}">
+                        <form action="${pageContext.request.contextPath}/carrito-mvc" method="POST">
                             <input type="hidden" name="accion" value="vaciar">
-                            <button type="submit" class="btn-secondary" style="border: none; background: none; color: #ff6b6b; cursor: pointer; text-decoration: underline;">BORRAR TODO</button>
+                            <button type="submit" class="btn-secondary">BORRAR TODO</button>
                         </form>
                     </c:if>
 
-                    <p>${empty requestScope.carrito ? 0 : requestScope.carrito.items.size()} artículos</p>
+                    <c:choose>
+                        <c:when test="${empty requestScope.carrito or empty requestScope.carrito.itemsCarrito}">
+                            <p>0 artículos</p>
+                        </c:when>
+                        <c:otherwise>
+                            <p>${requestScope.carrito.itemsCarrito.size()} artículos</p>
+                        </c:otherwise>
+                    </c:choose>
                 </header>
 
                 <div class="lista-carrito">
                     <c:choose>
-                        <c:when test="${empty requestScope.carrito or empty requestScope.carrito.items}">
-                            <p style="text-align: center; padding: 20px; color: #888;">
+                        <c:when test="${empty requestScope.carrito or empty requestScope.carrito.itemsCarrito}">
+                            <p class="msg-vacio">
                                 Tu carrito está vacío. ¡Agrega algunos peluches!
                             </p>
                         </c:when>
+
                         <c:otherwise>
-                            <c:forEach items="${requestScope.carrito.items}" var="item">
+                            <c:forEach items="${requestScope.carrito.itemsCarrito}" var="item">
                                 <article>
-                                    <img src="${pageContext.request.contextPath}/${item.producto.rutaImagen}" alt="${item.producto.nombre} mini">
-                                    <div>
+
+                                    <c:choose>
+                                        <c:when test="${fn:startsWith(item.producto.rutaImagen, 'http')}">
+                                            <img src="${item.producto.rutaImagen}" alt="${item.producto.nombre}">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <img src="${pageContext.request.contextPath}/${item.producto.rutaImagen}" alt="${item.producto.nombre}">
+                                        </c:otherwise>
+                                    </c:choose>
+
+                                    <div class="info-item-carrito">
                                         <strong>${item.producto.nombre}</strong>
                                         <p>$${item.producto.precio}</p>
                                     </div>
-                                    <div style="display: flex; align-items: center; gap: 5px;">
-                                        <form action="${pageContext.request.contextPath}/carrito-mvc" method="POST" style="margin:0;">
+
+                                    <div class="controles-cantidad">
+                                        <form action="${pageContext.request.contextPath}/carrito-mvc" method="POST">
                                             <input type="hidden" name="accion" value="disminuir">
                                             <input type="hidden" name="idProducto" value="${item.producto.id}">
                                             <button type="submit">-</button>
@@ -141,7 +172,7 @@
 
                                         <span>${item.cantidad}</span>
 
-                                        <form action="${pageContext.request.contextPath}/carrito-mvc" method="POST" style="margin:0;">
+                                        <form action="${pageContext.request.contextPath}/carrito-mvc" method="POST">
                                             <input type="hidden" name="accion" value="aumentar">
                                             <input type="hidden" name="idProducto" value="${item.producto.id}">
                                             <button type="submit">+</button>
@@ -154,16 +185,16 @@
                 </div>
 
                 <footer>
-                    <div>
+                    <div class="fila-subtotal">
                         <span>Subtotal</span>
                         <span>$${empty requestScope.carrito ? '0.00' : requestScope.carrito.total}</span>
                     </div>
-                    <div>
+                    <div class="fila-total">
                         <strong>Total</strong>
                         <strong class="total-precio">$${empty requestScope.carrito ? '0.00' : requestScope.carrito.total}</strong>
                     </div>
 
-                    <c:if test="${not empty requestScope.carrito and not empty requestScope.carrito.items}">
+                    <c:if test="${not empty requestScope.carrito and not empty requestScope.carrito.itemsCarrito}">
                         <button class="btn btn--primary" type="button" onclick="window.location.href = '${pageContext.request.contextPath}/vistas/app/pago.jsp'">
                             <img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png" alt="" aria-hidden="true">
                             COMPRAR

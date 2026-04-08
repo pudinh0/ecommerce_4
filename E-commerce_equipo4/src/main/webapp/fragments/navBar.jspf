@@ -1,9 +1,8 @@
-
 <%@ page pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <nav>
-    <a class="logo" href="${pageContext.request.contextPath}/index.jsp">
+    <a class="logo" href="${pageContext.request.contextPath}/inicio">
         <img src="${pageContext.request.contextPath}/assets/img/logo.png" alt="Logo SoftFriends">
         <span>SoftFriends</span>
     </a>
@@ -37,5 +36,11 @@
                 </li>
             </c:otherwise>
         </c:choose>
+
+        <li>
+            <a href="${pageContext.request.contextPath}/catalogo">
+                <img src="${pageContext.request.contextPath}/assets/img/iconoCompra.png" alt="Carrito">
+            </a>
+        </li>
     </ul>
 </nav>

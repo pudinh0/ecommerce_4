@@ -4,6 +4,7 @@
     Author     : Camila Zubía
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
@@ -14,9 +15,9 @@
     </head>
     <body class="fondo-gris">
         <%@ include file="/fragments/navBar.jspf" %>
-                    
+
         <div class="contenedor-principal inventario-layout">
-            
+
             <nav class="menu-lateral">
                 <ul>
                     <li>
@@ -37,14 +38,14 @@
                     </li>
                 </ul>
             </nav> 
-            
+
             <main class="inventario-detalle">
                 <header class="encabezado-inventario">
                     <h1>Gestión de Inventario</h1>
                 </header>
-                
+
                 <div class="contenedor-inventario">
-                    
+
                     <c:if test="${param.exito == 'true'}">
                         <div class="alerta alerta-exito">
                             La operación se ha realizado con éxito en el catálogo.
@@ -58,35 +59,35 @@
 
                     <div class="panel-formulario">
                         <h2>Agregar Nuevo Producto</h2>
-                        
+
                         <form action="${pageContext.request.contextPath}/inventario" method="POST" enctype="multipart/form-data" class="formulario-crear">
                             <input type="hidden" name="accion" value="crear">
-                            
+
                             <div class="form-grupo">
                                 <label>Nombre del Producto:</label>
                                 <input type="text" name="nombre" required placeholder="Ej: Peluche Ajolote">
                             </div>
-                            
+
                             <div class="form-grupo">
                                 <label>Precio ($):</label>
                                 <input type="number" name="precio" step="0.01" min="0.1" required placeholder="Ej: 250.50">
                             </div>
-                            
+
                             <div class="form-grupo">
                                 <label>Stock Inicial:</label>
                                 <input type="number" name="stock" min="1" required placeholder="Ej: 15">
                             </div>
-                            
+
                             <div class="form-grupo">
                                 <label>Subir Imagen:</label>
                                 <input type="file" name="imagen" accept="image/*" required>
                             </div>
-                            
+
                             <div class="form-grupo completo">
                                 <label>Descripción:</label>
                                 <textarea name="descripcion" rows="3" required placeholder="Describe los detalles del producto..."></textarea>
                             </div>
-                            
+
                             <button type="submit" class="btn-guardar">Guardar Producto en el Catálogo</button>
                         </form>
                     </div>
@@ -108,13 +109,18 @@
                                 <c:forEach items="${requestScope.listaProductos}" var="producto">
                                     <tr>
                                         <td>${producto.id}</td>
-                                        
+
                                         <td>
-                                            <img src="${pageContext.request.contextPath}/${producto.rutaImagen}" 
-                                                 alt="${producto.nombre}" 
-                                                 class="img-miniatura">
+                                            <c:choose>
+                                                <c:when test="${fn:startsWith(producto.rutaImagen, 'http')}">
+                                                    <img src="${producto.rutaImagen}" alt="${producto.nombre}" class="img-miniatura">
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <img src="${pageContext.request.contextPath}/${producto.rutaImagen}" alt="${producto.nombre}" class="img-miniatura">
+                                                </c:otherwise>
+                                            </c:choose>
                                         </td>
-                                        
+
                                         <td class="texto-nombre-prod">${producto.nombre}</td>
                                         <td class="precio-destacado">$${producto.precio}</td>
                                         <td>
@@ -123,12 +129,12 @@
                                             </span>
                                         </td>
                                         <td class="desc-corta">${producto.descripcion}</td>
-                                        
+
                                         <td>
                                             <form action="${pageContext.request.contextPath}/inventario" method="POST" class="form-en-tabla">
                                                 <input type="hidden" name="accion" value="eliminar">
                                                 <input type="hidden" name="idProducto" value="${producto.id}">
-                                                
+
                                                 <button type="submit" class="btn-accion btn-eliminar"
                                                         onclick="return confirm('¿Seguro que deseas eliminar este producto permanentemente?');">
                                                     Eliminar
@@ -137,7 +143,7 @@
                                         </td>
                                     </tr>
                                 </c:forEach>
-                                
+
                                 <c:if test="${empty requestScope.listaProductos}">
                                     <tr>
                                         <td colspan="7" class="msg-vacio">No hay productos registrados en el inventario. Utiliza el formulario superior para agregar uno.</td>

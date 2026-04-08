@@ -4,6 +4,8 @@
  */
 package controllers;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import dto.ProductoDTO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -15,8 +17,10 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import service.IProductoServicio;
 import service.ProductoService;
@@ -77,18 +81,22 @@ public class InventarioServlet extends HttpServlet {
                 Part filePart = request.getPart("imagen");
 
                 if (filePart != null && filePart.getSize() > 0) {
-                    String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIR;
-                    File uploadDir = new File(uploadPath);
-                    if (!uploadDir.exists()) {
-                        uploadDir.mkdirs();
-                    }
 
-                    String originalFileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-                    String uniqueFileName = UUID.randomUUID().toString().substring(0, 8) + "-" + originalFileName;
+                    Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+                            "cloud_name", "dslwxrhsi",
+                            "api_key", "257323838382729",
+                            "api_secret", "4eh9uS1EZsp1SSZPavNTRvmNuy8",
+                            "secure", true
+                    ));
 
-                    filePart.write(uploadPath + File.separator + uniqueFileName);
+                    InputStream fileContent = filePart.getInputStream();
+                    byte[] imageBytes = fileContent.readAllBytes();
 
-                    dto.setRutaImagen(UPLOAD_DIR + "/" + uniqueFileName);
+                    Map uploadResult = cloudinary.uploader().upload(imageBytes, ObjectUtils.emptyMap());
+
+                    String url = (String) uploadResult.get("secure_url");
+
+                    dto.setRutaImagen(url);
 
                 } else if ("actualizar".equals(accion)) {
                     dto.setRutaImagen(request.getParameter("rutaImagenActual"));
