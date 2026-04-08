@@ -48,7 +48,7 @@ public class CatalogoWebServlet extends HttpServlet {
 
             request.getRequestDispatcher("/vistas/app/catalogo.jsp").forward(request, response);
 
-        } catch (ServletException | IOException e) {
+        } catch (Exception e) {
             request.setAttribute("error", "Error al cargar el catálogo: " + e.getMessage());
             request.getRequestDispatcher("/vistas/errores/error.jsp").forward(request, response);
         }

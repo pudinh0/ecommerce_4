@@ -66,7 +66,7 @@ public class CatalogoServlet extends HttpServlet {
                 }
             }
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             enviarError(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error interno del servidor: " + e.getMessage());
         }
     }
