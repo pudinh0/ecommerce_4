@@ -749,7 +749,7 @@ nav ul img {
  
  
 /* ============================================================
-   9. INICIO (HERO)
+   9. INICIO
    ============================================================ */
  
 .hero {
@@ -1117,4 +1117,109 @@ nav ul img {
 .tarjeta-error p {
     color: #666;
     margin-bottom: 25px;
+}
+
+/* ==========================================================================
+   13. PEDIDOS
+   ========================================================================== */
+
+/* Celdas específicas de la tabla de pedidos */
+.celda-precio-pedido {
+    color: var(--color-primario);
+    font-weight: bold;
+}
+
+.celda-centrada {
+    text-align: center;
+}
+
+.celda-vacia {
+    text-align: center;
+    padding: 20px;
+    color: gray;
+}
+
+/* Formulario para cambiar estado en la tabla */
+.form-actualizar-estado {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin: 0;
+}
+
+.select-estado {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid var(--color-borde);
+    font-family: var(--fuente-principal);
+}
+
+.btn-guardar-estado {
+    background-color: #28a745; /* Verde éxito */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: bold;
+    transition: opacity 0.3s ease;
+}
+
+.btn-guardar-estado:hover {
+    opacity: 0.85;
+}
+
+/* Enlace para ver detalles del pedido */
+.link-detalles {
+    color: var(--color-primario);
+    text-decoration: underline;
+    font-weight: bold;
+    font-size: 0.9em;
+    transition: color 0.3s;
+}
+
+.link-detalles:hover {
+    color: #c2387d; /* Un tono más oscuro del color primario */
+}
+
+/* ==========================================================================
+   14. RESENIAS
+   ========================================================================== */
+
+.celda-comentario {
+    max-width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-style: italic;
+    color: var(--color-texto-secundario);
+}
+
+.celda-calificacion {
+    color: #f1c40f; 
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.form-eliminar-resenia {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.btn-eliminar-rojo {
+    background-color: #dc3545; 
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btn-eliminar-rojo:hover {
+    background-color: #c82333; 
 }

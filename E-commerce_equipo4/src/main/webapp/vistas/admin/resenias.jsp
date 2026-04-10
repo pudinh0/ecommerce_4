@@ -56,40 +56,36 @@
                         </div>
                     </c:if>
 
-                    <div style="overflow-x: auto;">
-                        <table class="tabla-admin">
-                            <thead class="encabezado-tabla-inventario">
+                    <div class="contenedor-tabla-scroll">
+                        <table class="tabla-inventario">
+                            <thead>
                                 <tr>
                                     <th>ID</th>
                                     <th>Producto</th>
                                     <th>Cliente</th>
-                                    <th>Calificación</th>
+                                    <th class="celda-centrada">Calificación</th>
                                     <th>Comentario</th>
-                                    <th>Acciones</th>
+                                    <th class="celda-centrada">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach items="${requestScope.listaResenias}" var="resenia">
                                     <tr>
-                                        <td>${resenia.id}</td>
-                                        
+                                        <td><strong>#${resenia.id}</strong></td>
                                         <td>${resenia.producto.nombre}</td>
                                         <td>${resenia.usuario.correo}</td>
-                                        
-                                        <td class="precio-destacado">
-                                            ${resenia.calificacion} / 5
+                                        <td class="celda-centrada celda-calificacion">
+                                            ★ ${resenia.calificacion} / 5
                                         </td>
-                                        
-                                        <td>
+                                        <td class="celda-comentario" title="${resenia.comentario}">
                                             "${resenia.comentario}"
                                         </td>
-                                        
                                         <td>
-                                            <form action="${pageContext.request.contextPath}/resenias-admin" method="POST" class="form-en-tabla">
+                                            <form action="${pageContext.request.contextPath}/resenias-admin" method="POST" class="form-eliminar-resenia">
                                                 <input type="hidden" name="accion" value="eliminar">
                                                 <input type="hidden" name="idResenia" value="${resenia.id}">
                                                 
-                                                <button type="submit" class="btn-accion btn-eliminar"
+                                                <button type="submit" class="btn-eliminar-rojo" 
                                                         onclick="return confirm('¿Estás seguro de que deseas eliminar esta reseña? Esta acción no se puede deshacer.');">
                                                     Eliminar
                                                 </button>
@@ -100,7 +96,9 @@
                                 
                                 <c:if test="${empty requestScope.listaResenias}">
                                     <tr>
-                                        <td colspan="6">No hay reseñas registradas en el sistema.</td>
+                                        <td colspan="6" class="celda-vacia">
+                                            No hay reseñas registradas en el sistema.
+                                        </td>
                                     </tr>
                                 </c:if>
                             </tbody>

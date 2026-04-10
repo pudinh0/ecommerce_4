@@ -16,19 +16,19 @@ public class ReseniaDTO {
     public Integer calificacion;
     public LocalDate fecha;
     public Long id;
-    public Long idProducto;
-    public UsuarioDTO usuario;
+    private UsuarioDTO usuario;
+    private ProductoDTO producto;
 
     public ReseniaDTO() {
     }
 
-    public ReseniaDTO(String comentario, Integer calificacion, LocalDate fecha, Long id, Long idProducto, UsuarioDTO usuario) {
+    public ReseniaDTO(String comentario, Integer calificacion, LocalDate fecha, Long id, UsuarioDTO usuario, ProductoDTO producto) {
         this.comentario = comentario;
         this.calificacion = calificacion;
         this.fecha = fecha;
         this.id = id;
-        this.idProducto = idProducto;
         this.usuario = usuario;
+        this.producto = producto;
     }
 
     public String getComentario() {
@@ -55,14 +55,6 @@ public class ReseniaDTO {
         this.fecha = fecha;
     }
 
-    public UsuarioDTO getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(UsuarioDTO usuario) {
-        this.usuario = usuario;
-    }
-
     public Long getId() {
         return id;
     }
@@ -71,12 +63,20 @@ public class ReseniaDTO {
         this.id = id;
     }
 
-    public Long getIdProducto() {
-        return idProducto;
+    public UsuarioDTO getUsuario() {
+        return usuario;
     }
 
-    public void setIdProducto(Long idProducto) {
-        this.idProducto = idProducto;
+    public void setUsuario(UsuarioDTO usuario) {
+        this.usuario = usuario;
+    }
+
+    public ProductoDTO getProducto() {
+        return producto;
+    }
+
+    public void setProducto(ProductoDTO producto) {
+        this.producto = producto;
     }
 
 }

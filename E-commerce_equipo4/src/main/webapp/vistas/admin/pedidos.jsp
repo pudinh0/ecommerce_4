@@ -5,6 +5,7 @@
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
@@ -57,44 +58,57 @@
                         </div>
                     </c:if>
 
-                    <div style="overflow-x: auto;"> <table class="tabla-admin">
-                            <thead class="encabezado-tabla-inventario">
+                    <div class="contenedor-tabla-scroll"> 
+                        <table class="tabla-inventario">
+                            <thead>
                                 <tr>
                                     <th>ID Pedido</th>
                                     <th>Cliente</th>
                                     <th>Fecha de Compra</th>
                                     <th>Total</th>
-                                    <th>Actualizar Estado</th>
+                                    <th>Estado Actual</th>
+                                    <th class="celda-centrada">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach items="${requestScope.listaPedidos}" var="pedido">
                                     <tr>
-                                        <td>#${pedido.id}</td>
+                                        <td><strong>#${pedido.id}</strong></td>
                                         <td>${pedido.usuario.correo}</td>
-                                        <td>${pedido.fechaCompra}</td>
-                                        <td class="precio-destacado">$${pedido.total}</td>
                                         <td>
-                                            <form action="${pageContext.request.contextPath}/pedidos-admin" method="POST" class="form-en-tabla">
+                                            ${fn:replace(pedido.fecha, 'T', ' ')}
+                                        </td>
+                                        <td class="celda-precio-pedido">
+                                            $${pedido.total}
+                                        </td>
+                                        <td>
+                                            <form action="${pageContext.request.contextPath}/pedidos-admin" method="POST" class="form-actualizar-estado">
                                                 <input type="hidden" name="idPedido" value="${pedido.id}">
                                                 
-                                                <select name="estado" class="select-admin">
+                                                <select name="estado" class="select-estado">
                                                     <option value="PENDIENTE" ${pedido.estado == 'PENDIENTE' ? 'selected' : ''}>Pendiente</option>
                                                     <option value="ENVIADO" ${pedido.estado == 'ENVIADO' ? 'selected' : ''}>Enviado</option>
                                                     <option value="ENTREGADO" ${pedido.estado == 'ENTREGADO' ? 'selected' : ''}>Entregado</option>
                                                 </select>
                                                 
-                                                <button type="submit" class="btn-accion btn-actualizar">
-                                                    Actualizar
+                                                <button type="submit" class="btn-guardar-estado">
+                                                    Guardar
                                                 </button>
                                             </form>
+                                        </td>
+                                        <td class="celda-centrada">
+                                            <a href="${pageContext.request.contextPath}/pedidos-admin/detalle?id=${pedido.id}" class="link-detalles">
+                                                Ver Detalles
+                                            </a>
                                         </td>
                                     </tr>
                                 </c:forEach>
                                 
                                 <c:if test="${empty requestScope.listaPedidos}">
                                     <tr>
-                                        <td colspan="5">No hay pedidos registrados en el sistema.</td>
+                                        <td colspan="6" class="celda-vacia">
+                                            No hay pedidos registrados en el sistema.
+                                        </td>
                                     </tr>
                                 </c:if>
                             </tbody>

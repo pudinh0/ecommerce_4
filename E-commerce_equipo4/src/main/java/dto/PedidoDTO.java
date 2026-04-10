@@ -18,16 +18,18 @@ public class PedidoDTO {
     private Double total;
     private String estado;
     private List<DetallePedidoDTO> detalles;
+    private UsuarioDTO usuario;
 
     public PedidoDTO() {
     }
 
-    public PedidoDTO(Long id, LocalDateTime fecha, Double total, String estado, List<DetallePedidoDTO> detalles) {
+    public PedidoDTO(Long id, LocalDateTime fecha, Double total, String estado, List<DetallePedidoDTO> detalles, UsuarioDTO usuario) {
         this.id = id;
         this.fecha = fecha;
         this.total = total;
         this.estado = estado;
         this.detalles = detalles;
+        this.usuario = usuario;
     }
 
     public Long getId() {
@@ -68,6 +70,14 @@ public class PedidoDTO {
 
     public void setDetalles(List<DetallePedidoDTO> detalles) {
         this.detalles = detalles;
+    }
+
+    public UsuarioDTO getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(UsuarioDTO usuario) {
+        this.usuario = usuario;
     }
 
 }

@@ -62,10 +62,9 @@ public class AdminReseniasServlet extends HttpServlet {
                 throw new IllegalArgumentException("Acción no reconocida.");
             }
 
-        } catch (IllegalArgumentException e) {
-            response.sendRedirect(request.getContextPath() + "/resenias-admin?error=" + e.getMessage());
-        } catch (IOException e) {
-            response.sendRedirect(request.getContextPath() + "/resenias-admin?error=Ocurrió un error interno al intentar eliminar la reseña.");
+        } catch (Exception e) { 
+            request.setAttribute("error", "Error al cargar la vista: " + e.getMessage());
+            request.getRequestDispatcher("/vistas/errores/error.jsp").forward(request, response);
         }
     }
 

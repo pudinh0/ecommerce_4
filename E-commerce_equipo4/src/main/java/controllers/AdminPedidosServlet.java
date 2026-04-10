@@ -35,8 +35,8 @@ public class AdminPedidosServlet extends HttpServlet {
             request.setAttribute("listaPedidos", todosLosPedidos);
             request.getRequestDispatcher("/vistas/admin/pedidos.jsp").forward(request, response);
             
-        } catch (ServletException | IOException e) {
-            request.setAttribute("error", "Error al cargar los pedidos: " + e.getMessage());
+        } catch (Exception e) { 
+            request.setAttribute("error", "Error al cargar la vista: " + e.getMessage());
             request.getRequestDispatcher("/vistas/errores/error.jsp").forward(request, response);
         }
     }
@@ -56,10 +56,9 @@ public class AdminPedidosServlet extends HttpServlet {
             
             response.sendRedirect(request.getContextPath() + "/pedidos-admin?exito=true");
             
-        } catch (IllegalArgumentException e) {
-            response.sendRedirect(request.getContextPath() + "/pedidos-admin?error=" + e.getMessage());
-        } catch (Exception e) {
-            response.sendRedirect(request.getContextPath() + "/pedidos-admin?error=Error al actualizar el estado.");
+        } catch (Exception e) { 
+            request.setAttribute("error", "Error al cargar la vista: " + e.getMessage());
+            request.getRequestDispatcher("/vistas/errores/error.jsp").forward(request, response);
         }
     }
 

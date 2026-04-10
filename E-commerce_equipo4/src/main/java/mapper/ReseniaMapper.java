@@ -15,6 +15,7 @@ import models.Resenia;
 public class ReseniaMapper {
 
     private final UsuarioMapper usuarioMapper = new UsuarioMapper();
+    private final ProductoMapper productoMapper = new ProductoMapper();
 
     public ReseniaDTO toDTO(Resenia entity) {
         if (entity == null) return null;
@@ -29,7 +30,7 @@ public class ReseniaMapper {
         }
         
         if (entity.getProducto() != null) {
-            dto.setIdProducto(entity.getProducto().getIdProducto());
+            dto.setProducto(productoMapper.toDTO(entity.getProducto()));
         }
         
         if (entity.getUsuario() != null) {

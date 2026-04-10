@@ -5,6 +5,7 @@
 --%>
 
 <%@ page contentType="text/html" pageEncoding="UTF-8" isErrorPage="true" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -28,8 +29,14 @@
                 No te preocupes, ya estamos trabajando en ello.
             </p>
 
+            <c:if test="${not empty requestScope.error}">
+                <div class="alerta alerta-error">
+                    <strong>Detalle técnico:</strong> ${requestScope.error}
+                </div>
+            </c:if>
+
             <nav>
-                <a href="${pageContext.request.contextPath}/index.jsp" class="btn btn--primary btn-auth">
+                <a href="${pageContext.request.contextPath}/inicio" class="btn btn--primary btn-auth">
                     VOLVER AL INICIO
                 </a>
             </nav>

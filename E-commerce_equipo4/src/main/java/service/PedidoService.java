@@ -52,6 +52,7 @@ public class PedidoService implements IPedidoService {
         pedido.setEstado(models.EstadoPedidoEnum.PENDIENTE);
 
         List<DetallePedido> detalles = new ArrayList<>();
+        double totalPedido = 0.0;
 
         for (ItemCarrito item : carrito.getItemsCarrito()) {
             Producto producto = item.getProducto();
@@ -67,18 +68,17 @@ public class PedidoService implements IPedidoService {
             detalle.setPedido(pedido);
             detalle.setProducto(producto);
             detalle.setCantidad(item.getCantidad());
-
             detalle.setPrecioVenta(producto.getPrecio());
+
+            totalPedido += (producto.getPrecio() * item.getCantidad());
 
             detalles.add(detalle);
         }
 
         pedido.setDetalles(detalles);
-
-        pedido.setTotal(pedido.getTotal());
+        pedido.setTotal(totalPedido);
 
         pedidoDAO.guardar(pedido);
-
         carritoDAO.vaciarCarrito(carrito.getIdCarrito());
     }
 
@@ -109,11 +109,11 @@ public class PedidoService implements IPedidoService {
                 .map(pedidoMapper::toDTO)
                 .collect(Collectors.toList());
     }
-    
+
     @Override
     public List<PedidoDTO> obtenerTodosLosPedidos() {
         List<Pedido> todosLosPedidos = pedidoDAO.obtenerTodos();
-        
+
         return todosLosPedidos.stream()
                 .map(pedidoMapper::toDTO)
                 .collect(Collectors.toList());
@@ -140,7 +140,7 @@ public class PedidoService implements IPedidoService {
             EstadoPedidoEnum estadoEnum = EstadoPedidoEnum.valueOf(nuevoEstado.toUpperCase());
             pedido.setEstado(estadoEnum);
             pedidoDAO.actualizar(pedido);
-            
+
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("El estado proporcionado no es válido.");
         }

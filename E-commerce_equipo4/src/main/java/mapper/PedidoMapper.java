@@ -17,17 +17,22 @@ import models.Pedido;
  */
 public class PedidoMapper {
 
+    private final UsuarioMapper usuarioMapper = new UsuarioMapper();
+
     public PedidoDTO toDTO(Pedido pedido) {
         if (pedido == null) {
             return null;
         }
 
         PedidoDTO dto = new PedidoDTO();
-        dto.setId(pedido.getIdPedido()); 
-        dto.setFecha(pedido.getFechaCompra()); 
-        dto.setEstado(pedido.getEstado().name()); 
+        dto.setId(pedido.getIdPedido());
+        dto.setFecha(pedido.getFechaCompra());
+        dto.setEstado(pedido.getEstado().name());
+        dto.setTotal(pedido.getTotal());
 
-        dto.setTotal(pedido.getTotal()); 
+        if (pedido.getUsuario() != null) {
+            dto.setUsuario(usuarioMapper.toDTO(pedido.getUsuario()));
+        }
 
         if (pedido.getDetalles() != null) {
             List<DetallePedidoDTO> detallesDTO = new ArrayList<>();
@@ -46,18 +51,17 @@ public class PedidoMapper {
         }
 
         DetallePedidoDTO dto = new DetallePedidoDTO();
-        dto.setId(detalle.getIdDetallePedido()); 
-        dto.setCantidad(detalle.getCantidad()); 
-        dto.setPrecioUnitario(detalle.getPrecioVenta()); 
+        dto.setId(detalle.getIdDetallePedido());
+        dto.setCantidad(detalle.getCantidad());
+        dto.setPrecioUnitario(detalle.getPrecioVenta());
 
         if (detalle.getProducto() != null) {
-            dto.setNombreProducto(detalle.getProducto().getNombre()); 
+            dto.setNombreProducto(detalle.getProducto().getNombre());
         }
 
-        dto.setSubtotal(detalle.getSubtotal()); 
+        dto.setSubtotal(detalle.getSubtotal());
 
         return dto;
     }
-    
-    
+
 }
