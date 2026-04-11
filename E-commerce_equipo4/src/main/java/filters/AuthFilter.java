@@ -32,7 +32,7 @@ public class AuthFilter implements Filter {
 
         //Rutas Públicas (Recursos estaticos, login, registro y catalogo publico)
         boolean isStaticResource = path.startsWith("/assets/") || path.contains("styles") || path.contains("img");
-        boolean isAuthRequest = path.contains("iniciar-sesion") || path.contains("registrarse") || path.contains("/login") || path.equals("/catalogo") || path.equals("/inicio");
+        boolean isAuthRequest = path.contains("iniciar-sesion") || path.contains("registro") || path.contains("registrarse") || path.contains("/login") || path.equals("/catalogo") || path.equals("/inicio");
 
         boolean isPublicApi = path.equals("/api/productos") || (path.startsWith("/api/productos/") && req.getMethod().equals("GET"));
 
