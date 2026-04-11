@@ -826,6 +826,7 @@ nav ul img {
 }
  
 .encabezado-tabla-inventario th {
+    display: table-cell;
     background: #F8FAFC;
     padding: 16px 24px;
     font-weight: 700;
@@ -881,8 +882,6 @@ nav ul img {
  
 .encabezado-tabla-inventario {
     background-color: #F8FAFC;
-    display: flex;
-    justify-content: space-between;
     padding: 15px 25px;
     font-size: 0.85rem;
     font-weight: 700;
@@ -1003,7 +1002,7 @@ nav ul img {
  
 .tabla-admin td {
     padding: 12px 10px;
-    text-align: center;
+    text-align: left;
     vertical-align: middle;
 }
  
