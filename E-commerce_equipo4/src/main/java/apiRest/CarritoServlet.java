@@ -106,11 +106,19 @@ public class CarritoServlet extends HttpServlet {
             Long idItem = Long.valueOf(body.get("idItem").toString());
 
             HttpSession session = request.getSession(false);
-            if (session == null || session.getAttribute("usuario") == null) {
-                enviarError(response, HttpServletResponse.SC_UNAUTHORIZED, "Debes iniciar sesion para editar el carrito.");
+
+            String correoUsuario = (String) request.getAttribute("usuario");
+
+            if (correoUsuario == null) {
+                if (session != null) {
+                    correoUsuario = (String) session.getAttribute("usuario");
+                }
+            }
+
+            if (correoUsuario == null) {
+                enviarError(response, HttpServletResponse.SC_UNAUTHORIZED, "Debes iniciar sesión para editar el carrito.");
                 return;
             }
-            String correoUsuario = (String) session.getAttribute("usuario");
 
             carritoService.eliminarItem(correoUsuario, idItem);
 
