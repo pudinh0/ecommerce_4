@@ -33,9 +33,10 @@ public class AuthFilter implements Filter {
         //Rutas Públicas (Recursos estaticos, login, registro y catalogo publico)
         boolean isStaticResource = path.startsWith("/assets/") || path.contains("styles") || path.contains("img");
         boolean isAuthRequest = path.contains("iniciar-sesion") || path.contains("registro") || path.contains("registrarse") || path.contains("/login") || path.equals("/catalogo") || path.equals("/inicio");
-
-        boolean isPublicApi = path.equals("/api/productos") || (path.startsWith("/api/productos/") && req.getMethod().equals("GET"));
-
+        boolean isAuthPath = path.equals("/api/auth");
+        boolean isPublicGet = path.equals("/api/productos") || (path.startsWith("/api/productos/") && req.getMethod().equals("GET"));
+        
+        boolean isPublicApi = isAuthPath || isPublicGet; 
         if (isStaticResource || isAuthRequest || isPublicApi) {
             chain.doFilter(request, response);
             return;
@@ -72,7 +73,7 @@ public class AuthFilter implements Filter {
         }
 
         //Seguridad para el Panel de Administracion
-        boolean isAdminRequest = path.startsWith("/vistas/admin/") || path.equals("/inventario") || path.equals("/pedidos-admin"); 
+        boolean isAdminRequest = path.startsWith("/vistas/admin/") || path.equals("/inventario") || path.equals("/pedidos-admin");
 
         HttpSession sesion = req.getSession(false);
         boolean isLoggedIn = (sesion != null && sesion.getAttribute("usuario") != null);

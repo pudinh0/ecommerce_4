@@ -8,6 +8,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import models.Carrito;
+import models.ItemCarrito;
 import util.JPAUtil;
 
 /**
@@ -21,6 +22,13 @@ public class CarritoDAO implements ICarritoDAO {
         EntityManager em = JPAUtil.getInstance().getEntityManager();
         try {
             em.getTransaction().begin();
+
+            if (carrito.getItemsCarrito() != null) {
+                for (ItemCarrito item : carrito.getItemsCarrito()) {
+                    item.setCarrito(carrito);
+                }
+            }
+
             em.persist(carrito);
             em.getTransaction().commit();
         } catch (Exception e) {
@@ -55,7 +63,7 @@ public class CarritoDAO implements ICarritoDAO {
         EntityManager em = JPAUtil.getInstance().getEntityManager();
         try {
             TypedQuery<Carrito> query = em.createQuery(
-                    "SELECT c FROM Carrito c LEFT JOIN FETCH c.items i "
+                    "SELECT c FROM Carrito c LEFT JOIN FETCH c.itemsCarrito i "
                     + "WHERE c.usuario.correo = :correo",
                     Carrito.class
             );

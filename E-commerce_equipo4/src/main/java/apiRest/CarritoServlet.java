@@ -67,11 +67,19 @@ public class CarritoServlet extends HttpServlet {
             int cantidad = Integer.parseInt(body.get("cantidad").toString());
 
             HttpSession session = request.getSession(false);
-            if (session == null || session.getAttribute("usuario") == null) {
+
+            String correoUsuario = (String) request.getAttribute("usuario");
+
+            if (correoUsuario == null) {
+                if (session != null) {
+                    correoUsuario = (String) session.getAttribute("usuario");
+                }
+            }
+
+            if (correoUsuario == null) {
                 enviarError(response, HttpServletResponse.SC_UNAUTHORIZED, "Debes iniciar sesión para agregar al carrito.");
                 return;
             }
-            String correoUsuario = (String) session.getAttribute("usuario");
 
             carritoService.agregarProducto(correoUsuario, idProducto, cantidad);
 
@@ -106,7 +114,7 @@ public class CarritoServlet extends HttpServlet {
 
             carritoService.eliminarItem(correoUsuario, idItem);
 
-            response.setStatus(HttpServletResponse.SC_OK); 
+            response.setStatus(HttpServletResponse.SC_OK);
             Map<String, String> exito = new HashMap<>();
             exito.put("mensaje", "Item eliminado del carrito correctamente");
             JSONMapper.mapper.writeValue(response.getWriter(), exito);
