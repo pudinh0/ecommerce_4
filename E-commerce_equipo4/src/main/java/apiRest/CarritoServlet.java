@@ -57,23 +57,43 @@ public class CarritoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
+        // Detectamos el tipo de contenido
+        String contentType = request.getContentType();
+        Long idProducto = null;
+        int cantidad = 1; // Valor por defecto
 
         try {
-            Map<String, Object> body = JSONMapper.mapper.readValue(request.getInputStream(), Map.class);
 
-            Long idProducto = Long.valueOf(body.get("idProducto").toString());
-            int cantidad = Integer.parseInt(body.get("cantidad").toString());
+            if (contentType != null && contentType.contains("application/json")) {
+
+                Map<String, Object> body = JSONMapper.mapper.readValue(request.getInputStream(), Map.class);
+                idProducto = Long.valueOf(body.get("idProducto").toString());
+                if (body.get("cantidad") != null) {
+                    cantidad = Integer.parseInt(body.get("cantidad").toString());
+                }
+            } else {
+
+                String idStr = request.getParameter("idProducto");
+                if (idStr != null) {
+                    idProducto = Long.valueOf(idStr);
+                }
+
+                String cantStr = request.getParameter("cantidad");
+                if (cantStr != null) {
+                    cantidad = Integer.parseInt(cantStr);
+                }
+            }
+
+            if (idProducto == null) {
+                enviarError(response, HttpServletResponse.SC_BAD_REQUEST, "No se proporcionó el ID del producto.");
+                return;
+            }
 
             HttpSession session = request.getSession(false);
+            String correoUsuario = null;
 
-            String correoUsuario = (String) request.getAttribute("usuario");
-
-            if (correoUsuario == null) {
-                if (session != null) {
-                    correoUsuario = (String) session.getAttribute("usuario");
-                }
+            if (session != null) {
+                correoUsuario = (String) session.getAttribute("usuario");
             }
 
             if (correoUsuario == null) {
@@ -83,15 +103,21 @@ public class CarritoServlet extends HttpServlet {
 
             carritoService.agregarProducto(correoUsuario, idProducto, cantidad);
 
-            response.setStatus(HttpServletResponse.SC_CREATED);
-            Map<String, String> exito = new HashMap<>();
-            exito.put("mensaje", "Producto agregado al carrito con exito");
-            JSONMapper.mapper.writeValue(response.getWriter(), exito);
+            if (contentType != null && contentType.contains("application/json")) {
 
-        } catch (IOException | NumberFormatException e) {
-            enviarError(response, HttpServletResponse.SC_BAD_REQUEST, "Ocurrió un problema con el carrito: " + e.getMessage());
+                response.setContentType("application/json");
+                response.setStatus(HttpServletResponse.SC_CREATED);
+                Map<String, String> exito = new HashMap<>();
+                exito.put("mensaje", "Producto agregado con éxito");
+                JSONMapper.mapper.writeValue(response.getWriter(), exito);
+            } else {
+
+                response.sendRedirect(request.getContextPath() + "/index.jsp");
+            }
+
+        } catch (Exception e) {
+            enviarError(response, HttpServletResponse.SC_BAD_REQUEST, "Error al procesar: " + e.getMessage());
         }
-
     }
 
     @Override

@@ -70,7 +70,7 @@
                                             <div class="precio-carrito">
                                                 <p class="precio">$${producto.precio}</p>
                                                 
-                                                <form action="${pageContext.request.contextPath}/carrito-mvc" method="POST">
+                                                <form action="${pageContext.request.contextPath}/api/carrito" method="POST">
                                                     <input type="hidden" name="accion" value="agregar">
                                                     <input type="hidden" name="idProducto" value="${producto.id}">
                                                     <button type="submit" class="btn-agregar" aria-label="Agregar al carrito">
