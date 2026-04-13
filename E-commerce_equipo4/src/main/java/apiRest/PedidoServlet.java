@@ -31,67 +31,76 @@ public class PedidoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
         try {
             String pathInfo = request.getPathInfo();
-            
+
             if (pathInfo == null || pathInfo.equals("/")) {
                 enviarError(response, HttpServletResponse.SC_BAD_REQUEST, "Falta especificar la ruta del pedido o del usuario.");
                 return;
             }
 
             if (pathInfo.startsWith("/usuario/")) {
-                String correoUsuario = pathInfo.substring("/usuario/".length());
-                List<PedidoDTO> historial = pedidoService.obtenerHistorialUsuario(correoUsuario);
+                String identificador = pathInfo.substring("/usuario/".length());
                 
+                List<PedidoDTO> historial = pedidoService.obtenerHistorialUsuario(identificador);
+
                 response.setStatus(HttpServletResponse.SC_OK);
                 JSONMapper.mapper.writeValue(response.getWriter(), historial);
-                
-            } 
-            else {
-                String idParam = pathInfo.substring(1); 
+            } else {
+                String idParam = pathInfo.substring(1);
                 try {
                     Long idPedido = Long.valueOf(idParam);
                     PedidoDTO pedido = pedidoService.obtenerPedidoPorId(idPedido);
-                    
+
+                    if (pedido == null) {
+                        enviarError(response, HttpServletResponse.SC_NOT_FOUND, "Pedido no encontrado.");
+                        return;
+                    }
+
                     response.setStatus(HttpServletResponse.SC_OK);
                     JSONMapper.mapper.writeValue(response.getWriter(), pedido);
+
                 } catch (NumberFormatException e) {
-                    enviarError(response, HttpServletResponse.SC_BAD_REQUEST, "El ID del pedido debe ser numerico.");
-                } catch (IllegalArgumentException e) {
-                    enviarError(response, HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+                    enviarError(response, HttpServletResponse.SC_BAD_REQUEST, "El ID del pedido debe ser numérico.");
                 }
             }
 
-        } catch (IOException e) {
+        } catch (IllegalArgumentException e) {
+            enviarError(response, HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+        } catch (Exception e) {
             enviarError(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error al consultar pedidos: " + e.getMessage());
         }
     }
 
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            
+
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
         try {
             HttpSession session = request.getSession(false);
-            
-            if (session == null || session.getAttribute("usuario") == null) {
+            String correoUsuario = (String) request.getAttribute("usuario");
+
+            if (correoUsuario == null) {
+                if (session != null) {
+                    correoUsuario = (String) session.getAttribute("usuario");
+                }
+            }
+
+            if (correoUsuario == null) {
                 enviarError(response, HttpServletResponse.SC_UNAUTHORIZED, "Debes iniciar sesion para procesar una compra.");
                 return;
             }
-            
-            String correoUsuario = (String) session.getAttribute("usuario");
-            
+
             // Procesamos la compra llamando al service
             pedidoService.procesarCompra(correoUsuario);
-            
+
             // Devolvemos respuesta de éxito 201 (Created)
             response.setStatus(HttpServletResponse.SC_CREATED);
             Map<String, String> exito = new HashMap<>();

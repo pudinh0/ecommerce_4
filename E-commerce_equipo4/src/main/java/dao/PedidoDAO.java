@@ -73,6 +73,24 @@ public class PedidoDAO implements IPedidoDAO {
     }
 
     @Override
+    public List<Pedido> buscarPorIdUsuario(Long idUsuario) {
+        EntityManager em = JPAUtil.getInstance().getEntityManager();
+
+        try {
+            TypedQuery<Pedido> query = em.createQuery(
+                    "SELECT p FROM Pedido p WHERE p.usuario.id = :idUsuario ORDER BY p.idPedido DESC",
+                    Pedido.class
+            );
+            query.setParameter("idUsuario", idUsuario);
+
+            return query.getResultList();
+
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
     public void actualizar(Pedido pedido) {
         EntityManager em = JPAUtil.getInstance().getEntityManager();
 

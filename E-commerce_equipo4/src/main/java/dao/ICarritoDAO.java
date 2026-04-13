@@ -18,5 +18,7 @@ public interface ICarritoDAO {
 
     Carrito buscarPorCorreoUsuario(String correoUsuario);
 
+    Carrito buscarPorIdUsuario(Long idUsuario);
+
     void vaciarCarrito(Long idCarrito);
 }

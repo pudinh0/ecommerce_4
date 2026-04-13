@@ -30,15 +30,28 @@ public class CarritoService implements ICarritoService {
     private final CarritoMapper carritoMapper = new CarritoMapper();
 
     @Override
-    public CarritoDTO obtenerCarrito(String correoUsuario) {
-        if (correoUsuario == null || correoUsuario.trim().isEmpty()) {
+    public CarritoDTO obtenerCarrito(String identificador) {
+        if (identificador == null || identificador.trim().isEmpty()) {
             throw new IllegalArgumentException("El correo es obligatorio.");
         }
 
-        Carrito carrito = carritoDAO.buscarPorCorreoUsuario(correoUsuario);
+        Carrito carrito = null;
+        Usuario usuario = null;
+
+        try {
+            Long id = Long.parseLong(identificador);
+            carrito = carritoDAO.buscarPorIdUsuario(id);
+            if (carrito == null) {
+                usuario = usuarioDAO.buscarPorId(id);
+            }
+        } catch (NumberFormatException e) {
+            carrito = carritoDAO.buscarPorCorreoUsuario(identificador);
+            if (carrito == null) {
+                usuario = usuarioDAO.buscarPorCorreo(identificador);
+            }
+        }
 
         if (carrito == null) {
-            Usuario usuario = usuarioDAO.buscarPorCorreo(correoUsuario);
             if (usuario == null) {
                 throw new IllegalArgumentException("Usuario no encontrado.");
             }
@@ -58,7 +71,7 @@ public class CarritoService implements ICarritoService {
         }
 
         Carrito carrito = carritoDAO.buscarPorCorreoUsuario(correoUsuario);
-        
+
         if (carrito == null) {
             Usuario usuario = usuarioDAO.buscarPorCorreo(correoUsuario);
             carrito = new Carrito();
@@ -100,7 +113,7 @@ public class CarritoService implements ICarritoService {
 
     @Override
     public void eliminarItem(String correoUsuario, Long idItem) {
-       if (idItem == null || idItem <= 0) {
+        if (idItem == null || idItem <= 0) {
             throw new IllegalArgumentException("ID de item inválido.");
         }
 
@@ -111,7 +124,7 @@ public class CarritoService implements ICarritoService {
 
         if (carrito.getItemsCarrito() != null) {
             carrito.getItemsCarrito().removeIf(item -> item.getIdItemCarrito().equals(idItem));
-            
+
             carritoDAO.actualizar(carrito);
         }
     }

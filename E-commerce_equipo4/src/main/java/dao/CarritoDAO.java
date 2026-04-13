@@ -77,6 +77,24 @@ public class CarritoDAO implements ICarritoDAO {
     }
 
     @Override
+    public Carrito buscarPorIdUsuario(Long idUsuario) {
+        EntityManager em = JPAUtil.getInstance().getEntityManager();
+        try {
+            TypedQuery<Carrito> query = em.createQuery(
+                    "SELECT c FROM Carrito c LEFT JOIN FETCH c.itemsCarrito i "
+                    + "WHERE c.usuario.id = :idUsuario", 
+                    Carrito.class
+            );
+            query.setParameter("idUsuario", idUsuario);
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
     public void vaciarCarrito(Long idCarrito) {
         EntityManager em = JPAUtil.getInstance().getEntityManager();
         try {

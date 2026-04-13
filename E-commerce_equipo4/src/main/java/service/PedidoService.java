@@ -47,9 +47,11 @@ public class PedidoService implements IPedidoService {
         }
 
         Pedido pedido = new Pedido();
-        pedido.setUsuario(carrito.getUsuario());
-        pedido.setFechaCompra(LocalDateTime.now());
+        pedido.setFolio("FOL-" + System.currentTimeMillis());
+        pedido.setMetodoPago("EFECTIVO");
         pedido.setEstado(models.EstadoPedidoEnum.PENDIENTE);
+        pedido.setFechaCompra(LocalDateTime.now());
+        pedido.setUsuario(carrito.getUsuario());
 
         List<DetallePedido> detalles = new ArrayList<>();
         double totalPedido = 0.0;
@@ -98,12 +100,19 @@ public class PedidoService implements IPedidoService {
     }
 
     @Override
-    public List<PedidoDTO> obtenerHistorialUsuario(String correoUsuario) {
-        if (correoUsuario == null || correoUsuario.trim().isEmpty()) {
-            throw new IllegalArgumentException("El correo es obligatorio.");
+    public List<PedidoDTO> obtenerHistorialUsuario(String identificador) {
+        if (identificador == null || identificador.trim().isEmpty()) {
+            throw new IllegalArgumentException("El identificador es obligatorio.");
         }
 
-        List<Pedido> pedidosBD = pedidoDAO.buscarPorCorreoUsuario(correoUsuario);
+        List<Pedido> pedidosBD;
+
+        try {
+            Long id = Long.valueOf(identificador);
+            pedidosBD = pedidoDAO.buscarPorIdUsuario(id);
+        } catch (NumberFormatException e) {
+            pedidosBD = pedidoDAO.buscarPorCorreoUsuario(identificador);
+        }
 
         return pedidosBD.stream()
                 .map(pedidoMapper::toDTO)
