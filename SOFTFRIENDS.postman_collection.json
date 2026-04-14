@@ -1,0 +1,425 @@
+{
+  "info": {
+    "_postman_id": "b7f88436-a90a-4480-a05c-4eb649165bb0",
+    "name": "SOFTFRIENDS",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "52045861",
+    "_collection_link": "https://go.postman.co/collection/52045861-b7f88436-a90a-4480-a05c-4eb649165bb0?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "auth",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"correo\": \"adel2@mail.com\",\r\n    \"contrasenia\":\"moxxito2\"\r\n\r\n\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/E-commerce_equipo4/api/auth",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "E-commerce_equipo4",
+            "api",
+            "auth"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Registrar Usuario",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"txt_nombres\": \"Juan Alberto\",\r\n  \"txt_primerApellido\": \"García\",\r\n  \"txt_segundoApellido\": \"Rodríguez\",\r\n  \"txt_correo\": \"juan.alberto@softfriends.com\",\r\n  \"txt_contrasenia\": \"Segura123!\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/E-commerce_equipo4/vistas/auth/registrarse.jsp",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "E-commerce_equipo4",
+            "vistas",
+            "auth",
+            "registrarse.jsp"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Iniciar Sesion",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"correo\": \"adel2@mail.com\",\r\n    \"contra\": \"moxxito2\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/E-commerce_equipo4/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "E-commerce_equipo4",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Obtener Productos",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/E-commerce_equipo4/api/productos",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "E-commerce_equipo4",
+            "api",
+            "productos"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Ver Detalles del producto",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/E-commerce_equipo4/api/productos/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "E-commerce_equipo4",
+            "api",
+            "productos",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Agregar un producto",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZGVsMkBtYWlsLmNvbSIsImlhdCI6MTc3NjEwMzA4NSwiZXhwIjoxNzc2MTA2Njg1fQ.rtyVwrexgDLsFjmwlrLMCTaiElH2fPh8QqRZG_nYZiA",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"idProducto\": 1,\r\n    \"cantidad\": 2\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/E-commerce_equipo4/api/carrito",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "E-commerce_equipo4",
+            "api",
+            "carrito"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Obtener Carrito por correo o id",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZGVsMkBtYWlsLmNvbSIsImlhdCI6MTc3NjEwMzA4NSwiZXhwIjoxNzc2MTA2Njg1fQ.rtyVwrexgDLsFjmwlrLMCTaiElH2fPh8QqRZG_nYZiA",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "http://localhost:8080/E-commerce_equipo4/api/carrito/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "E-commerce_equipo4",
+            "api",
+            "carrito",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "crear pedido/compra",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZGVsMkBtYWlsLmNvbSIsImlhdCI6MTc3NjEwMzc3MywiZXhwIjoxNzc2MTA3MzczfQ.ts5TaxQGRH57eqfSBT_RkU10r9WcGxyqvWxNZ_vo3ME",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"direccionEnvio\": \"Calle ITSON #123, Cd. Obregón\",\r\n    \"metodoPago\": \"Tarjeta de Crédito\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/E-commerce_equipo4/api/pedidos",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "E-commerce_equipo4",
+            "api",
+            "pedidos"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "consultar pedido",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZGVsMkBtYWlsLmNvbSIsImlhdCI6MTc3NjEwMzYyNCwiZXhwIjoxNzc2MTA3MjI0fQ.fgcWVU0_hI2g92ajGPEv9a4R_usBbVXpuDMeEoZ43SA",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/E-commerce_equipo4/api/pedidos/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "E-commerce_equipo4",
+            "api",
+            "pedidos",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "historial de pedidos",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZGVsMkBtYWlsLmNvbSIsImlhdCI6MTc3NjEwNjU4MywiZXhwIjoxNzc2MTEwMTgzfQ.C4ujV69DdKzAYEAEmHuNxhxw2F1_RCUdx79gXLwtRlQ",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/E-commerce_equipo4/api/pedidos/usuario/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "E-commerce_equipo4",
+            "api",
+            "pedidos",
+            "usuario",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Crear reseña",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZGVsMkBtYWlsLmNvbSIsImlhdCI6MTc3NjE1Mjk5NCwiZXhwIjoxNzc2MTU2NTk0fQ.xrod5ru1YxjvqJtvC616CQ-ShdR7dZ1aki6IcK0gr3w",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"id\": 1,\r\n    \"calificacion\": 5,\r\n    \"comentario\": \"El Ryzen 7 corre todo perfecto.\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/E-commerce_equipo4/api/resenas",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "E-commerce_equipo4",
+            "api",
+            "resenas"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Mirar Reseñas del producto",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZGVsMkBtYWlsLmNvbSIsImlhdCI6MTc3NjE1Mjk5NCwiZXhwIjoxNzc2MTU2NTk0fQ.xrod5ru1YxjvqJtvC616CQ-ShdR7dZ1aki6IcK0gr3w",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/E-commerce_equipo4/api/resenas/producto/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "E-commerce_equipo4",
+            "api",
+            "resenas",
+            "producto",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
