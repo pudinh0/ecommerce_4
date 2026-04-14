@@ -58,6 +58,7 @@ public class ReseniaService implements IReseniaService {
         }
 
         Resenia reseniaEntity = reseniaMapper.toEntity(reseniaDTO);
+        reseniaEntity.setIdResenia(null);
         reseniaEntity.setProducto(producto);
         reseniaEntity.setUsuario(usuario);
 

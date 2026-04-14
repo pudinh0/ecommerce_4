@@ -67,14 +67,20 @@ public class ReseniaServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
 
         try {
+
+            String correoUsuario = (String) request.getAttribute("usuario");
             HttpSession session = request.getSession(false);
-            if (session == null || session.getAttribute("usuario") == null) {
+            if (correoUsuario == null) {
+                if (session != null) {
+                    correoUsuario = (String) session.getAttribute("usuario");
+                }
+            }
+
+            if (correoUsuario == null) {
                 enviarError(response, HttpServletResponse.SC_UNAUTHORIZED, "Debes iniciar sesion para dejar una reseña.");
                 return;
             }
-
-            String correoUsuario = (String) session.getAttribute("usuario");
-
+            
             ReseniaDTO nuevaResenia = JSONMapper.mapper.readValue(request.getInputStream(), ReseniaDTO.class);
 
             reseniaService.crearResenia(nuevaResenia, correoUsuario);

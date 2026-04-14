@@ -22,7 +22,7 @@ public class ReseniaDAO implements IReseniaDAO {
 
         try {
             em.getTransaction().begin();
-            em.persist(resenia);
+            em.merge(resenia);
             em.getTransaction().commit();
 
         } catch (Exception e) {
