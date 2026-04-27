@@ -1,11 +1,15 @@
 package service;
 
+import dao.CarritoDAO;
+import dao.ICarritoDAO;
 import dao.IUsuarioDAO;
 import dao.UsuarioDAO;
 import dto.UsuarioDTO;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import mapper.UsuarioMapper;
+import models.Carrito;
 import models.TipoUsuarioEnum;
 import models.Usuario;
 
@@ -13,6 +17,7 @@ public class UsuarioService implements IUsuarioService {
 
     private final IUsuarioDAO usuarioDAO = new UsuarioDAO();
     private final UsuarioMapper usuarioMapper = new UsuarioMapper();
+    private final ICarritoDAO carritoDAO= new CarritoDAO();
 
     @Override
     public void registrar(String nombres,
@@ -30,12 +35,17 @@ public class UsuarioService implements IUsuarioService {
             throw new IllegalArgumentException("El correo ya está registrado.");
         }
 
+        
         Usuario usuario = new Usuario();
         usuario.setNombres(nombres);
         usuario.setPrimerApellido(primerApellido);
         usuario.setSegundoApellido(segundoApellido);
         usuario.setCorreo(correo.trim().toLowerCase());
         usuario.setContrasenia(contrasenia);
+        Carrito carrito= new Carrito();
+        carrito.setFechaCreacion(LocalDate.now());
+        carrito.setUsuario(usuario);
+        usuario.setCarrito(carrito);
 
         usuario.setTipoUsuario(TipoUsuarioEnum.CLIENTE);
 

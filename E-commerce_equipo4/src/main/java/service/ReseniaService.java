@@ -34,7 +34,7 @@ public class ReseniaService implements IReseniaService {
         if (reseniaDTO == null) {
             throw new IllegalArgumentException("La reseña no puede ser nula.");
         }
-        if (reseniaDTO.getId() == null) {
+        if (reseniaDTO.getProducto() == null || reseniaDTO.getProducto().getId() == null) {
             throw new IllegalArgumentException("El ID del producto es obligatorio para dejar una reseña.");
         }
         if (reseniaDTO.getComentario() == null || reseniaDTO.getComentario().trim().isEmpty()) {
@@ -47,7 +47,7 @@ public class ReseniaService implements IReseniaService {
             throw new IllegalArgumentException("Se requiere la sesión de un usuario válido.");
         }
 
-        Producto producto = productoDAO.buscarPorId(reseniaDTO.getId());
+        Producto producto = productoDAO.buscarPorId(reseniaDTO.getProducto().getId());
         if (producto == null) {
             throw new IllegalArgumentException("El producto que intentas reseñar no existe.");
         }

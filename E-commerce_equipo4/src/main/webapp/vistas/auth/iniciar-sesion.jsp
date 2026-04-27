@@ -35,6 +35,12 @@
                         <h2> Inicio de Sesión </h2>
                         <p> Que alegría verte por aquí! </p>
                     </div>
+                        <c:if test="${not empty requestScope.error}">
+                            <div class="mensaje-error-banner"> 
+                                ${requestScope.error}
+                            </div>
+                                
+                        </c:if>
 
                     <form action="${pageContext.request.contextPath}/login" method="POST">
 

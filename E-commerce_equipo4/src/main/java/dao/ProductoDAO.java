@@ -100,7 +100,7 @@ public class ProductoDAO implements IProductoDAO{
     public List<Producto> listaTop(int limite) {
         EntityManager em = JPAUtil.getInstance().getEntityManager();
         try {
-            TypedQuery<Producto> query = em.createQuery("SELECT u FROM Producto ORDER BY u.id DESC", Producto.class);
+            TypedQuery<Producto> query = em.createQuery("SELECT u FROM Producto u ORDER BY u.id DESC", Producto.class);
             query.setMaxResults(limite);
             return query.getResultList();
         } catch (Exception e) {
