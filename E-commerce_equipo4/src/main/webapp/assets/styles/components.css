@@ -53,12 +53,19 @@ nav ul {
     align-items: center;
     gap: 20px;
     list-style: none;
+    color: var(--color-texto);
 }
  
 nav ul img {
     width: 30px;
     height: auto;
     cursor: pointer;
+}
+
+nav li, a{
+    color: var(--color-texto);
+    font-weight: 700;
+    text-decoration: none;
 }
  
  

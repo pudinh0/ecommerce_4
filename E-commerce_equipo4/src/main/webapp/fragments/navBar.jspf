@@ -15,14 +15,14 @@
     <ul>
         <c:choose>
             <c:when test="${not empty sessionScope.usuario}">
-                <li style="color: white; font-weight: bold; margin-right: 15px;">
+                <li>
                     Hola, ${sessionScope.nombreUsuario}
                 </li>
                 <li>
                     <a href="#"><img src="${pageContext.request.contextPath}/assets/img/configuracion.png" alt="Configuracion de la cuenta"></a>
                 </li>
                 <li>
-                    <a href="${pageContext.request.contextPath}/logout" style="color: white; text-decoration: none; font-weight: bold;">
+                    <a href="${pageContext.request.contextPath}/logout">
                         Salir
                     </a>
                 </li>
