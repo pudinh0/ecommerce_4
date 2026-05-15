@@ -11,7 +11,7 @@
 <html lang="es">
 
     <head>
-        <title>Catálogo - SoftFriends</title>
+        <title>Catalogo - SoftFriends</title>
         <meta name="description" content="Explora nuestro catálogo de peluches adorables.">
 
         <%@ include file="/fragments/styles.jspf" %>
@@ -107,35 +107,30 @@
             <section class="carrito">
                 <header>
                     <h3>Carrito</h3>
-
-                    <c:if test="${not empty requestScope.carrito and not empty requestScope.carrito.itemsCarrito}">
-                        <button type="button" class="btn-agregar js-add-carrito" data-id="${producto.id}" aria-label="Agregar al carrito">
-                            <img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png" alt="Agregar al carrito">
-                        </button>
-                    </c:if>
-
-                    <c:choose>
-                        <c:when test="${empty requestScope.carrito or empty requestScope.carrito.itemsCarrito}">
-                            <p>0 artículos</p>
-                        </c:when>
-                        <c:otherwise>
-                            <p>${requestScope.carrito.itemsCarrito.size()} artículos</p>
-                        </c:otherwise>
-                    </c:choose>
+                    <p id="contador-articulos-carrito">
+                        <c:choose>
+                            <c:when test="${empty requestScope.carrito or empty requestScope.carrito.itemsCarrito}">
+                                0 artículos
+                            </c:when>
+                            <c:otherwise>
+                                ${requestScope.carrito.itemsCarrito.size()} artículos
+                            </c:otherwise>
+                        </c:choose>
+                    </p>
                 </header>
 
-                <div class="lista-carrito">
+                <div class="lista-carrito" id="contenedor-items-carrito">
                     <c:choose>
                         <c:when test="${empty requestScope.carrito or empty requestScope.carrito.itemsCarrito}">
                             <p class="msg-vacio">
-                                Tu carrito está vacío. ¡Agrega algunos peluches!
+                                Tu carrito está vacío.
+                                ¡Agrega algunos peluches!
                             </p>
                         </c:when>
 
                         <c:otherwise>
                             <c:forEach items="${requestScope.carrito.itemsCarrito}" var="item">
                                 <article>
-
                                     <c:choose>
                                         <c:when test="${fn:startsWith(item.producto.rutaImagen, 'http')}">
                                             <img src="${item.producto.rutaImagen}" alt="${item.producto.nombre}">
@@ -151,15 +146,16 @@
                                     </div>
 
                                     <div class="controles-cantidad">
-                                        <form action="${pageContext.request.contextPath}/carrito-mvc" method="POST">
+                                        <form method="POST">
                                             <input type="hidden" name="accion" value="disminuir">
                                             <input type="hidden" name="idProducto" value="${item.producto.id}">
+                                            <input type="hidden" name="idItem" value="${item.id}">
                                             <button type="submit">-</button>
                                         </form>
 
                                         <span>${item.cantidad}</span>
 
-                                        <form action="${pageContext.request.contextPath}/carrito-mvc" method="POST">
+                                        <form method="POST">
                                             <input type="hidden" name="accion" value="aumentar">
                                             <input type="hidden" name="idProducto" value="${item.producto.id}">
                                             <button type="submit">+</button>
@@ -174,19 +170,21 @@
                 <footer>
                     <div class="fila-subtotal">
                         <span>Subtotal</span>
-                        <span>$${empty requestScope.carrito ? '0.00' : requestScope.carrito.total}</span>
+                        <span id="subtotal-carrito">$${empty requestScope.carrito ? '0.00' : requestScope.carrito.total}</span>
                     </div>
                     <div class="fila-total">
                         <strong>Total</strong>
-                        <strong class="total-precio">$${empty requestScope.carrito ? '0.00' : requestScope.carrito.total}</strong>
+                        <strong class="total-precio" id="total-precio-carrito">$${empty requestScope.carrito ? '0.00' : requestScope.carrito.total}</strong>
                     </div>
 
-                    <c:if test="${not empty requestScope.carrito and not empty requestScope.carrito.itemsCarrito}">
-                        <button class="btn btn--primary" type="button" onclick="window.location.href = '${pageContext.request.contextPath}/vistas/app/pago.jsp'">
-                            <img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png" alt="" aria-hidden="true">
-                            COMPRAR
-                        </button>
-                    </c:if>
+                    <div id="contenedor-accion-carrito">
+                        <c:if test="${not empty requestScope.carrito and not empty requestScope.carrito.itemsCarrito}">
+                            <button class="btn btn--primary" type="button" onclick="window.location.href = '${pageContext.request.contextPath}/vistas/app/pago.jsp'">
+                                <img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png" alt="" aria-hidden="true">
+                                COMPRAR
+                            </button>
+                        </c:if>
+                    </div>
                 </footer>
             </section>
 

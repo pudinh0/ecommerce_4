@@ -30,25 +30,27 @@ public class CarritoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
         try {
-            String pathInfo = request.getPathInfo();
+            HttpSession session = request.getSession(false);
+            String correoUsuario = (String) request.getAttribute("usuario");
 
-            if (pathInfo != null && pathInfo.length() > 1) {
-                String correoUsuario = pathInfo.substring(1);
+            if (correoUsuario == null && session != null) {
+                correoUsuario = (String) session.getAttribute("usuario");
+            }
 
+            if (correoUsuario != null) {
                 CarritoDTO carrito = carritoService.obtenerCarrito(correoUsuario);
-
                 response.setStatus(HttpServletResponse.SC_OK);
                 JSONMapper.mapper.writeValue(response.getWriter(), carrito);
             } else {
-                enviarError(response, HttpServletResponse.SC_BAD_REQUEST, "Falta el ID (correo) del usuario en la URL.");
+                enviarError(response, HttpServletResponse.SC_UNAUTHORIZED, "Debes iniciar sesión para ver el carrito.");
             }
 
-        } catch (IOException e) {
+        } catch (Exception e) {
+            e.printStackTrace();
             enviarError(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error al cargar el carrito: " + e.getMessage());
         }
     }
@@ -56,28 +58,27 @@ public class CarritoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
         try {
             Map<String, Object> body = JSONMapper.mapper.readValue(request.getInputStream(), Map.class);
+            if (body == null || !body.containsKey("idProducto") || !body.containsKey("cantidad")) {
+                enviarError(response, HttpServletResponse.SC_BAD_REQUEST, "Faltan datos en la petición.");
+                return;
+            }
 
             Long idProducto = Long.valueOf(body.get("idProducto").toString());
             int cantidad = Integer.parseInt(body.get("cantidad").toString());
 
             HttpSession session = request.getSession(false);
-
             String correoUsuario = (String) request.getAttribute("usuario");
 
-            if (correoUsuario == null) {
-                if (session != null) {
-                    correoUsuario = (String) session.getAttribute("usuario");
-                }
+            if (correoUsuario == null && session != null) {
+                correoUsuario = (String) session.getAttribute("usuario");
             }
-
             if (correoUsuario == null) {
-                enviarError(response, HttpServletResponse.SC_UNAUTHORIZED, "Debes iniciar sesión para agregar al carrito.");
+                enviarError(response, HttpServletResponse.SC_UNAUTHORIZED, "Debes iniciar sesión.");
                 return;
             }
 
@@ -85,38 +86,38 @@ public class CarritoServlet extends HttpServlet {
 
             response.setStatus(HttpServletResponse.SC_CREATED);
             Map<String, String> exito = new HashMap<>();
-            exito.put("mensaje", "Producto agregado al carrito con exito");
+            exito.put("mensaje", "Producto agregado con éxito");
             JSONMapper.mapper.writeValue(response.getWriter(), exito);
 
-        } catch (IOException | NumberFormatException e) {
-            enviarError(response, HttpServletResponse.SC_BAD_REQUEST, "Ocurrió un problema con el carrito: " + e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            enviarError(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error: " + e.getMessage());
         }
-
     }
 
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
         try {
             Map<String, Object> body = JSONMapper.mapper.readValue(request.getInputStream(), Map.class);
+            if (body == null || !body.containsKey("idItem")) {
+                enviarError(response, HttpServletResponse.SC_BAD_REQUEST, "Falta el id del item a eliminar.");
+                return;
+            }
+
             Long idItem = Long.valueOf(body.get("idItem").toString());
 
             HttpSession session = request.getSession(false);
-
             String correoUsuario = (String) request.getAttribute("usuario");
 
-            if (correoUsuario == null) {
-                if (session != null) {
-                    correoUsuario = (String) session.getAttribute("usuario");
-                }
+            if (correoUsuario == null && session != null) {
+                correoUsuario = (String) session.getAttribute("usuario");
             }
-
             if (correoUsuario == null) {
-                enviarError(response, HttpServletResponse.SC_UNAUTHORIZED, "Debes iniciar sesión para editar el carrito.");
+                enviarError(response, HttpServletResponse.SC_UNAUTHORIZED, "Debes iniciar sesión.");
                 return;
             }
 
@@ -127,14 +128,12 @@ public class CarritoServlet extends HttpServlet {
             exito.put("mensaje", "Item eliminado del carrito correctamente");
             JSONMapper.mapper.writeValue(response.getWriter(), exito);
 
-        } catch (IOException | NumberFormatException e) {
-            enviarError(response, HttpServletResponse.SC_BAD_REQUEST, "Error al eliminar el item: " + e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            enviarError(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error: " + e.getMessage());
         }
     }
 
-    /**
-     * Método auxiliar para mandar los errores limpios en JSON
-     */
     private void enviarError(HttpServletResponse response, int statusCode, String mensaje) throws IOException {
         response.setStatus(statusCode);
         Map<String, String> error = new HashMap<>();
