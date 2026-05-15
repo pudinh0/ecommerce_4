@@ -149,7 +149,7 @@
                                         <form method="POST">
                                             <input type="hidden" name="accion" value="disminuir">
                                             <input type="hidden" name="idProducto" value="${item.producto.id}">
-                                            <input type="hidden" name="idItem" value="${item.id}">
+                                            <input type="hidden" name="idItem" value="${item.idItemCarrito}">
                                             <button type="submit">-</button>
                                         </form>
 
