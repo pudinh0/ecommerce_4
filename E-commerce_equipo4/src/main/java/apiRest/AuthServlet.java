@@ -4,17 +4,15 @@
  */
 package apiRest;
 
-import dto.ResponseMessageDTO;
-import dto.UsuarioAuthDTO;
 import dto.UsuarioDTO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import models.Usuario;
+import java.io.PrintWriter;
+import java.util.Map;
 import service.IUsuarioService;
 import service.UsuarioService;
 import util.JSONMapper;
@@ -34,24 +32,51 @@ public class AuthServlet extends HttpServlet {
             throws ServletException, IOException {
 
         response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        PrintWriter out = response.getWriter();
 
-        UsuarioAuthDTO req = JSONMapper.mapper.readValue(request.getInputStream(), UsuarioAuthDTO.class);
-        UsuarioDTO user = usuarioService.autenticar(req.getCorreo(), req.getContrasenia());
-        ResponseMessageDTO mensaje = new ResponseMessageDTO();
+        try {
+            Map<String, String> body = JSONMapper.mapper.readValue(
+                    request.getReader(), Map.class
+            );
 
-        if (user == null) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401
-            mensaje.setSuccess(false);
-            mensaje.setMessage("Credenciales incorrectas para el correo: " + req.getCorreo());
-            JSONMapper.mapper.writeValue(response.getWriter(), mensaje);
-            return;
+            String correo = body.get("correo");
+            String password = body.get("password");
+
+            if (correo == null || correo.trim().isEmpty()
+                    || password == null || password.trim().isEmpty()) {
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                out.print(JSONMapper.mapper.writeValueAsString(
+                        Map.of("success", false, "message", "Correo y contraseña son obligatorios")
+                ));
+                return;
+            }
+
+            UsuarioDTO usuario = usuarioService.autenticar(correo.trim(), password.trim());
+
+            if (usuario != null) {
+                String token = JWTUtil.generarToken(usuario.getCorreo());
+                response.setStatus(HttpServletResponse.SC_OK);
+                out.print(JSONMapper.mapper.writeValueAsString(
+                        Map.of("success", true, "message", token)
+                ));
+            } else {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                out.print(JSONMapper.mapper.writeValueAsString(
+                        Map.of("success", false, "message", "Credenciales incorrectas")
+                ));
+            }
+
+        } catch (IllegalArgumentException e) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            out.print(JSONMapper.mapper.writeValueAsString(
+                    Map.of("success", false, "message", e.getMessage())
+            ));
+        } catch (Exception e) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            out.print(JSONMapper.mapper.writeValueAsString(
+                    Map.of("success", false, "message", "Error interno del servidor")
+            ));
         }
-
-        String token = JWTUtil.generarToken(user.getCorreo());
-
-        mensaje.setSuccess(true);
-        mensaje.setMessage(token);
-        response.setContentType("application/json");
-        JSONMapper.mapper.writeValue(response.getWriter(), mensaje);
     }
 }

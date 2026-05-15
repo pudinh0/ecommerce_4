@@ -35,33 +35,31 @@
                         <h2> Inicio de Sesión </h2>
                         <p> Que alegría verte por aquí! </p>
                     </div>
-                        <c:if test="${not empty requestScope.error}">
-                            <div class="mensaje-error-banner"> 
-                                ${requestScope.error}
-                            </div>
-                                
-                        </c:if>
+                    <c:if test="${not empty requestScope.error}">
+                        <div class="mensaje-error-banner"> 
+                            ${requestScope.error}
+                        </div>
 
-                    <form action="${pageContext.request.contextPath}/login" method="POST">
+                    </c:if>
 
+                    <form id="form-login">
                         <div class="form-group">
                             <label for="correo">Correo Electronico</label>
-                            <input type="email" id="correo" name="correo" class="form-control" placeholder="ejemplo@correo.com" required autocomplete="email">
+                            <input type="email" id="correo" name="correo" class="form-control" required>
                         </div>
 
                         <div class="form-group">
-                            <div class="lblPassword">             
-                                <label for="password">Contraseña</label>
-                                <a href="#">¿Olvidaste tu contraseña?</a>
-                            </div>
-                            <input type="password" id="password" name="contrasenia" class="form-control" placeholder="Ingresa tu contraseña" required autocomplete="current-password">
+                            <label for="password">Contraseña</label>
+                            <input type="password" id="password" name="password" class="form-control" required>
                         </div>
 
-                        <button type="submit" class="btn btn--primary btn-auth">
-                            Iniciar Sesión
-                        </button>
-
+                        <button type="submit" class="btn btn--primary btn-auth">Iniciar Sesión</button>
                     </form>
+
+                    <script>
+                        window.CONTEXT_PATH = '${pageContext.request.contextPath}';
+                    </script>
+                    <script type="module" src="${pageContext.request.contextPath}/js/app/login.js"></script>
 
                     <div class="auth-links">
                         <p>¿No tienes una cuenta? <a href="${pageContext.request.contextPath}/vistas/auth/registrarse.jsp">Regístrate aqui</a></p>

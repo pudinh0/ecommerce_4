@@ -10,7 +10,7 @@
 
     <head>
         <title>Pago - SoftFriends</title>
-        
+
         <%@ include file="/fragments/styles.jspf" %>
     </head>
 
@@ -41,7 +41,7 @@
             <main class="seccion-carrito-detalle">
                 <header class="encabezado-carrito">
                     <h1>Carrito</h1>
-                    <button class="btn-agregar-mas" onclick="window.location.href='${pageContext.request.contextPath}/catalogo'">+ Agregar</button>
+                    <button class="btn-agregar-mas" onclick="window.location.href = '${pageContext.request.contextPath}/catalogo'">+ Agregar</button>
                 </header>
 
                 <div class="contenedor-articulos">
@@ -101,10 +101,15 @@
                         <strong class="total-precio">$0.00</strong>
                     </div>
 
-                    <button class="btn btn--primary" type="button">
+                    <button id="btn-procesar-pago" class="btn btn--primary" type="button">
                         <img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png" alt="" aria-hidden="true">
-                        COMPRAR
+                        <span id="texto-boton-pago">CONFIRMAR PAGO</span>
                     </button>
+
+                    <script>
+                        window.CONTEXT_PATH = '${pageContext.request.contextPath}';
+                    </script>
+                    <script type="module" src="${pageContext.request.contextPath}/js/app/pago.js"></script>
                 </div>
 
             </aside>

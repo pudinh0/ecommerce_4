@@ -90,24 +90,12 @@
                                         </c:choose>
                                     </figure>
 
-                                    <div class="info-producto">
-                                        <h3>${producto.nombre}</h3>
+                                    <div class="precio-carrito">
+                                        <p class="precio">$${producto.precio}</p>
 
-                                        <p class="categoria">
-                                            ${producto.descripcion}
-                                        </p>
-
-                                        <div class="precio-carrito">
-                                            <p class="precio">$${producto.precio}</p>
-
-                                            <form action="${pageContext.request.contextPath}/carrito-mvc" method="POST">
-                                                <input type="hidden" name="accion" value="agregar">
-                                                <input type="hidden" name="idProducto" value="${producto.id}">
-                                                <button type="submit" class="btn-agregar" aria-label="Agregar al carrito">
-                                                    <img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png" alt="Agregar al carrito">
-                                                </button>
-                                            </form>
-                                        </div>
+                                        <button type="button" class="btn-agregar js-add-carrito" data-id="${producto.id}" aria-label="Agregar al carrito">
+                                            <img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png" alt="Agregar al carrito">
+                                        </button>
                                     </div>
                                 </article>
                             </c:forEach>
@@ -121,10 +109,9 @@
                     <h3>Carrito</h3>
 
                     <c:if test="${not empty requestScope.carrito and not empty requestScope.carrito.itemsCarrito}">
-                        <form action="${pageContext.request.contextPath}/carrito-mvc" method="POST">
-                            <input type="hidden" name="accion" value="vaciar">
-                            <button type="submit" class="btn-secondary">BORRAR TODO</button>
-                        </form>
+                        <button type="button" class="btn-agregar js-add-carrito" data-id="${producto.id}" aria-label="Agregar al carrito">
+                            <img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png" alt="Agregar al carrito">
+                        </button>
                     </c:if>
 
                     <c:choose>
@@ -204,6 +191,9 @@
             </section>
 
         </div>
-
+        <script>
+            window.CONTEXT_PATH = '${pageContext.request.contextPath}';
+        </script>
+        <script type="module" src="${pageContext.request.contextPath}/js/app/catalogo.js"></script>
     </body>
 </html>

@@ -18,7 +18,7 @@ import util.JWTUtil;
 
 /**
  *
- * @author Usuario
+ * @author Abraham Coronel
  */
 @WebFilter(filterName = "AuthFilter", urlPatterns = {"/*"})
 public class AuthFilter implements Filter {
@@ -30,14 +30,22 @@ public class AuthFilter implements Filter {
 
         String path = req.getRequestURI().substring(req.getContextPath().length());
 
-        //Rutas Públicas (Recursos estaticos, login, registro y catalogo publico)
-        boolean isStaticResource = path.startsWith("/assets/") || path.contains("styles") || path.contains("img");
-        boolean isAuthRequest = path.contains("iniciar-sesion") || path.contains("registro") || path.contains("registrarse") || path.contains("/login") || path.equals("/catalogo") || path.equals("/inicio");
-        boolean isAuthPath = path.equals("/api/auth");
-        boolean isPublicGet = path.equals("/api/productos") || (path.startsWith("/api/productos/") && req.getMethod().equals("GET"));
-        
-        boolean isPublicApi = isAuthPath || isPublicGet; 
-        if (isStaticResource || isAuthRequest || isPublicApi) {
+        boolean isStaticResource = path.startsWith("/assets/")
+                || path.startsWith("/js/")
+                || path.startsWith("/css/")
+                || path.startsWith("/fragments/")
+                || path.contains("styles")
+                || path.contains("img");
+        boolean isAuthRequest = path.startsWith("/vistas/auth/")
+                || path.equals("/catalogo")
+                || path.equals("/inicio")
+                || path.equals("/");
+        boolean isAuthPath = path.startsWith("/api/auth");
+        boolean isPublicGet = path.equals("/api/productos")
+                || (path.startsWith("/api/productos/")
+                && req.getMethod().equals("GET"));
+
+        if (isStaticResource || isAuthRequest || isAuthPath || isPublicGet) {
             chain.doFilter(request, response);
             return;
         }

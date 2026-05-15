@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btnLogout.addEventListener('click', (e) => {
             e.preventDefault();
             localStorage.removeItem('jwt_token');
-            window.location.href = 'index.html'; 
+            window.location.href = `${window.CONTEXT_PATH}/index.jsp`; 
         });
     }
 });
