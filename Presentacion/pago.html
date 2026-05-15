@@ -19,8 +19,8 @@
         </a>
 
         <ul>
-            <li><img src="img/configuracion.png" alt="Icono de configuracion"></li>
-            <li><img src="img/iconoUsuario.png" alt="Icono de usuario"></li>
+            <li><a href="#"><img src="img/configuracion.png" alt="Icono de configuracion"></a></li>
+            <li><a id="btn-perfil" href="#"><img src="img/iconoUsuario.png" alt="Icono de usuario"></a></li>
         </ul>
     </nav>
 
@@ -28,42 +28,33 @@
 
         <main class="seccion-carrito-detalle">
             <header class="encabezado-carrito">
-                <h1>Carrito</h1>
-                <button class="btn-agregar-mas">+ Agregar</button>
+                <h1>Tu Pedido</h1>
+                <button class="btn-agregar-mas" id="btn-volver-catalogo">+ Seguir Comprando</button>
             </header>
 
-            <div class="contenedor-articulos">
-                <div class="encabezado-lista">
-                    <span>Articulos (0)</span>
-                    <span>Precio</span>
+            <div class="contenedor-articulos" id="lista-pago-articulos">
                 </div>
-
-                <div class="lista-articulos-vacia">
-                    <p>No hay articulos en el carrito por el momento.</p>
-                </div>
-            </div>
         </main>
 
-        <aside class="seccion-pago-resumen">
-
+        <aside class="seccion-resumen">
             <div class="tarjeta-blanca metodo-pago">
-                <h3>Metodo de Pago</h3>
+                <h3>Método de pago</h3>
                 <div class="opciones-pago">
-
-                    <div class="opcion-pago seleccionada">
-                        <div class="radio-custom"></div>
+                    
+                    <div class="opcion-pago activa" data-metodo="tarjeta">
+                        <div class="radio-custom seleccionado"></div>
                         <img src="img/iconoTarjeta.png" alt="Tarjeta">
-                        <span>Tarjeta de Credito/Débito</span>
+                        <span>Tarjeta (Crédito/Débito)</span>
                         <img src="img/palomitaRosa.png" class="icono-check" alt="Check">
                     </div>
 
-                    <div class="opcion-pago">
+                    <div class="opcion-pago" data-metodo="efectivo">
                         <div class="radio-custom"></div>
                         <img src="img/iconoEfectivo.png" alt="Efectivo">
                         <span>Efectivo</span>
                     </div>
 
-                    <div class="opcion-pago">
+                    <div class="opcion-pago" data-metodo="wallet">
                         <div class="radio-custom"></div>
                         <img src="img/iconoWallet.png" alt="Wallet">
                         <span>Wallet Digital</span>
@@ -77,21 +68,21 @@
 
                 <div class="fila">
                     <span>Subtotal</span>
-                    <span>$0.00</span>
+                    <span id="resumen-subtotal">$0.00</span>
                 </div>
                 <div class="fila descuento">
                     <span>Descuento</span>
-                    <span>-$0.00</span>
+                    <span id="resumen-descuento">-$0.00</span>
                 </div>
 
                 <div class="fila-total">
                     <strong>Total</strong>
-                    <strong class="total-precio">$0.00</strong>
+                    <strong class="total-precio" id="resumen-total">$0.00</strong>
                 </div>
 
-                <button class="btn btn--primary" type="button">
+                <button id="btn-procesar-pago" class="btn btn--primary" type="button">
                     <img src="img/iconoComprar.png" alt="" aria-hidden="true">
-                    COMPRAR
+                    CONFIRMAR PAGO
                 </button>
             </div>
 
@@ -99,6 +90,7 @@
 
     </div>
 
+    <script type="module" src="js/app/pago.js"></script>
 </body>
 
 </html>
