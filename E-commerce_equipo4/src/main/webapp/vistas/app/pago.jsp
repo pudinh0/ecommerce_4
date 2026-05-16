@@ -15,11 +15,7 @@
     </head>
 
     <body class="fondo-gris">
-        <%
-            if (session.getAttribute("usuario") == null) {
-                response.sendRedirect("/iniciar-sesion.jsp");
-            }
-        %>
+        
         <nav>
             <a class="logo" href="${pageContext.request.contextPath}/index.jsp">
                 <img src="${pageContext.request.contextPath}/assets/img/logo.png" alt="Logo SoftFriends">
@@ -28,10 +24,10 @@
 
             <ul>
                 <li>
-                    <a href="#"><img src="${pageContext.request.contextPath}/assets/img/configuracion.png" alt="Icono de configuracion"></a>
+                    <a href="${pageContext.request.contextPath}/vistas/app/perfil.jsp"><img src="${pageContext.request.contextPath}/assets/img/configuracion.png" alt="Icono de configuracion"></a>
                 </li>
                 <li>
-                    <a href="#"><img src="${pageContext.request.contextPath}/assets/img/iconoUsuario.png" alt="Icono de usuario"></a>
+                    <a href="#" id="btn-logout-pago"><img src="${pageContext.request.contextPath}/assets/img/iconoUsuario.png" alt="Icono de usuario"></a>
                 </li>
             </ul>
         </nav>
@@ -41,17 +37,17 @@
             <main class="seccion-carrito-detalle">
                 <header class="encabezado-carrito">
                     <h1>Carrito</h1>
-                    <button class="btn-agregar-mas" onclick="window.location.href = '${pageContext.request.contextPath}/catalogo'">+ Agregar</button>
+                    <button class="btn-agregar-mas" onclick="window.location.href = '${pageContext.request.contextPath}/vistas/app/catalogo.jsp'">+ Agregar</button>
                 </header>
 
                 <div class="contenedor-articulos">
                     <div class="encabezado-lista">
-                        <span>Artículos (0)</span>
+                        <span>Artículos</span>
                         <span>Precio</span>
                     </div>
 
                     <div class="lista-articulos-vacia">
-                        <p>No hay artículos en el carrito por el momento.</p>
+                        <p>Revisa tus artículos antes de pagar.</p>
                     </div>
                 </div>
             </main>
@@ -89,16 +85,12 @@
 
                     <div class="fila">
                         <span>Subtotal</span>
-                        <span>$0.00</span>
-                    </div>
-                    <div class="fila descuento">
-                        <span>Descuento</span>
-                        <span>-$0.00</span>
+                        <span>Confirmar en servidor</span>
                     </div>
 
                     <div class="fila-total">
                         <strong>Total</strong>
-                        <strong class="total-precio">$0.00</strong>
+                        <strong class="total-precio">Procesando...</strong>
                     </div>
 
                     <button id="btn-procesar-pago" class="btn btn--primary" type="button">
@@ -108,6 +100,10 @@
 
                     <script>
                         window.CONTEXT_PATH = '${pageContext.request.contextPath}';
+                        
+                        if(!localStorage.getItem('jwt_token')){
+                            window.location.href = '${pageContext.request.contextPath}/vistas/auth/iniciar-sesion.jsp';
+                        }
                     </script>
                     <script type="module" src="${pageContext.request.contextPath}/js/app/pago.js"></script>
                 </div>

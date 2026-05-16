@@ -99,21 +99,24 @@ const actualizarContenedorDerecho = (carrito) => {
 
 document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('jwt_token');
+    
     if (token) {
         try {
             actualizarContenedorDerecho(await obtenerCarritoServidor(token));
         } catch (e) {
+            console.error(e);
         }
     }
 
-    document.querySelectorAll('.js-add-carrito').forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-            if (!token)
-                return window.location.href = `${window.CONTEXT_PATH}/vistas/auth/iniciar-sesion.jsp`;
-            const ok = await cambiarCantidadAPI(e.currentTarget.getAttribute('data-id'), 1, token);
-            if (ok)
+    window.addEventListener('carritoActualizado', async () => {
+        if (token) {
+            try {
                 actualizarContenedorDerecho(await obtenerCarritoServidor(token));
-        });
+                mostrarAlerta('Producto agregado al carrito', 'success');
+            } catch(e) {
+                console.error(e);
+            }
+        }
     });
 
     const contenedorItems = document.getElementById('contenedor-items-carrito');

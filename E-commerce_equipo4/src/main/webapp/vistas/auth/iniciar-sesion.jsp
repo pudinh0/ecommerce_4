@@ -33,18 +33,18 @@
 
                     <div class="textoIniciarSesion">
                         <h2> Inicio de Sesión </h2>
-                        <p> Que alegría verte por aquí! </p>
+                        <p> ¡Que alegría verte por aquí! </p>
                     </div>
+                    
                     <c:if test="${not empty requestScope.error}">
                         <div class="mensaje-error-banner"> 
                             ${requestScope.error}
                         </div>
-
                     </c:if>
 
                     <form id="form-login">
                         <div class="form-group">
-                            <label for="correo">Correo Electronico</label>
+                            <label for="correo">Correo Electrónico</label>
                             <input type="email" id="correo" name="correo" class="form-control" required>
                         </div>
 
@@ -62,7 +62,7 @@
                     <script type="module" src="${pageContext.request.contextPath}/js/app/login.js"></script>
 
                     <div class="auth-links">
-                        <p>¿No tienes una cuenta? <a href="${pageContext.request.contextPath}/vistas/auth/registrarse.jsp">Regístrate aqui</a></p>
+                        <p>¿No tienes una cuenta? <a href="${pageContext.request.contextPath}/vistas/auth/registrarse.jsp">Regístrate aquí</a></p>
                     </div>
                 </div>
             </div>

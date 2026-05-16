@@ -7,9 +7,9 @@
         <span>SoftFriends</span>
     </a>
 
-    <form name="form_busqueda" action="${pageContext.request.contextPath}/catalogo" method="GET">
-        <img src="${pageContext.request.contextPath}/assets/img/iconoBuscar.png" alt="Icono de búsqueda" class="search-icon">
-        <input id="txt_buscar" name="txt_buscar" type="text" placeholder="Search">
+    <form id="form-busqueda" action="${pageContext.request.contextPath}/catalogo" method="GET">
+        <img src="${pageContext.request.contextPath}/assets/img/iconoBuscar.png" alt="Icono de búsqueda" class="search-icon" id="btn-buscar" style="cursor: pointer;">
+        <input id="input-busqueda" name="txt_buscar" type="text" placeholder="Buscar productos...">
     </form>
 
     <ul>
@@ -19,12 +19,10 @@
                     Hola, ${sessionScope.nombreUsuario}
                 </li>
                 <li>
-                    <a href="#"><img src="${pageContext.request.contextPath}/assets/img/configuracion.png" alt="Configuracion de la cuenta"></a>
+                    <a href="${pageContext.request.contextPath}/vistas/app/perfil.jsp"><img src="${pageContext.request.contextPath}/assets/img/configuracion.png" alt="Configuracion de la cuenta"></a>
                 </li>
                 <li>
-                    <a href="${pageContext.request.contextPath}/logout">
-                        Salir
-                    </a>
+                    <a href="#" id="btn-logout">Salir</a>
                 </li>
             </c:when>
 
@@ -38,9 +36,13 @@
         </c:choose>
 
         <li>
-            <a href="${pageContext.request.contextPath}/catalogo">
+            <a href="${pageContext.request.contextPath}/vistas/app/catalogo.jsp">
                 <img src="${pageContext.request.contextPath}/assets/img/iconoCompra.png" alt="Carrito">
             </a>
         </li>
     </ul>
 </nav>
+
+<c:if test="${not empty sessionScope.usuario}">
+    <script type="module" src="${pageContext.request.contextPath}/js/app/logout.js"></script>
+</c:if>

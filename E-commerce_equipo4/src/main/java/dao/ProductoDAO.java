@@ -39,13 +39,20 @@ public class ProductoDAO implements IProductoDAO {
     public List<Producto> buscarYFiltrarProductos(String busqueda, String nombreCategoria) {
         EntityManager em = JPAUtil.getInstance().getEntityManager();
         try {
-            StringBuilder jpql = new StringBuilder("SELECT p FROM Producto p WHERE 1=1 ");
+            StringBuilder jpql = new StringBuilder("SELECT DISTINCT p FROM Producto p ");
+
+            if (nombreCategoria != null && !nombreCategoria.trim().isEmpty()) {
+                jpql.append("JOIN p.productosCategorias pc JOIN pc.categoria c ");
+            }
+
+            jpql.append("WHERE 1=1 ");
 
             if (busqueda != null && !busqueda.trim().isEmpty()) {
                 jpql.append("AND LOWER(p.nombre) LIKE LOWER(:busqueda) ");
             }
+
             if (nombreCategoria != null && !nombreCategoria.trim().isEmpty()) {
-                jpql.append("AND LOWER(p.categoria.nombre) = LOWER(:categoria) ");
+                jpql.append("AND LOWER(c.nombre) = LOWER(:categoria) ");
             }
 
             TypedQuery<Producto> query = em.createQuery(jpql.toString(), Producto.class);

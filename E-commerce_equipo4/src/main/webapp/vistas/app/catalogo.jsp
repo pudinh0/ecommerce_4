@@ -38,28 +38,37 @@
 
             <main>
                 <section class="categorias">
+                    
+                    <select id="select-categoria" style="display:none;">
+                        <option value="">Todo</option>
+                        <option value="Marino">Marino</option>
+                        <option value="Osos">Osos</option>
+                        <option value="Místico">Místico</option>
+                        <option value="Dinosaurios">Dinosaurios</option>
+                    </select>
+
                     <ul>
-                        <li><button class="active">Todo</button></li>
+                        <li><button class="active btn-categoria" data-cat="">Todo</button></li>
                         <li>
-                            <button>
+                            <button class="btn-categoria" data-cat="Marino">
                                 <img src="${pageContext.request.contextPath}/assets/img/gota.png" alt="Icono gota">
                                 Marino
                             </button>
                         </li>
                         <li>
-                            <button>
+                            <button class="btn-categoria" data-cat="Osos">
                                 <img src="${pageContext.request.contextPath}/assets/img/pinos.png" alt="Icono pinos">
                                 Osos
                             </button>
                         </li>
                         <li>
-                            <button>
+                            <button class="btn-categoria" data-cat="Místico">
                                 <img src="${pageContext.request.contextPath}/assets/img/brillos.png" alt="Icono brillos">
                                 Místico
                             </button>
                         </li>
                         <li>
-                            <button>
+                            <button class="btn-categoria" data-cat="Dinosaurios">
                                 <img src="${pageContext.request.contextPath}/assets/img/gota.png" alt="Icono dinosaurios">
                                 Dinosaurios
                             </button>
@@ -67,7 +76,7 @@
                     </ul>
                 </section>
 
-                <section class="productos">
+                <section class="productos" id="contenedor-productos">
 
                     <c:choose>
                         <c:when test="${empty requestScope.listaProductos}">
@@ -78,7 +87,7 @@
                         </c:when>
                         <c:otherwise>
                             <c:forEach items="${requestScope.listaProductos}" var="producto">
-                                <article>
+                                <article class="card-producto">
                                     <figure>
                                         <c:choose>
                                             <c:when test="${fn:startsWith(producto.rutaImagen, 'http')}">
@@ -120,52 +129,7 @@
                 </header>
 
                 <div class="lista-carrito" id="contenedor-items-carrito">
-                    <c:choose>
-                        <c:when test="${empty requestScope.carrito or empty requestScope.carrito.itemsCarrito}">
-                            <p class="msg-vacio">
-                                Tu carrito está vacío.
-                                ¡Agrega algunos peluches!
-                            </p>
-                        </c:when>
-
-                        <c:otherwise>
-                            <c:forEach items="${requestScope.carrito.itemsCarrito}" var="item">
-                                <article>
-                                    <c:choose>
-                                        <c:when test="${fn:startsWith(item.producto.rutaImagen, 'http')}">
-                                            <img src="${item.producto.rutaImagen}" alt="${item.producto.nombre}">
-                                        </c:when>
-                                        <c:otherwise>
-                                            <img src="${pageContext.request.contextPath}/${item.producto.rutaImagen}" alt="${item.producto.nombre}">
-                                        </c:otherwise>
-                                    </c:choose>
-
-                                    <div class="info-item-carrito">
-                                        <strong>${item.producto.nombre}</strong>
-                                        <p>$${item.producto.precio}</p>
-                                    </div>
-
-                                    <div class="controles-cantidad">
-                                        <form method="POST">
-                                            <input type="hidden" name="accion" value="disminuir">
-                                            <input type="hidden" name="idProducto" value="${item.producto.id}">
-                                            <input type="hidden" name="idItem" value="${item.idItemCarrito}">
-                                            <button type="submit">-</button>
-                                        </form>
-
-                                        <span>${item.cantidad}</span>
-
-                                        <form method="POST">
-                                            <input type="hidden" name="accion" value="aumentar">
-                                            <input type="hidden" name="idProducto" value="${item.producto.id}">
-                                            <button type="submit">+</button>
-                                        </form>
-                                    </div>
-                                </article>
-                            </c:forEach>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
+                    </div>
 
                 <footer>
                     <div class="fila-subtotal">
@@ -189,9 +153,21 @@
             </section>
 
         </div>
+        
         <script>
             window.CONTEXT_PATH = '${pageContext.request.contextPath}';
+            
+            document.querySelectorAll('.btn-categoria').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.btn-categoria').forEach(b => b.classList.remove('active'));
+                    e.currentTarget.classList.add('active');
+                    document.getElementById('select-categoria').value = e.currentTarget.getAttribute('data-cat');
+                    document.getElementById('btn-buscar').click(); 
+                });
+            });
         </script>
+        
+        <script type="module" src="${pageContext.request.contextPath}/js/app/busqueda.js"></script>
         <script type="module" src="${pageContext.request.contextPath}/js/app/catalogo.js"></script>
     </body>
 </html>

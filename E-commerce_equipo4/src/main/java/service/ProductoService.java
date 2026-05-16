@@ -51,11 +51,10 @@ public class ProductoService implements IProductoServicio {
     @Override
     public List<ProductoDTO> buscarYFiltrarProductos(String busqueda, String categoria) {
         List<Producto> productos = productoDAO.buscarYFiltrarProductos(busqueda, categoria);
-        return productos.stream().map(p -> {
-            ProductoDTO dto = new ProductoDTO();
-            productoMapper.toEntity(dto);
-            return dto;
-        }).collect(Collectors.toList());
+
+        return productos.stream()
+                .map(productoMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
