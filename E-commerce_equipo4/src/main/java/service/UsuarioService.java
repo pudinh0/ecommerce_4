@@ -113,8 +113,11 @@ public class UsuarioService implements IUsuarioService {
         if (usuarioDTO.getNombres() != null && !usuarioDTO.getNombres().trim().isEmpty()) {
             usuario.setNombres(usuarioDTO.getNombres());
         }
-        if (usuarioDTO.getCorreo() != null) {
-            usuario.setCorreo(usuarioDTO.getCorreo());
+        if (usuarioDTO.getPrimerApellido() != null && !usuarioDTO.getPrimerApellido().trim().isEmpty()) {
+            usuario.setPrimerApellido(usuarioDTO.getPrimerApellido());
+        }
+        if (usuarioDTO.getSegundoApellido() != null) {
+            usuario.setSegundoApellido(usuarioDTO.getSegundoApellido());
         }
 
         usuarioDAO.actualizar(usuario);

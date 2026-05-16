@@ -38,11 +38,19 @@ public class AuthFilter implements Filter {
                 || path.contains("img");
         boolean isAuthRequest = path.startsWith("/vistas/auth/")
                 || path.equals("/catalogo")
+                || path.equals("/vistas/app/catalogo.jsp")
+                || path.equals("/vistas/app/detalle-producto.jsp")
+                || path.equals("/vistas/app/pago.jsp")
+                || path.equals("/vistas/app/perfil.jsp")
+                || path.equals("/vistas/app/pedidos.jsp")
                 || path.equals("/inicio")
+                || path.equals("/index.jsp")
                 || path.equals("/");
         boolean isAuthPath = path.startsWith("/api/auth");
         boolean isPublicGet = path.equals("/api/productos")
                 || (path.startsWith("/api/productos/")
+                && req.getMethod().equals("GET"))
+                || (path.startsWith("/api/resenas/producto/")
                 && req.getMethod().equals("GET"));
 
         if (isStaticResource || isAuthRequest || isAuthPath || isPublicGet) {

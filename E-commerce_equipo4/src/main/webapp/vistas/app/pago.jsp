@@ -37,7 +37,7 @@
             <main class="seccion-carrito-detalle">
                 <header class="encabezado-carrito">
                     <h1>Carrito</h1>
-                    <button class="btn-agregar-mas" onclick="window.location.href = '${pageContext.request.contextPath}/vistas/app/catalogo.jsp'">+ Agregar</button>
+                    <button class="btn-agregar-mas" onclick="window.location.href = '${pageContext.request.contextPath}/catalogo'">+ Agregar</button>
                 </header>
 
                 <div class="contenedor-articulos">
@@ -46,7 +46,7 @@
                         <span>Precio</span>
                     </div>
 
-                    <div class="lista-articulos-vacia">
+                    <div class="lista-articulos-vacia" id="lista-articulos-pago">
                         <p>Revisa tus artículos antes de pagar.</p>
                     </div>
                 </div>
@@ -85,12 +85,12 @@
 
                     <div class="fila">
                         <span>Subtotal</span>
-                        <span>Confirmar en servidor</span>
+                        <span id="subtotal-pago">Confirmar en servidor</span>
                     </div>
 
                     <div class="fila-total">
                         <strong>Total</strong>
-                        <strong class="total-precio">Procesando...</strong>
+                        <strong class="total-precio" id="total-pago">Procesando...</strong>
                     </div>
 
                     <button id="btn-procesar-pago" class="btn btn--primary" type="button">
@@ -106,6 +106,7 @@
                         }
                     </script>
                     <script type="module" src="${pageContext.request.contextPath}/js/app/pago.js"></script>
+                    <script type="module" src="${pageContext.request.contextPath}/js/app/logout.js"></script>
                 </div>
 
             </aside>

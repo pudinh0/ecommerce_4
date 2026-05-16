@@ -110,13 +110,21 @@ public class PedidoServlet extends HttpServlet {
                 return;
             }
 
-            // Procesamos la compra llamando al service
-            pedidoService.procesarCompra(correoUsuario);
+            Map<String, Object> body = null;
+            if (request.getContentLengthLong() > 0) {
+                body = JSONMapper.mapper.readValue(request.getInputStream(), Map.class);
+            }
+            String metodoPago = body != null && body.get("metodoPago") != null
+                    ? body.get("metodoPago").toString()
+                    : "Tarjeta";
+
+            pedidoService.procesarCompra(correoUsuario, metodoPago);
 
             // Devolvemos respuesta de éxito 201 (Created)
             response.setStatus(HttpServletResponse.SC_CREATED);
             Map<String, String> exito = new HashMap<>();
             exito.put("mensaje", "Compra procesada y pedido creado con éxito");
+            exito.put("metodoPago", metodoPago);
             JSONMapper.mapper.writeValue(response.getWriter(), exito);
 
         } catch (IllegalArgumentException e) {

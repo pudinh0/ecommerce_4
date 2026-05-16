@@ -12,6 +12,9 @@ import dao.ProductoDAO;
 import dao.UsuarioDAO;
 import dto.CarritoDTO;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import mapper.CarritoMapper;
 import models.Carrito;
 import models.ItemCarrito;
@@ -61,6 +64,7 @@ public class CarritoService implements ICarritoService {
             carritoDAO.guardar(carrito);
         }
 
+        consolidarItemsDuplicados(carrito);
         return carritoMapper.toDTO(carrito);
     }
 
@@ -81,9 +85,11 @@ public class CarritoService implements ICarritoService {
         }
 
         Producto producto = productoDAO.buscarPorId(idProducto);
-        if (producto == null) {
+        if (producto == null || Boolean.FALSE.equals(producto.getActivo())) {
             throw new IllegalArgumentException("El producto no existe.");
         }
+
+        consolidarItemsDuplicados(carrito);
 
         boolean encontrado = false;
         if (carrito.getItemsCarrito() != null) {
@@ -109,6 +115,80 @@ public class CarritoService implements ICarritoService {
         }
 
         carritoDAO.actualizar(carrito);
+    }
+
+    @Override
+    public void cambiarCantidadProducto(String correoUsuario, Long idProducto, int cambio) {
+        if (idProducto == null || idProducto <= 0) {
+            throw new IllegalArgumentException("ID de producto invalido.");
+        }
+        if (cambio == 0) {
+            throw new IllegalArgumentException("El cambio de cantidad no puede ser 0.");
+        }
+
+        Carrito carrito = carritoDAO.buscarPorCorreoUsuario(correoUsuario);
+        if (carrito == null || carrito.getItemsCarrito() == null) {
+            throw new IllegalArgumentException("No se encontro el carrito.");
+        }
+
+        consolidarItemsDuplicados(carrito);
+
+        ItemCarrito itemEncontrado = null;
+        for (ItemCarrito item : carrito.getItemsCarrito()) {
+            if (item.getProducto().getIdProducto().equals(idProducto)) {
+                itemEncontrado = item;
+                break;
+            }
+        }
+
+        if (itemEncontrado == null) {
+            if (cambio > 0) {
+                agregarProducto(correoUsuario, idProducto, cambio);
+                return;
+            }
+            throw new IllegalArgumentException("El producto no esta en el carrito.");
+        }
+
+        int nuevaCantidad = itemEncontrado.getCantidad() + cambio;
+        if (nuevaCantidad <= 0) {
+            carrito.getItemsCarrito().remove(itemEncontrado);
+        } else {
+            Producto producto = itemEncontrado.getProducto();
+            if (producto.getStock() < nuevaCantidad) {
+                throw new IllegalArgumentException("No hay stock suficiente para el producto: " + producto.getNombre());
+            }
+            itemEncontrado.setCantidad(nuevaCantidad);
+        }
+
+        carritoDAO.actualizar(carrito);
+    }
+
+    private void consolidarItemsDuplicados(Carrito carrito) {
+        if (carrito == null || carrito.getItemsCarrito() == null || carrito.getItemsCarrito().isEmpty()) {
+            return;
+        }
+
+        Map<Long, ItemCarrito> itemPorProducto = new HashMap<>();
+        Iterator<ItemCarrito> iterator = carrito.getItemsCarrito().iterator();
+        boolean huboDuplicados = false;
+
+        while (iterator.hasNext()) {
+            ItemCarrito item = iterator.next();
+            Long idProducto = item.getProducto().getIdProducto();
+            ItemCarrito existente = itemPorProducto.get(idProducto);
+
+            if (existente == null) {
+                itemPorProducto.put(idProducto, item);
+            } else {
+                existente.setCantidad(existente.getCantidad() + item.getCantidad());
+                iterator.remove();
+                huboDuplicados = true;
+            }
+        }
+
+        if (huboDuplicados && carrito.getIdCarrito() != null) {
+            carritoDAO.actualizar(carrito);
+        }
     }
 
     @Override

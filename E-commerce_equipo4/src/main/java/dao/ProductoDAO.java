@@ -45,7 +45,7 @@ public class ProductoDAO implements IProductoDAO {
                 jpql.append("JOIN p.productosCategorias pc JOIN pc.categoria c ");
             }
 
-            jpql.append("WHERE 1=1 ");
+            jpql.append("WHERE COALESCE(p.activo, true) = true ");
 
             if (busqueda != null && !busqueda.trim().isEmpty()) {
                 jpql.append("AND LOWER(p.nombre) LIKE LOWER(:busqueda) ");
@@ -106,7 +106,9 @@ public class ProductoDAO implements IProductoDAO {
             em.getTransaction().begin();
             Producto producto = em.find(Producto.class, idProducto);
             if (producto != null) {
-                em.remove(producto);
+                producto.setActivo(false);
+                producto.setStock(0);
+                em.merge(producto);
             }
             em.getTransaction().commit();
         } catch (Exception e) {
@@ -124,7 +126,7 @@ public class ProductoDAO implements IProductoDAO {
         EntityManager em = JPAUtil.getInstance().getEntityManager();
         try {
             TypedQuery<Producto> query = em.createQuery(
-                    "SELECT u FROM Producto u",
+                    "SELECT u FROM Producto u WHERE COALESCE(u.activo, true) = true",
                     Producto.class
             );
             return query.getResultList();

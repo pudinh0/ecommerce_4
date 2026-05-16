@@ -36,6 +36,9 @@ public class Producto {
     
     @Column(name = "rutaImagen", nullable = false, length = 260)
     private String rutaImagen;
+
+    @Column(name = "activo")
+    private Boolean activo = true;
     
     @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
     private List<ProductoCategoria> productosCategorias;
@@ -103,6 +106,14 @@ public class Producto {
 
     public void setRutaImagen(String rutaImagen) {
         this.rutaImagen = rutaImagen;
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
     }
 
     public List<ProductoCategoria> getProductosCategorias() {

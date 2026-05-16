@@ -40,7 +40,7 @@ public class PedidoDAO implements IPedidoDAO {
     public List<Pedido> obtenerPedidosPorCorreoUsuario(String correo) {
         EntityManager em = JPAUtil.getInstance().getEntityManager();
         try {
-            String jpql = "SELECT p FROM Pedido p WHERE p.usuario.correo = :correo ORDER BY p.fechaCreacion DESC";
+            String jpql = "SELECT p FROM Pedido p WHERE p.usuario.correo = :correo ORDER BY p.fechaCompra DESC";
             TypedQuery<Pedido> query = em.createQuery(jpql, Pedido.class);
             query.setParameter("correo", correo);
 
@@ -94,7 +94,7 @@ public class PedidoDAO implements IPedidoDAO {
 
         try {
             TypedQuery<Pedido> query = em.createQuery(
-                    "SELECT p FROM Pedido p WHERE p.usuario.id = :idUsuario ORDER BY p.idPedido DESC",
+                    "SELECT p FROM Pedido p WHERE p.usuario.idUsuario = :idUsuario ORDER BY p.idPedido DESC",
                     Pedido.class
             );
             query.setParameter("idUsuario", idUsuario);

@@ -88,6 +88,7 @@
                         <c:otherwise>
                             <c:forEach items="${requestScope.listaProductos}" var="producto">
                                 <article class="card-producto">
+                                    <a href="${pageContext.request.contextPath}/vistas/app/detalle-producto.jsp?id=${producto.id}" class="producto-link">
                                     <figure>
                                         <c:choose>
                                             <c:when test="${fn:startsWith(producto.rutaImagen, 'http')}">
@@ -98,11 +99,16 @@
                                             </c:otherwise>
                                         </c:choose>
                                     </figure>
+                                    </a>
+
+                                    <div style="padding: 10px 0; text-align: center;">
+                                        <h3 style="margin: 0; font-size: 1.1rem; color: #333;">${producto.nombre}</h3>
+                                    </div>
 
                                     <div class="precio-carrito">
                                         <p class="precio">$${producto.precio}</p>
 
-                                        <button type="button" class="btn-agregar js-add-carrito" data-id="${producto.id}" aria-label="Agregar al carrito">
+                                        <button type="button" class="btn-agregar js-add-carrito" data-id="${producto.id}" aria-label="Agregar al carrito" onclick="window.agregarProductoAlCarrito(this)">
                                             <img src="${pageContext.request.contextPath}/assets/img/IconoAgregarCarrito.png" alt="Agregar al carrito">
                                         </button>
                                     </div>

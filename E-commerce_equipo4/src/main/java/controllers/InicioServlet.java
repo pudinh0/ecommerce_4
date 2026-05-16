@@ -11,6 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import service.IProductoServicio;
 import service.ProductoService;
@@ -28,6 +29,12 @@ public class InicioServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+            HttpSession session = request.getSession(false);
+            if (session != null && "ADMINISTRADOR".equals(session.getAttribute("rol"))) {
+                response.sendRedirect(request.getContextPath() + "/inventario");
+                return;
+            }
+
             List<ProductoDTO> todos = productoServicio.listarProductosPublicos();
 
             List<ProductoDTO> destacados = todos.size() > 3 ? todos.subList(0, 3) : todos;

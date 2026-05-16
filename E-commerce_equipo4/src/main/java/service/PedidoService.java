@@ -36,6 +36,11 @@ public class PedidoService implements IPedidoService {
 
     @Override
     public void procesarCompra(String correoUsuario) {
+        procesarCompra(correoUsuario, "EFECTIVO");
+    }
+
+    @Override
+    public void procesarCompra(String correoUsuario, String metodoPago) {
         if (correoUsuario == null || correoUsuario.trim().isEmpty()) {
             throw new IllegalArgumentException("El correo del usuario es obligatorio.");
         }
@@ -48,7 +53,7 @@ public class PedidoService implements IPedidoService {
 
         Pedido pedido = new Pedido();
         pedido.setFolio("FOL-" + System.currentTimeMillis());
-        pedido.setMetodoPago("EFECTIVO");
+        pedido.setMetodoPago(metodoPago == null || metodoPago.trim().isEmpty() ? "EFECTIVO" : metodoPago.trim());
         pedido.setEstado(models.EstadoPedidoEnum.PENDIENTE);
         pedido.setFechaCompra(LocalDateTime.now());
         pedido.setUsuario(carrito.getUsuario());
@@ -88,11 +93,9 @@ public class PedidoService implements IPedidoService {
     public List<PedidoDTO> obtenerHistorialUsuarioPorCorreo(String correo) {
         List<Pedido> pedidos = pedidoDAO.obtenerPedidosPorCorreoUsuario(correo);
         
-        return pedidos.stream().map(p -> {
-            PedidoDTO dto = new PedidoDTO();
-            pedidoMapper.toEntity(dto);
-            return dto;
-        }).collect(Collectors.toList());
+        return pedidos.stream()
+                .map(pedidoMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     @Override

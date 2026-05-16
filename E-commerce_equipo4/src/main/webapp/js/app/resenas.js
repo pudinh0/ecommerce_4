@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         'Authorization': `Bearer ${token}`
                     },
                     body: JSON.stringify({
-                        productoId: idProducto,
+                        producto: { id: Number(idProducto) },
                         calificacion: parseInt(calificacion),
                         comentario: comentario
                     })
@@ -43,4 +43,3 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-

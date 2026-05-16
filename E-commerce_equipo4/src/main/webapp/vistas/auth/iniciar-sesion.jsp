@@ -59,7 +59,7 @@
                     <script>
                         window.CONTEXT_PATH = '${pageContext.request.contextPath}';
                     </script>
-                    <script type="module" src="${pageContext.request.contextPath}/js/app/login.js"></script>
+                    <script type="module" src="${pageContext.request.contextPath}/js/app/login.js?v=2"></script>
 
                     <div class="auth-links">
                         <p>¿No tienes una cuenta? <a href="${pageContext.request.contextPath}/vistas/auth/registrarse.jsp">Regístrate aquí</a></p>

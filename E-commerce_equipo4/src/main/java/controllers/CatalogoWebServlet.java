@@ -33,10 +33,15 @@ public class CatalogoWebServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+            HttpSession session = request.getSession(false);
+            if (session != null && "ADMINISTRADOR".equals(session.getAttribute("rol"))) {
+                response.sendRedirect(request.getContextPath() + "/inventario");
+                return;
+            }
+
             List<ProductoDTO> productos = productoServicio.listarProductosPublicos();
             request.setAttribute("listaProductos", productos);
 
-            HttpSession session = request.getSession(false);
             if (session != null && session.getAttribute("usuario") != null) {
 
                 String correoUsuario = (String) session.getAttribute("usuario");

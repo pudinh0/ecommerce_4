@@ -1,9 +1,5 @@
 package apiRest;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 import dto.UsuarioDTO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -18,10 +14,6 @@ import service.IUsuarioService;
 import service.UsuarioService;
 import util.JSONMapper;
 
-/**
- *
- * @author Abraham Coronel
- */
 @WebServlet(name = "PerfilServlet", urlPatterns = {"/api/usuarios/*"})
 public class PerfilServlet extends HttpServlet {
 
@@ -38,14 +30,12 @@ public class PerfilServlet extends HttpServlet {
             String pathInfo = request.getPathInfo();
 
             if (pathInfo != null && pathInfo.equals("/perfil")) {
+                String correoUsuario = obtenerCorreoUsuario(request);
 
-                HttpSession session = request.getSession(false);
-                if (session == null || session.getAttribute("usuario") == null) {
-                    enviarError(response, HttpServletResponse.SC_UNAUTHORIZED, "Debes iniciar sesión para ver tu perfil.");
+                if (correoUsuario == null) {
+                    enviarError(response, HttpServletResponse.SC_UNAUTHORIZED, "Debes iniciar sesion para ver tu perfil.");
                     return;
                 }
-
-                String correoUsuario = (String) session.getAttribute("usuario");
 
                 UsuarioDTO perfil = usuarioService.buscarPorCorreo(correoUsuario);
 
@@ -55,12 +45,10 @@ public class PerfilServlet extends HttpServlet {
                 } else {
                     enviarError(response, HttpServletResponse.SC_NOT_FOUND, "Usuario no encontrado en el sistema.");
                 }
-
             } else {
                 enviarError(response, HttpServletResponse.SC_BAD_REQUEST, "Ruta de usuario no valida.");
             }
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             enviarError(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error al cargar el perfil: " + e.getMessage());
         }
     }
@@ -73,22 +61,17 @@ public class PerfilServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
 
         try {
-            HttpSession session = request.getSession(false);
-            String correoUsuario = (String) request.getAttribute("usuario");
-
-            if (correoUsuario == null && session != null) {
-                correoUsuario = (String) session.getAttribute("usuario");
-            }
+            String correoUsuario = obtenerCorreoUsuario(request);
 
             if (correoUsuario == null) {
-                enviarError(response, HttpServletResponse.SC_UNAUTHORIZED, "Debes iniciar sesión para editar tu perfil.");
+                enviarError(response, HttpServletResponse.SC_UNAUTHORIZED, "Debes iniciar sesion para editar tu perfil.");
                 return;
             }
 
             UsuarioDTO perfilActualizado = JSONMapper.mapper.readValue(request.getInputStream(), UsuarioDTO.class);
 
             if (!correoUsuario.equals(perfilActualizado.getCorreo())) {
-                enviarError(response, HttpServletResponse.SC_FORBIDDEN, "Acción denegada. Solo puedes editar tu propio perfil.");
+                enviarError(response, HttpServletResponse.SC_FORBIDDEN, "Accion denegada. Solo puedes editar tu propio perfil.");
                 return;
             }
 
@@ -96,7 +79,7 @@ public class PerfilServlet extends HttpServlet {
 
             response.setStatus(HttpServletResponse.SC_OK);
             Map<String, String> exito = new HashMap<>();
-            exito.put("mensaje", "Perfil actualizado con éxito.");
+            exito.put("mensaje", "Perfil actualizado con exito.");
             JSONMapper.mapper.writeValue(response.getWriter(), exito);
 
         } catch (IllegalArgumentException e) {
@@ -106,14 +89,21 @@ public class PerfilServlet extends HttpServlet {
         }
     }
 
-    /**
-     * Método auxiliar para mandar los errores limpios en JSON
-     */
+    private String obtenerCorreoUsuario(HttpServletRequest request) {
+        String correoUsuario = (String) request.getAttribute("usuario");
+        HttpSession session = request.getSession(false);
+
+        if (correoUsuario == null && session != null) {
+            correoUsuario = (String) session.getAttribute("usuario");
+        }
+
+        return correoUsuario;
+    }
+
     private void enviarError(HttpServletResponse response, int statusCode, String mensaje) throws IOException {
         response.setStatus(statusCode);
         Map<String, String> error = new HashMap<>();
         error.put("error", mensaje);
         JSONMapper.mapper.writeValue(response.getWriter(), error);
     }
-
 }

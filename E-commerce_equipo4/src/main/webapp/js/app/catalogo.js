@@ -1,9 +1,20 @@
 import { mostrarAlerta } from '../ui/alertaUI.js';
 
+const crearHeaders = (token, incluirJson = false) => {
+    const headers = { 'Accept': 'application/json' };
+    if (incluirJson) {
+        headers['Content-Type'] = 'application/json';
+    }
+    if (token) {
+        headers.Authorization = `Bearer ${token}`;
+    }
+    return headers;
+};
+
 const obtenerCarritoServidor = async (token) => {
     const res = await fetch(`${window.CONTEXT_PATH}/api/carrito`, {
         method: 'GET',
-        headers: {'Authorization': `Bearer ${token}`, 'Accept': 'application/json'}
+        headers: crearHeaders(token)
     });
     if (!res.ok)
         throw new Error('Error al cargar carrito');
@@ -13,7 +24,7 @@ const obtenerCarritoServidor = async (token) => {
 const cambiarCantidadAPI = async (idProducto, cantidad, token) => {
     const res = await fetch(`${window.CONTEXT_PATH}/api/carrito`, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
+        headers: crearHeaders(token, true),
         body: JSON.stringify({idProducto, cantidad})
     });
     return res.ok;
@@ -22,11 +33,39 @@ const cambiarCantidadAPI = async (idProducto, cantidad, token) => {
 const eliminarItemAPI = async (idItem, token) => {
     const res = await fetch(`${window.CONTEXT_PATH}/api/carrito`, {
         method: 'DELETE',
-        headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
+        headers: crearHeaders(token, true),
         body: JSON.stringify({idItem})
     });
     return res.ok;
 };
+
+const agregarProductoDesdeBoton = async (btn) => {
+    const tokenActual = localStorage.getItem('jwt_token');
+
+    if (btn.dataset.enviando === 'true') {
+        return;
+    }
+
+    btn.dataset.enviando = 'true';
+    btn.disabled = true;
+
+    try {
+        const ok = await cambiarCantidadAPI(btn.getAttribute('data-id'), 1, tokenActual);
+        if (!ok) {
+            window.location.href = `${window.CONTEXT_PATH}/vistas/auth/iniciar-sesion.jsp`;
+            return;
+        }
+        window.dispatchEvent(new Event('carritoActualizado'));
+    } catch (err) {
+        console.error(err);
+        mostrarAlerta('No se pudo agregar el producto', 'error');
+    } finally {
+        btn.dataset.enviando = 'false';
+        btn.disabled = false;
+    }
+};
+
+window.agregarProductoAlCarrito = agregarProductoDesdeBoton;
 
 const actualizarContenedorDerecho = (carrito) => {
     const contenedor = document.getElementById('contenedor-items-carrito');
@@ -91,6 +130,12 @@ const actualizarContenedorDerecho = (carrito) => {
                     <input type="hidden" name="idProducto" value="${item.producto.id}">
                     <button type="submit">+</button>
                 </form>
+                <form method="POST">
+                    <input type="hidden" name="accion" value="eliminar">
+                    <input type="hidden" name="idProducto" value="${item.producto.id}">
+                    <input type="hidden" name="idItem" value="${item.idItemCarrito || ''}">
+                    <button type="submit" aria-label="Eliminar producto">x</button>
+                </form>
             </div>
         `;
         contenedor.appendChild(article);
@@ -99,28 +144,25 @@ const actualizarContenedorDerecho = (carrito) => {
 
 document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('jwt_token');
-    
-    if (token) {
-        try {
-            actualizarContenedorDerecho(await obtenerCarritoServidor(token));
-        } catch (e) {
-            console.error(e);
-        }
+
+    try {
+        actualizarContenedorDerecho(await obtenerCarritoServidor(token));
+    } catch (e) {
+        console.error(e);
     }
 
     window.addEventListener('carritoActualizado', async () => {
-        if (token) {
-            try {
-                actualizarContenedorDerecho(await obtenerCarritoServidor(token));
-                mostrarAlerta('Producto agregado al carrito', 'success');
-            } catch(e) {
-                console.error(e);
-            }
+        try {
+            actualizarContenedorDerecho(await obtenerCarritoServidor(localStorage.getItem('jwt_token')));
+            mostrarAlerta('Producto agregado al carrito', 'success');
+        } catch (e) {
+            console.error(e);
         }
     });
 
     const contenedorItems = document.getElementById('contenedor-items-carrito');
-    if (contenedorItems) {
+    if (contenedorItems && !contenedorItems.dataset.eventosAsignados) {
+        contenedorItems.dataset.eventosAsignados = "true";
         contenedorItems.addEventListener('submit', async (e) => {
             e.preventDefault();
             const form = e.target;
@@ -136,10 +178,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (accion === 'aumentar') {
                     await cambiarCantidadAPI(idProducto, 1, token);
                 } else if (accion === 'disminuir') {
+                    await cambiarCantidadAPI(idProducto, -1, token);
+                } else if (accion === 'eliminar') {
                     if (idItem && idItem !== '') {
                         await eliminarItemAPI(idItem, token);
-                    } else {
-                        await cambiarCantidadAPI(idProducto, -1, token);
                     }
                 }
                 actualizarContenedorDerecho(await obtenerCarritoServidor(token));

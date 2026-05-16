@@ -1268,3 +1268,143 @@ nav li, a{
     from { transform: translateX(110%); opacity: 0; }
     to   { transform: translateX(0);    opacity: 1; }
 }
+
+/* ==========================================================================
+   15. CLIENTE: PERFIL, DETALLE Y PEDIDOS
+   ========================================================================== */
+
+.pagina-simple {
+    display: block;
+}
+
+.panel-usuario,
+.detalle-producto {
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid var(--color-borde);
+    border-radius: 8px;
+    padding: 24px;
+}
+
+.encabezado-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.encabezado-panel h1,
+.encabezado-panel h2 {
+    margin: 0;
+    color: var(--color-texto);
+}
+
+.formulario-cliente {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.producto-link {
+    display: block;
+    color: inherit;
+}
+
+.detalle-producto-card {
+    display: grid;
+    grid-template-columns: minmax(240px, 420px) 1fr;
+    gap: 32px;
+    align-items: center;
+}
+
+.detalle-producto-card figure {
+    margin: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--color-fondo-input);
+}
+
+.detalle-producto-card img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    display: block;
+}
+
+.detalle-producto-card h1 {
+    margin: 6px 0 12px;
+    font-size: 2rem;
+}
+
+.detalle-producto-card .categoria,
+.stock-detalle {
+    color: var(--color-texto-secundario);
+    font-weight: 700;
+}
+
+.precio-detalle {
+    display: block;
+    margin: 18px 0 8px;
+    color: var(--color-primario);
+    font-size: 1.8rem;
+}
+
+.lista-resenas,
+.lista-pedidos {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.resena-card,
+.pedido-card,
+.item-pago {
+    border: 1px solid var(--color-borde);
+    border-radius: 8px;
+    padding: 14px;
+    background: var(--color-fondo);
+}
+
+.resena-card strong {
+    color: #f1c40f;
+}
+
+.pedido-card header,
+.pedido-card footer,
+.pedido-detalles div,
+.item-pago {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.pedido-card header div,
+.item-pago div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.pedido-card footer {
+    border-top: 1px dashed var(--color-borde);
+    margin-top: 12px;
+    padding-top: 12px;
+}
+
+.badge-estado {
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: #fff5f8;
+    color: var(--color-primario);
+    font-weight: 700;
+    font-size: 0.8rem;
+}
+
+@media (max-width: 768px) {
+    .detalle-producto-card {
+        grid-template-columns: 1fr;
+    }
+}

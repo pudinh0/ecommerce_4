@@ -11,6 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.PrintWriter;
 import java.util.Map;
 import service.IUsuarioService;
@@ -56,9 +57,23 @@ public class AuthServlet extends HttpServlet {
 
             if (usuario != null) {
                 String token = JWTUtil.generarToken(usuario.getCorreo());
+                String rol = usuario.getTipoUsuario().name();
+                String destino = "ADMINISTRADOR".equals(rol) ? "/inventario" : "/inicio";
+                HttpSession session = request.getSession(true);
+                session.setAttribute("usuario", usuario.getCorreo());
+                session.setAttribute("rol", rol);
+                session.setAttribute("idUsuario", usuario.getId());
+                session.setAttribute("nombreUsuario", usuario.getNombres());
+
                 response.setStatus(HttpServletResponse.SC_OK);
                 out.print(JSONMapper.mapper.writeValueAsString(
-                        Map.of("success", true, "message", token)
+                        Map.of(
+                                "success", true,
+                                "message", token,
+                                "usuario", usuario,
+                                "rol", rol,
+                                "destino", destino
+                        )
                 ));
             } else {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

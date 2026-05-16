@@ -136,7 +136,7 @@
                                                 <input type="hidden" name="idProducto" value="${producto.id}">
 
                                                 <button type="submit" class="btn-accion btn-eliminar"
-                                                        onclick="return confirm('¿Seguro que deseas eliminar este producto permanentemente?');">
+                                                        onclick="return confirm('¿Seguro que deseas retirar este producto del catálogo? Los pedidos históricos se conservarán.');">
                                                     Eliminar
                                                 </button>
                                             </form>

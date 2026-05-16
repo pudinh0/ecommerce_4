@@ -19,7 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (respuesta.ok && data.success) {
                     localStorage.setItem('jwt_token', data.message);
-                    window.location.href = `${window.CONTEXT_PATH}/catalogo`;
+                    const rol = data.rol || data.usuario?.tipoUsuario;
+                    const destino = data.destino || (rol === 'ADMINISTRADOR' ? '/inventario' : '/inicio');
+                    window.location.href = `${window.CONTEXT_PATH}${destino}`;
                 } else {
                     alert('Error: ' + (data.message || 'Credenciales incorrectas'));
                 }

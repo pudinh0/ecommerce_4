@@ -15,6 +15,8 @@ public interface IPedidoService {
 
     void procesarCompra(String correoUsuario);
 
+    void procesarCompra(String correoUsuario, String metodoPago);
+
     PedidoDTO obtenerPedidoPorId(Long idPedido);
 
     List<PedidoDTO> obtenerHistorialUsuario(String correoUsuario);

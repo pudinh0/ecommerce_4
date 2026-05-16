@@ -82,7 +82,7 @@ public class CarritoDAO implements ICarritoDAO {
         try {
             TypedQuery<Carrito> query = em.createQuery(
                     "SELECT c FROM Carrito c LEFT JOIN FETCH c.itemsCarrito i "
-                    + "WHERE c.usuario.id = :idUsuario", 
+                    + "WHERE c.usuario.idUsuario = :idUsuario", 
                     Carrito.class
             );
             query.setParameter("idUsuario", idUsuario);

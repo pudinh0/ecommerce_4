@@ -2,24 +2,37 @@ document.addEventListener('DOMContentLoaded', async () => {
     const formPerfil = document.getElementById('form-perfil');
     const token = localStorage.getItem('jwt_token');
 
-    if (!token) return; // Si no hay token, no es necesario ejecutar esto
+    if (!token) {
+        window.location.href = `${window.CONTEXT_PATH}/vistas/auth/iniciar-sesion.jsp`;
+        return;
+    }
 
-    // 1. Cargar datos al iniciar
+    const setValue = (id, value) => {
+        const input = document.getElementById(id);
+        if (input) {
+            input.value = value || '';
+        }
+    };
+
     try {
         const res = await fetch(`${window.CONTEXT_PATH}/api/usuarios/perfil`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
-        if (res.ok) {
-            const perfil = await res.json();
-            document.getElementById('input-nombre').value = perfil.nombre || '';
-            document.getElementById('input-correo').value = perfil.correo || ''; // Debería ser readonly
-            document.getElementById('input-telefono').value = perfil.telefono || '';
+
+        if (!res.ok) {
+            throw new Error('No se pudo cargar el perfil');
         }
+
+        const perfil = await res.json();
+        setValue('input-nombres', perfil.nombres);
+        setValue('input-primer-apellido', perfil.primerApellido);
+        setValue('input-segundo-apellido', perfil.segundoApellido);
+        setValue('input-correo', perfil.correo);
     } catch (error) {
         console.error('Error al cargar perfil', error);
+        alert('No se pudo cargar tu perfil.');
     }
 
-    // 2. Guardar cambios (Editar)
     if (formPerfil) {
         formPerfil.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -28,9 +41,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             btnGuardar.innerText = 'Guardando...';
 
             const perfilActualizado = {
-                nombre: document.getElementById('input-nombre').value,
-                correo: document.getElementById('input-correo').value,
-                telefono: document.getElementById('input-telefono').value
+                nombres: document.getElementById('input-nombres').value.trim(),
+                primerApellido: document.getElementById('input-primer-apellido').value.trim(),
+                segundoApellido: document.getElementById('input-segundo-apellido').value.trim(),
+                correo: document.getElementById('input-correo').value.trim()
             };
 
             try {
@@ -43,20 +57,20 @@ document.addEventListener('DOMContentLoaded', async () => {
                     body: JSON.stringify(perfilActualizado)
                 });
 
+                const data = await res.json();
+
                 if (res.ok) {
-                    alert('Perfil actualizado con éxito'); // Idealmente cambiar por un Toast/Alerta de UI
+                    alert(data.mensaje || 'Perfil actualizado con exito');
                 } else {
-                    const err = await res.json();
-                    alert(err.error || 'No se pudo actualizar el perfil');
+                    alert(data.error || 'No se pudo actualizar el perfil');
                 }
             } catch (error) {
                 console.error(error);
+                alert('Fallo la comunicacion con el servidor.');
             } finally {
                 btnGuardar.disabled = false;
-                btnGuardar.innerText = 'Guardar Cambios';
+                btnGuardar.innerText = 'Guardar cambios';
             }
         });
     }
 });
-
-

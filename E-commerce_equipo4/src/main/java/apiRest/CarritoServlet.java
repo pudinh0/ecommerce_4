@@ -82,7 +82,11 @@ public class CarritoServlet extends HttpServlet {
                 return;
             }
 
-            carritoService.agregarProducto(correoUsuario, idProducto, cantidad);
+            if (cantidad > 0) {
+                carritoService.agregarProducto(correoUsuario, idProducto, cantidad);
+            } else {
+                carritoService.cambiarCantidadProducto(correoUsuario, idProducto, cantidad);
+            }
 
             response.setStatus(HttpServletResponse.SC_CREATED);
             Map<String, String> exito = new HashMap<>();

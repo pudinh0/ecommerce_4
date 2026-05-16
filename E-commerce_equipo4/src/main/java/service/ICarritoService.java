@@ -15,6 +15,8 @@ public interface ICarritoService {
 
     void agregarProducto(String correoUsuario, Long idProducto, int cantidad);
 
+    void cambiarCantidadProducto(String correoUsuario, Long idProducto, int cambio);
+
     void eliminarItem(String correoUsuario, Long idItem);
 
     void vaciarCarrito(String correoUsuario);

@@ -92,7 +92,7 @@ public class ProductoService implements IProductoServicio {
             throw new IllegalArgumentException("ID inválido");
         }
         Producto producto = productoDAO.buscarPorId(idProducto);
-        if (producto == null) {
+        if (producto == null || Boolean.FALSE.equals(producto.getActivo())) {
             throw new IllegalArgumentException("El producto no existe");
         }
         productoDAO.eliminarProducto(idProducto);
@@ -104,7 +104,7 @@ public class ProductoService implements IProductoServicio {
             throw new IllegalArgumentException("ID inválido");
         }
         Producto producto = productoDAO.buscarPorId(idProducto);
-        if (producto == null) {
+        if (producto == null || Boolean.FALSE.equals(producto.getActivo())) {
             throw new IllegalArgumentException("El producto no existe");
         }
 
