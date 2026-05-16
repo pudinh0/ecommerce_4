@@ -4,8 +4,6 @@ package apiRest;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
-
 import dto.UsuarioDTO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -32,7 +30,7 @@ public class PerfilServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
@@ -40,7 +38,7 @@ public class PerfilServlet extends HttpServlet {
             String pathInfo = request.getPathInfo();
 
             if (pathInfo != null && pathInfo.equals("/perfil")) {
-                
+
                 HttpSession session = request.getSession(false);
                 if (session == null || session.getAttribute("usuario") == null) {
                     enviarError(response, HttpServletResponse.SC_UNAUTHORIZED, "Debes iniciar sesión para ver tu perfil.");
@@ -57,13 +55,54 @@ public class PerfilServlet extends HttpServlet {
                 } else {
                     enviarError(response, HttpServletResponse.SC_NOT_FOUND, "Usuario no encontrado en el sistema.");
                 }
-                
+
             } else {
                 enviarError(response, HttpServletResponse.SC_BAD_REQUEST, "Ruta de usuario no valida.");
             }
 
         } catch (IOException e) {
             enviarError(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error al cargar el perfil: " + e.getMessage());
+        }
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        try {
+            HttpSession session = request.getSession(false);
+            String correoUsuario = (String) request.getAttribute("usuario");
+
+            if (correoUsuario == null && session != null) {
+                correoUsuario = (String) session.getAttribute("usuario");
+            }
+
+            if (correoUsuario == null) {
+                enviarError(response, HttpServletResponse.SC_UNAUTHORIZED, "Debes iniciar sesión para editar tu perfil.");
+                return;
+            }
+
+            UsuarioDTO perfilActualizado = JSONMapper.mapper.readValue(request.getInputStream(), UsuarioDTO.class);
+
+            if (!correoUsuario.equals(perfilActualizado.getCorreo())) {
+                enviarError(response, HttpServletResponse.SC_FORBIDDEN, "Acción denegada. Solo puedes editar tu propio perfil.");
+                return;
+            }
+
+            usuarioService.actualizarPerfil(perfilActualizado);
+
+            response.setStatus(HttpServletResponse.SC_OK);
+            Map<String, String> exito = new HashMap<>();
+            exito.put("mensaje", "Perfil actualizado con éxito.");
+            JSONMapper.mapper.writeValue(response.getWriter(), exito);
+
+        } catch (IllegalArgumentException e) {
+            enviarError(response, HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+        } catch (Exception e) {
+            enviarError(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error al actualizar perfil: " + e.getMessage());
         }
     }
 

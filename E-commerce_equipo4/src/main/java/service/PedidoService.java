@@ -83,6 +83,17 @@ public class PedidoService implements IPedidoService {
         pedidoDAO.guardar(pedido);
         carritoDAO.vaciarCarrito(carrito.getIdCarrito());
     }
+    
+    @Override
+    public List<PedidoDTO> obtenerHistorialUsuarioPorCorreo(String correo) {
+        List<Pedido> pedidos = pedidoDAO.obtenerPedidosPorCorreoUsuario(correo);
+        
+        return pedidos.stream().map(p -> {
+            PedidoDTO dto = new PedidoDTO();
+            pedidoMapper.toEntity(dto);
+            return dto;
+        }).collect(Collectors.toList());
+    }
 
     @Override
     public PedidoDTO obtenerPedidoPorId(Long idPedido) {

@@ -39,17 +39,29 @@ public class PedidoServlet extends HttpServlet {
             String pathInfo = request.getPathInfo();
 
             if (pathInfo == null || pathInfo.equals("/")) {
-                enviarError(response, HttpServletResponse.SC_BAD_REQUEST, "Falta especificar la ruta del pedido o del usuario.");
+                enviarError(response, HttpServletResponse.SC_BAD_REQUEST, "Falta especificar la ruta del pedido.");
                 return;
             }
 
-            if (pathInfo.startsWith("/usuario/")) {
-                String identificador = pathInfo.substring("/usuario/".length());
-                
-                List<PedidoDTO> historial = pedidoService.obtenerHistorialUsuario(identificador);
+            if (pathInfo.equals("/historial")) {
+
+                HttpSession session = request.getSession(false);
+                String correoUsuario = (String) request.getAttribute("usuario");
+
+                if (correoUsuario == null && session != null) {
+                    correoUsuario = (String) session.getAttribute("usuario");
+                }
+
+                if (correoUsuario == null) {
+                    enviarError(response, HttpServletResponse.SC_UNAUTHORIZED, "Debes iniciar sesión para ver tu historial.");
+                    return;
+                }
+
+                List<PedidoDTO> historial = pedidoService.obtenerHistorialUsuarioPorCorreo(correoUsuario);
 
                 response.setStatus(HttpServletResponse.SC_OK);
                 JSONMapper.mapper.writeValue(response.getWriter(), historial);
+
             } else {
                 String idParam = pathInfo.substring(1);
                 try {

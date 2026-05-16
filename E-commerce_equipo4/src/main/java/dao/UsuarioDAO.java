@@ -96,7 +96,6 @@ public class UsuarioDAO implements IUsuarioDAO {
         }
     }
 
-
     @Override
     public List<Usuario> listarTodos() {
 
@@ -118,25 +117,20 @@ public class UsuarioDAO implements IUsuarioDAO {
 
     @Override
     public void actualizar(Usuario usuario) {
-
         EntityManager em = JPAUtil.getInstance().getEntityManager();
-
         try {
-
             em.getTransaction().begin();
             em.merge(usuario);
             em.getTransaction().commit();
-
         } catch (Exception e) {
-
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-
-            throw new RuntimeException("Error al actualizar usuario", e);
-
+            throw new RuntimeException("Error al actualizar usuario en BD", e);
         } finally {
-            em.close();
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
         }
     }
 

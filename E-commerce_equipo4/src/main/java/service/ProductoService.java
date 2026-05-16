@@ -44,8 +44,18 @@ public class ProductoService implements IProductoServicio {
         }
 
         Producto producto = productoMapper.toEntity(productoDTO);
-        
+
         productoDAO.crearProducto(producto);
+    }
+
+    @Override
+    public List<ProductoDTO> buscarYFiltrarProductos(String busqueda, String categoria) {
+        List<Producto> productos = productoDAO.buscarYFiltrarProductos(busqueda, categoria);
+        return productos.stream().map(p -> {
+            ProductoDTO dto = new ProductoDTO();
+            productoMapper.toEntity(dto);
+            return dto;
+        }).collect(Collectors.toList());
     }
 
     @Override
@@ -98,7 +108,7 @@ public class ProductoService implements IProductoServicio {
         if (producto == null) {
             throw new IllegalArgumentException("El producto no existe");
         }
-        
+
         return productoMapper.toDTO(producto);
     }
 
@@ -107,9 +117,9 @@ public class ProductoService implements IProductoServicio {
         if (idAdmin == null) {
             throw new IllegalArgumentException("Usuario inválido");
         }
-        
+
         List<Producto> productosBD = productoDAO.obtenerTodosProductos();
-        
+
         return productosBD.stream()
                 .map(productoMapper::toDTO)
                 .collect(Collectors.toList());
@@ -117,7 +127,7 @@ public class ProductoService implements IProductoServicio {
 
     @Override
     public List<ProductoDTO> listarProductosPublicos() {
-        
+
         List<Producto> productosBD = productoDAO.obtenerTodosProductos();
 
         return productosBD.stream()

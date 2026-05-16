@@ -6,6 +6,7 @@ package mapper;
 
 import dto.TipoUsuarioDTO;
 import dto.UsuarioDTO;
+import models.TipoUsuarioEnum;
 import models.Usuario;
 
 /**
@@ -18,7 +19,6 @@ public class UsuarioMapper {
         if (usuario == null) {
             return null;
         }
-
         UsuarioDTO dto = new UsuarioDTO();
         dto.setId(usuario.getIdUsuario());
         dto.setNombres(usuario.getNombres());
@@ -26,7 +26,26 @@ public class UsuarioMapper {
         dto.setSegundoApellido(usuario.getSegundoApellido());
         dto.setCorreo(usuario.getCorreo());
         dto.setTipoUsuario(TipoUsuarioDTO.valueOf(usuario.getTipoUsuario().name()));
-
         return dto;
+    }
+
+    public Usuario toEntity(UsuarioDTO dto) {
+        if (dto == null) {
+            return null;
+        }
+
+        Usuario usuario = new Usuario();
+
+        usuario.setIdUsuario(dto.getId());
+        usuario.setNombres(dto.getNombres());
+        usuario.setPrimerApellido(dto.getPrimerApellido());
+        usuario.setSegundoApellido(dto.getSegundoApellido());
+        usuario.setCorreo(dto.getCorreo());
+
+        if (dto.getTipoUsuario() != null) {
+            usuario.setTipoUsuario(TipoUsuarioEnum.valueOf(dto.getTipoUsuario().name()));
+        }
+
+        return usuario;
     }
 }

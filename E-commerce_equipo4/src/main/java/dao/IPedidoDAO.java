@@ -18,8 +18,13 @@ public interface IPedidoDAO {
     Pedido buscarPorId(Long idPedido);
 
     List<Pedido> buscarPorCorreoUsuario(String correoUsuario);
+
     List<Pedido> buscarPorIdUsuario(Long idUsuario);
+
     void actualizar(Pedido pedido);
-    
+
     List<Pedido> obtenerTodos();
+
+    // Agregar:
+    List<Pedido> obtenerPedidosPorCorreoUsuario(String correo);
 }

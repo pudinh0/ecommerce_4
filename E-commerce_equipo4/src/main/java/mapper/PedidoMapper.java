@@ -9,7 +9,9 @@ import dto.PedidoDTO;
 import java.util.ArrayList;
 import java.util.List;
 import models.DetallePedido;
+import models.EstadoPedidoEnum;
 import models.Pedido;
+import models.Producto;
 
 /**
  *
@@ -62,6 +64,60 @@ public class PedidoMapper {
         dto.setSubtotal(detalle.getSubtotal());
 
         return dto;
+    }
+
+    public Pedido toEntity(PedidoDTO dto) {
+        if (dto == null) {
+            return null;
+        }
+
+        Pedido pedido = new Pedido();
+        pedido.setIdPedido(dto.getId());
+        pedido.setFechaCompra(dto.getFecha());
+
+        if (dto.getEstado() != null) {
+            pedido.setEstado(EstadoPedidoEnum.valueOf(dto.getEstado()));
+        }
+
+        pedido.setTotal(dto.getTotal());
+
+        if (dto.getUsuario() != null) {
+            pedido.setUsuario(usuarioMapper.toEntity(dto.getUsuario()));
+        }
+
+        if (dto.getDetalles() != null && !dto.getDetalles().isEmpty()) {
+            List<DetallePedido> detalles = new ArrayList<>();
+
+            for (DetallePedidoDTO detalleDTO : dto.getDetalles()) {
+                DetallePedido detalle = detalleToEntity(detalleDTO);
+                detalle.setPedido(pedido);           // ← Relación bidireccional importante
+                detalles.add(detalle);
+            }
+
+            pedido.setDetalles(detalles);
+        }
+
+        return pedido;
+    }
+
+    private DetallePedido detalleToEntity(DetallePedidoDTO dto) {
+        if (dto == null) {
+            return null;
+        }
+
+        DetallePedido detalle = new DetallePedido();
+
+        detalle.setIdDetallePedido(dto.getId());
+        detalle.setCantidad(dto.getCantidad());
+        detalle.setPrecioVenta(dto.getPrecioUnitario());
+
+        if (dto.getNombreProducto() != null) {
+            Producto producto = new Producto();
+            producto.setNombre(dto.getNombreProducto());
+            detalle.setProducto(producto);
+        }
+
+        return detalle;
     }
 
 }

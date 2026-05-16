@@ -18,8 +18,10 @@ public interface IPedidoService {
     PedidoDTO obtenerPedidoPorId(Long idPedido);
 
     List<PedidoDTO> obtenerHistorialUsuario(String correoUsuario);
-    
+
     List<PedidoDTO> obtenerTodosLosPedidos();
 
     void actualizarEstadoPedido(Long idPedido, String nuevoEstado, Long idAdmin);
+
+    List<PedidoDTO> obtenerHistorialUsuarioPorCorreo(String correo);
 }

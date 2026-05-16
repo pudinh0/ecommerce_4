@@ -14,7 +14,7 @@ import util.JPAUtil;
  *
  * @author Usuario
  */
-public class ProductoDAO implements IProductoDAO{
+public class ProductoDAO implements IProductoDAO {
 
     @Override
     public void crearProducto(Producto producto) {
@@ -34,7 +34,37 @@ public class ProductoDAO implements IProductoDAO{
             em.close();
         }
     }
-    
+
+    @Override
+    public List<Producto> buscarYFiltrarProductos(String busqueda, String nombreCategoria) {
+        EntityManager em = JPAUtil.getInstance().getEntityManager();
+        try {
+            StringBuilder jpql = new StringBuilder("SELECT p FROM Producto p WHERE 1=1 ");
+
+            if (busqueda != null && !busqueda.trim().isEmpty()) {
+                jpql.append("AND LOWER(p.nombre) LIKE LOWER(:busqueda) ");
+            }
+            if (nombreCategoria != null && !nombreCategoria.trim().isEmpty()) {
+                jpql.append("AND LOWER(p.categoria.nombre) = LOWER(:categoria) ");
+            }
+
+            TypedQuery<Producto> query = em.createQuery(jpql.toString(), Producto.class);
+
+            if (busqueda != null && !busqueda.trim().isEmpty()) {
+                query.setParameter("busqueda", "%" + busqueda.trim() + "%");
+            }
+            if (nombreCategoria != null && !nombreCategoria.trim().isEmpty()) {
+                query.setParameter("categoria", nombreCategoria.trim());
+            }
+
+            return query.getResultList();
+        } finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+        }
+    }
+
     @Override
     public Producto buscarPorId(Long id) {
         EntityManager em = JPAUtil.getInstance().getEntityManager();
@@ -138,5 +168,5 @@ public class ProductoDAO implements IProductoDAO{
             em.close();
         }
     }
-    
+
 }

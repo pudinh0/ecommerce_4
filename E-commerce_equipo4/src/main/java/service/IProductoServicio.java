@@ -26,4 +26,6 @@ public interface IProductoServicio {
     
     List<ProductoDTO> listarProductosPublicos();
     
+    List<ProductoDTO> buscarYFiltrarProductos(String busqueda, String categoria);
+    
 }

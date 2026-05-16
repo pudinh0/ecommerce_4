@@ -35,14 +35,13 @@ public class UsuarioService implements IUsuarioService {
             throw new IllegalArgumentException("El correo ya está registrado.");
         }
 
-        
         Usuario usuario = new Usuario();
         usuario.setNombres(nombres);
         usuario.setPrimerApellido(primerApellido);
         usuario.setSegundoApellido(segundoApellido);
         usuario.setCorreo(correo.trim().toLowerCase());
         usuario.setContrasenia(contrasenia);
-        Carrito carrito= new Carrito();
+        Carrito carrito = new Carrito();
         carrito.setFechaCreacion(LocalDate.now());
         carrito.setUsuario(usuario);
         usuario.setCarrito(carrito);
@@ -104,17 +103,19 @@ public class UsuarioService implements IUsuarioService {
     }
 
     @Override
-    public void actualizarUsuario(Usuario usuario) {
+    public void actualizarPerfil(UsuarioDTO usuarioDTO) {
+        Usuario usuario = usuarioDAO.buscarPorCorreo(usuarioDTO.getCorreo());
+
         if (usuario == null) {
-            throw new IllegalArgumentException("El usuario no puede ser nulo.");
+            throw new IllegalArgumentException("Usuario no encontrado.");
         }
 
-        if (usuario.getIdUsuario() == null || usuario.getIdUsuario() <= 0) {
-            throw new IllegalArgumentException("El id del usuario no es válido.");
+        if (usuarioDTO.getNombres() != null && !usuarioDTO.getNombres().trim().isEmpty()) {
+            usuario.setNombres(usuarioDTO.getNombres());
         }
-
-        validarNombre(usuario.getNombres());
-        validarCorreo(usuario.getCorreo());
+        if (usuarioDTO.getCorreo() != null) {
+            usuario.setCorreo(usuarioDTO.getCorreo());
+        }
 
         usuarioDAO.actualizar(usuario);
     }

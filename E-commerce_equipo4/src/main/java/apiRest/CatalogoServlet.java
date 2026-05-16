@@ -31,7 +31,6 @@ public class CatalogoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Configurar que la respuesta sera JSON y en UTF-8
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
@@ -39,9 +38,18 @@ public class CatalogoServlet extends HttpServlet {
             String pathInfo = request.getPathInfo();
 
             if (pathInfo == null || pathInfo.equals("/")) {
-                List<ProductoDTO> productos = productoServicio.listarProductosPublicos();
+                String busqueda = request.getParameter("q");
+                String categoria = request.getParameter("categoria");
 
-                //Responder éxito con codigo 200
+                List<ProductoDTO> productos;
+
+                if ((busqueda != null && !busqueda.trim().isEmpty())
+                        || (categoria != null && !categoria.trim().isEmpty())) {
+                    productos = productoServicio.buscarYFiltrarProductos(busqueda, categoria);
+                } else {
+                    productos = productoServicio.listarProductosPublicos();
+                }
+
                 response.setStatus(HttpServletResponse.SC_OK);
                 JSONMapper.mapper.writeValue(response.getWriter(), productos);
 

@@ -37,6 +37,22 @@ public class PedidoDAO implements IPedidoDAO {
     }
 
     @Override
+    public List<Pedido> obtenerPedidosPorCorreoUsuario(String correo) {
+        EntityManager em = JPAUtil.getInstance().getEntityManager();
+        try {
+            String jpql = "SELECT p FROM Pedido p WHERE p.usuario.correo = :correo ORDER BY p.fechaCreacion DESC";
+            TypedQuery<Pedido> query = em.createQuery(jpql, Pedido.class);
+            query.setParameter("correo", correo);
+
+            return query.getResultList();
+        } finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+        }
+    }
+
+    @Override
     public Pedido buscarPorId(Long idPedido) {
         EntityManager em = JPAUtil.getInstance().getEntityManager();
 
