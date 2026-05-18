@@ -1,3 +1,5 @@
+
+import { renderizarFiltrosCategorias, renderizarProductos } from '../ui/catalogoUI.js';
 import { mostrarAlerta } from '../ui/alertaUI.js';
 
 const crearHeaders = (token, incluirJson = false) => {
@@ -142,6 +144,42 @@ const actualizarContenedorDerecho = (carrito) => {
     });
 };
 
+function asignarEventosFiltro(todosLosProductos, contenedorProductos) {
+    const botonesFiltro = document.querySelectorAll('.btn-filtro');
+    
+    botonesFiltro.forEach(boton => {
+        boton.addEventListener('click', (e) => {
+            botonesFiltro.forEach(b => b.classList.remove('activo'));
+            e.target.classList.add('activo');
+            
+            const categoriaSeleccionada = boton.dataset.categoria;
+            
+            // 1. ¡CRUCIAL! Limpiar el contenedor antes de pintar los productos filtrados
+            if (contenedorProductos) {
+                contenedorProductos.innerHTML = '';
+            }
+            
+            if (categoriaSeleccionada === 'todos') {
+                renderizarProductos(todosLosProductos, contenedorProductos); 
+            } else {
+                const productosFiltrados = todosLosProductos.filter(producto => 
+                    producto.categoria && producto.categoria.toLowerCase().trim() === categoriaSeleccionada
+                );
+                renderizarProductos(productosFiltrados, contenedorProductos); 
+            }
+        });
+    });
+}
+
+const obtenerProductosDesdeAPI = async () => {
+    const res = await fetch(`${window.CONTEXT_PATH}/api/productos`, {
+        method: 'GET',
+        headers: { 'Accept': 'application/json' }
+    });
+    if (!res.ok) throw new Error('Error al cargar productos');
+    return await res.json();
+};
+
 document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('jwt_token');
 
@@ -150,7 +188,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     } catch (e) {
         console.error(e);
     }
+    const contenedorFiltros = document.getElementById('categorias');
+    const contenedorProductos = document.getElementById('contenedor-productos');
+    if (contenedorFiltros) {
+        try {
+            const productos = await obtenerProductosDesdeAPI();
+            renderizarFiltrosCategorias(contenedorFiltros, productos, () => {
+                asignarEventosFiltro(productos, contenedorProductos);
+            });
 
+        } catch (error) {
+            console.error("Error al inicializar el catálogo:", error);
+        }
+    }
+    
     window.addEventListener('carritoActualizado', async () => {
         try {
             actualizarContenedorDerecho(await obtenerCarritoServidor(localStorage.getItem('jwt_token')));

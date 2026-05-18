@@ -23,58 +23,10 @@
 
         <div class="contenedor-principal">
 
-            <nav class="menu-lateral">
-                <ul>
-                    <li class="active">
-                        <img src="${pageContext.request.contextPath}/assets/img/iconoCatalogo.png" alt="Icono catalogo">
-                        <a href="${pageContext.request.contextPath}/catalogo">Catálogo</a>
-                    </li>
-                    <li>
-                        <img src="${pageContext.request.contextPath}/assets/img/iconoFiltro.png" alt="Icono filtros">
-                        <a href="#">Filtros</a>
-                    </li>
-                </ul>
-            </nav>
-
             <main>
-                <section class="categorias">
-                    
-                    <select id="select-categoria" style="display:none;">
-                        <option value="">Todo</option>
-                        <option value="Marino">Marino</option>
-                        <option value="Osos">Osos</option>
-                        <option value="Místico">Místico</option>
-                        <option value="Dinosaurios">Dinosaurios</option>
-                    </select>
+                <div class= "categorias" id="categorias">
 
-                    <ul>
-                        <li><button class="active btn-categoria" data-cat="">Todo</button></li>
-                        <li>
-                            <button class="btn-categoria" data-cat="Marino">
-                                <img src="${pageContext.request.contextPath}/assets/img/gota.png" alt="Icono gota">
-                                Marino
-                            </button>
-                        </li>
-                        <li>
-                            <button class="btn-categoria" data-cat="Osos">
-                                <img src="${pageContext.request.contextPath}/assets/img/pinos.png" alt="Icono pinos">
-                                Osos
-                            </button>
-                        </li>
-                        <li>
-                            <button class="btn-categoria" data-cat="Místico">
-                                <img src="${pageContext.request.contextPath}/assets/img/brillos.png" alt="Icono brillos">
-                                Místico
-                            </button>
-                        </li>
-                        <li>
-                            <button class="btn-categoria" data-cat="Dinosaurios">
-                                <img src="${pageContext.request.contextPath}/assets/img/gota.png" alt="Icono dinosaurios">
-                                Dinosaurios
-                            </button>
-                        </li>
-                    </ul>
-                </section>
+                </div>
 
                 <section class="productos" id="contenedor-productos">
 
@@ -89,16 +41,16 @@
                             <c:forEach items="${requestScope.listaProductos}" var="producto">
                                 <article class="card-producto">
                                     <a href="${pageContext.request.contextPath}/vistas/app/detalle-producto.jsp?id=${producto.id}" class="producto-link">
-                                    <figure>
-                                        <c:choose>
-                                            <c:when test="${fn:startsWith(producto.rutaImagen, 'http')}">
-                                                <img src="${producto.rutaImagen}" alt="${producto.nombre}" loading="lazy" decoding="async" class="img-producto-estandar">
-                                            </c:when>
-                                            <c:otherwise>
-                                                <img src="${pageContext.request.contextPath}/${producto.rutaImagen}" alt="${producto.nombre}" loading="lazy" decoding="async" class="img-producto-estandar">
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </figure>
+                                        <figure>
+                                            <c:choose>
+                                                <c:when test="${fn:startsWith(producto.rutaImagen, 'http')}">
+                                                    <img src="${producto.rutaImagen}" alt="${producto.nombre}" loading="lazy" decoding="async" class="img-producto-estandar">
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <img src="${pageContext.request.contextPath}/${producto.rutaImagen}" alt="${producto.nombre}" loading="lazy" decoding="async" class="img-producto-estandar">
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </figure>
                                     </a>
 
                                     <div style="padding: 10px 0; text-align: center;">
@@ -136,7 +88,7 @@
                 </header>
 
                 <div class="lista-carrito" id="contenedor-items-carrito">
-                    </div>
+                </div>
 
                 <footer>
                     <div class="fila-subtotal">
@@ -160,20 +112,20 @@
             </section>
 
         </div>
-        
+
         <script>
             window.CONTEXT_PATH = '${pageContext.request.contextPath}';
-            
+
             document.querySelectorAll('.btn-categoria').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     document.querySelectorAll('.btn-categoria').forEach(b => b.classList.remove('active'));
                     e.currentTarget.classList.add('active');
                     document.getElementById('select-categoria').value = e.currentTarget.getAttribute('data-cat');
-                    document.getElementById('btn-buscar').click(); 
+                    document.getElementById('btn-buscar').click();
                 });
             });
         </script>
-        
+
         <script type="module" src="${pageContext.request.contextPath}/js/app/busqueda.js"></script>
         <script type="module" src="${pageContext.request.contextPath}/js/app/catalogo.js"></script>
     </body>

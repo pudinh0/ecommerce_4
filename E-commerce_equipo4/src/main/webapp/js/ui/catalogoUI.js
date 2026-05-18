@@ -8,7 +8,7 @@ export const renderizarProductos = (productos, contenedor, callbackAgregar) => {
 
     productos.forEach(producto => {
         const article = document.createElement('article');
-
+        article.className = 'card-producto';
         const rutaImagen = producto.rutaImagen.startsWith('http') 
             ? producto.rutaImagen 
             : `../${producto.rutaImagen}`;
@@ -35,3 +35,33 @@ export const renderizarProductos = (productos, contenedor, callbackAgregar) => {
         contenedor.appendChild(article);
     });
 };
+
+export function renderizarFiltrosCategorias(contenedorFiltros, productos, callbackFiltro) {
+    if (!contenedorFiltros) return;
+
+    const categoriasUnicas = new Set();
+    
+    productos.forEach(producto => {
+        if (producto.categoria) {
+            const categoriaNormalizada = producto.categoria.trim().toLowerCase();
+            categoriasUnicas.add(categoriaNormalizada);
+        }
+    });
+
+    contenedorFiltros.innerHTML = `
+        <button class="btn-filtro activo" data-categoria="todos">Todos</button>
+    `;
+
+    categoriasUnicas.forEach(categoria => {
+        const categoriaParaMostrar = categoria.charAt(0).toUpperCase() + categoria.slice(1);
+        const boton = document.createElement('button');
+        boton.className = 'btn-filtro';
+        boton.dataset.categoria = categoria;
+        boton.textContent = categoriaParaMostrar;
+        contenedorFiltros.appendChild(boton);
+    });
+
+    if (callbackFiltro) {
+        callbackFiltro();
+    }
+}
