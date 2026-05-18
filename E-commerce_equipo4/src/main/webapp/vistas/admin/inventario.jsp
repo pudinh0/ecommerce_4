@@ -3,6 +3,7 @@
     Created on : 2 abr 2026, 1:15:16 p.m.
     Author     : Camila Zubía
 --%>
+<%@page import="models.TamanoPeluche"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -77,6 +78,25 @@
                                 <label>Stock Inicial:</label>
                                 <input type="number" name="stock" min="1" required placeholder="Ej: 15">
                             </div>
+                            
+                            <div class="form-grupo">
+                                <label>Categoria:</label>
+                                <input type="text" name="categoria" required placeholder="Ej: Bosque">
+                            </div>
+                            
+                            <div class="form-grupo">
+                                <label>Tamaño:</label>
+                                <select name="tamano" required>
+                                    <option value="">Seleccione un tamaño...</option>
+                                    <%
+                                        for (TamanoPeluche t : TamanoPeluche.values()) {
+                                    %>
+                                    <option value="<%= t.name()%>"><%= t.name()%></option>
+                                    <%
+                                        }
+                                    %>
+                                </select>
+                            </div>
 
                             <div class="form-grupo">
                                 <label>Subir Imagen:</label>
@@ -99,6 +119,8 @@
                                     <th>ID</th>
                                     <th>Foto</th>
                                     <th>Nombre</th>
+                                    <th>Categoria</th>
+                                    <th>Tamaño</th>
                                     <th>Precio</th>
                                     <th>Stock</th>
                                     <th>Descripción</th>
@@ -122,6 +144,8 @@
                                         </td>
 
                                         <td class="texto-nombre-prod">${producto.nombre}</td>
+                                        <td class="texto-categoria-prod">${producto.categoria}</td>
+                                        <td class="texto-tamano-prod">${producto.tamano}</td>
                                         <td class="precio-destacado">$${producto.precio}</td>
                                         <td>
                                             <span class="badge-stock ${producto.stock > 5 ? 'badge-stock-ok' : 'badge-stock-bajo'}">

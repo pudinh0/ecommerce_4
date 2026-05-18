@@ -2,7 +2,6 @@ package models;
 
 //@author SAUL ISAAC APODACA BALDENEGRO 00000252020
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,6 +24,12 @@ public class Producto {
     @Column(name="nombre", nullable = false, length = 150)
     private String nombre;
     
+    @Column(name = "tamano", nullable = false,  length = 150)
+    private TamanoPeluche tamano;
+    
+    @Column(name = "categoria", nullable = false,  length = 150)
+    private String categoria;
+    
     @Column(name="precio", nullable = false)
     private Double precio;
     
@@ -40,23 +45,21 @@ public class Producto {
     @Column(name = "activo")
     private Boolean activo = true;
     
-    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
-    private List<ProductoCategoria> productosCategorias;
-    
     @OneToMany(mappedBy = "producto")
     private List<Resenia> resenias;
 
     public Producto() {
     }
 
-    public Producto(Long idProducto, String nombre, Double precio, String descripcion, Integer stock, String rutaImagen, List<ProductoCategoria> productosCategorias, List<Resenia> resenias) {
+    public Producto(Long idProducto, String nombre, TamanoPeluche tamano, String categoria, Double precio, String descripcion, Integer stock, String rutaImagen, List<Resenia> resenias) {
         this.idProducto = idProducto;
         this.nombre = nombre;
+        this.tamano = tamano;
+        this.categoria = categoria;
         this.precio = precio;
         this.descripcion = descripcion;
         this.stock = stock;
         this.rutaImagen = rutaImagen;
-        this.productosCategorias = productosCategorias;
         this.resenias = resenias;
     }
 
@@ -116,12 +119,20 @@ public class Producto {
         this.activo = activo;
     }
 
-    public List<ProductoCategoria> getProductosCategorias() {
-        return productosCategorias;
+    public TamanoPeluche getTamano() {
+        return tamano;
     }
 
-    public void setProductosCategorias(List<ProductoCategoria> productosCategorias) {
-        this.productosCategorias = productosCategorias;
+    public void setTamano(TamanoPeluche tamano) {
+        this.tamano = tamano;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 
     public List<Resenia> getResenias() {

@@ -15,13 +15,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import service.IProductoServicio;
 import service.ProductoService;
 
@@ -77,6 +74,8 @@ public class InventarioServlet extends HttpServlet {
                 dto.setPrecio(Double.parseDouble(request.getParameter("precio")));
                 dto.setDescripcion(request.getParameter("descripcion"));
                 dto.setStock(Integer.parseInt(request.getParameter("stock")));
+                dto.setCategoria(request.getParameter("categoria"));
+                dto.setTamano(models.TamanoPeluche.valueOf(request.getParameter("tamano")));
 
                 Part filePart = request.getPart("imagen");
 

@@ -14,11 +14,15 @@ import models.Producto;
 public class ProductoMapper {
 
     public Producto toEntity(ProductoDTO dto) {
-        if (dto == null) return null;
+        if (dto == null) {
+            return null;
+        }
         
         Producto producto = new Producto();
         producto.setIdProducto(dto.getId());
         producto.setNombre(dto.getNombre());
+        producto.setCategoria(dto.getCategoria());
+        producto.setTamano(dto.getTamano());
         producto.setPrecio(dto.getPrecio());
         producto.setDescripcion(dto.getDescripcion());
         producto.setRutaImagen(dto.getRutaImagen());
@@ -34,6 +38,8 @@ public class ProductoMapper {
         ProductoDTO dto = new ProductoDTO();
         dto.setId(producto.getIdProducto());
         dto.setNombre(producto.getNombre());
+        dto.setCategoria(producto.getCategoria());
+        dto.setTamano(producto.getTamano());
         dto.setPrecio(producto.getPrecio());
         dto.setDescripcion(producto.getDescripcion());
         dto.setRutaImagen(producto.getRutaImagen());

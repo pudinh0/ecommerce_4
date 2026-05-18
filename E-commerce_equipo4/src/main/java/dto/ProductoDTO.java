@@ -5,6 +5,7 @@
 package dto;
 
 import java.util.List;
+import models.TamanoPeluche;
 
 /**
  *
@@ -16,19 +17,21 @@ public class ProductoDTO {
     public String nombre;
     public double precio;
     public String descripcion;
+    public TamanoPeluche tamano;
     public String rutaImagen;
-    public CategoriaDTO categoria;
+    public String categoria;
     public int stock;
     public List<ReseniaDTO> resenias;
 
     public ProductoDTO() {
     }
 
-    public ProductoDTO(Long id, String nombre, double precio, String descripcion, String rutaImagen, CategoriaDTO categoria, int stock, List<ReseniaDTO> resenias) {
+    public ProductoDTO(Long id, String nombre, double precio, String descripcion, TamanoPeluche tamano, String rutaImagen, String categoria, int stock, List<ReseniaDTO> resenias) {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
         this.descripcion = descripcion;
+        this.tamano = tamano;
         this.rutaImagen = rutaImagen;
         this.categoria = categoria;
         this.stock = stock;
@@ -75,11 +78,11 @@ public class ProductoDTO {
         this.descripcion = descripcion;
     }
 
-    public CategoriaDTO getCategoria() {
+    public String getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(CategoriaDTO categoria) {
+    public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
 
@@ -89,6 +92,14 @@ public class ProductoDTO {
 
     public void setStock(int stock) {
         this.stock = stock;
+    }
+
+    public TamanoPeluche getTamano() {
+        return tamano;
+    }
+
+    public void setTamano(TamanoPeluche tamano) {
+        this.tamano = tamano;
     }
 
     public List<ReseniaDTO> getResenias() {

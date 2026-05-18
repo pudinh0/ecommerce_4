@@ -30,6 +30,12 @@ public class ProductoService implements IProductoServicio {
         if (productoDTO.getNombre() == null || productoDTO.getNombre().trim().isEmpty()) {
             throw new IllegalArgumentException("El nombre es obligatorio");
         }
+        if (productoDTO.getCategoria() == null || productoDTO.getCategoria().trim().isEmpty()) {
+            throw new IllegalArgumentException("La categoria es obligatoria");
+        }
+        if (productoDTO.getTamano() == null) {
+            throw new IllegalArgumentException("El tamaño es obligatorio");
+        }
         if (productoDTO.getPrecio() <= 0) {
             throw new IllegalArgumentException("El precio debe de ser mayor a 0");
         }
