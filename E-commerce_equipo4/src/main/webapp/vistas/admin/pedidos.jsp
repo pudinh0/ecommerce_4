@@ -16,9 +16,9 @@
     </head>
     <body class="fondo-gris">
         <%@ include file="/fragments/navBar.jspf" %>
-                    
+
         <div class="contenedor-principal inventario-layout">
-            
+
             <nav class="menu-lateral">
                 <ul>
                     <li>
@@ -39,14 +39,14 @@
                     </li>
                 </ul>
             </nav> 
-            
+
             <main class="inventario-detalle">
                 <header class="encabezado-inventario">
                     <h1>Gestión de Pedidos</h1>
                 </header>
-                
+
                 <div class="contenedor-inventario">
-                    
+
                     <c:if test="${param.exito == 'true'}">
                         <div class="alerta alerta-exito">
                             El estado del pedido se ha actualizado correctamente.
@@ -59,8 +59,8 @@
                     </c:if>
 
                     <div class="contenedor-tabla-scroll"> 
-                        <table class="tabla-inventario">
-                            <thead>
+                        <table class="tabla-admin">
+                            <thead class="encabezado-tabla-inventario">
                                 <tr>
                                     <th>ID Pedido</th>
                                     <th>Cliente</th>
@@ -84,13 +84,13 @@
                                         <td>
                                             <form action="${pageContext.request.contextPath}/pedidos-admin" method="POST" class="form-actualizar-estado">
                                                 <input type="hidden" name="idPedido" value="${pedido.id}">
-                                                
+
                                                 <select name="estado" class="select-estado">
                                                     <option value="PENDIENTE" ${pedido.estado == 'PENDIENTE' ? 'selected' : ''}>Pendiente</option>
                                                     <option value="ENVIADO" ${pedido.estado == 'ENVIADO' ? 'selected' : ''}>Enviado</option>
                                                     <option value="ENTREGADO" ${pedido.estado == 'ENTREGADO' ? 'selected' : ''}>Entregado</option>
                                                 </select>
-                                                
+
                                                 <button type="submit" class="btn-guardar-estado">
                                                     Guardar
                                                 </button>
@@ -103,7 +103,7 @@
                                         </td>
                                     </tr>
                                 </c:forEach>
-                                
+
                                 <c:if test="${empty requestScope.listaPedidos}">
                                     <tr>
                                         <td colspan="6" class="celda-vacia">

@@ -103,6 +103,7 @@
 
                                     <div style="padding: 10px 0; text-align: center;">
                                         <h3 style="margin: 0; font-size: 1.1rem; color: #333;">${producto.nombre}</h3>
+                                        <p class="categoria">${producto.categoria} - ${producto.tamano}</p>
                                     </div>
 
                                     <div class="precio-carrito">

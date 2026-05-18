@@ -57,8 +57,8 @@
                     </c:if>
 
                     <div class="contenedor-tabla-scroll">
-                        <table class="tabla-inventario">
-                            <thead>
+                        <table class="tabla-admin">
+                            <thead class="encabezado-tabla-inventario">
                                 <tr>
                                     <th>ID</th>
                                     <th>Producto</th>
