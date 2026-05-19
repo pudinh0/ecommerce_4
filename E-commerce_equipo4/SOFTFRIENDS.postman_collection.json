@@ -1,42 +1,12 @@
 {
   "info": {
-    "_postman_id": "b7f88436-a90a-4480-a05c-4eb649165bb0",
+    "_postman_id": "e661354f-6120-4751-84aa-97e12a213cb1",
     "name": "SOFTFRIENDS",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "52045861",
-    "_collection_link": "https://go.postman.co/collection/52045861-b7f88436-a90a-4480-a05c-4eb649165bb0?source=collection_link"
+    "_exporter_id": "51752933",
+    "_collection_link": "https://go.postman.co/collection/51752933-e661354f-6120-4751-84aa-97e12a213cb1?source=collection_link"
   },
   "item": [
-    {
-      "name": "auth",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"correo\": \"adel2@mail.com\",\r\n    \"contrasenia\":\"moxxito2\"\r\n\r\n\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:8080/E-commerce_equipo4/api/auth",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "E-commerce_equipo4",
-            "api",
-            "auth"
-          ]
-        }
-      },
-      "response": []
-    },
     {
       "name": "Registrar Usuario",
       "request": {
@@ -44,7 +14,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n  \"txt_nombres\": \"Juan Alberto\",\r\n  \"txt_primerApellido\": \"García\",\r\n  \"txt_segundoApellido\": \"Rodríguez\",\r\n  \"txt_correo\": \"juan.alberto@softfriends.com\",\r\n  \"txt_contrasenia\": \"Segura123!\"\r\n}",
+          "raw": "{\r\n  \"nombres\": \"Juan Alberto\",\r\n  \"primerApellido\": \"García\",\r\n  \"segundoApellido\": \"Rodríguez\",\r\n  \"correo\": \"juan.alberto@softfriends.com\",\r\n  \"contrasenia\": \"Segura123!\"\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -52,7 +22,7 @@
           }
         },
         "url": {
-          "raw": "http://localhost:8080/E-commerce_equipo4/vistas/auth/registrarse.jsp",
+          "raw": "http://localhost:8080/E-commerce_equipo4/vistas/auth/registro",
           "protocol": "http",
           "host": [
             "localhost"
@@ -62,7 +32,7 @@
             "E-commerce_equipo4",
             "vistas",
             "auth",
-            "registrarse.jsp"
+            "registro"
           ]
         }
       },
@@ -160,7 +130,7 @@
           "bearer": [
             {
               "key": "token",
-              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZGVsMkBtYWlsLmNvbSIsImlhdCI6MTc3NjEwMzA4NSwiZXhwIjoxNzc2MTA2Njg1fQ.rtyVwrexgDLsFjmwlrLMCTaiElH2fPh8QqRZG_nYZiA",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYW1pLnp1YmlhQGdtYWlsLmNvbSIsImlhdCI6MTc3NzI2OTYxMywiZXhwIjoxNzc3MjczMjEzfQ.I0PewFU77ZQ1iFhBsHpLqjD3QP6wtP6VutAXsNx-Bhs",
               "type": "string"
             }
           ]
@@ -416,6 +386,157 @@
             "resenas",
             "producto",
             "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Cerrar Sesión",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYW1pLnp1YmlhQGdtYWlsLmNvbSIsImlhdCI6MTc3NzI2OTYxMywiZXhwIjoxNzc3MjczMjEzfQ.I0PewFU77ZQ1iFhBsHpLqjD3QP6wtP6VutAXsNx-Bhs",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/E-commerce_equipo4/api/auth/logout",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "E-commerce_equipo4",
+            "api",
+            "auth",
+            "logout"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Buscar Productos",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": ""
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Actualizar Perfil",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYW1pLnp1YmlhQGdtYWlsLmNvbSIsImlhdCI6MTc3NzI2OTYxMywiZXhwIjoxNzc3MjczMjEzfQ.I0PewFU77ZQ1iFhBsHpLqjD3QP6wtP6VutAXsNx-Bhs",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"nombres\": \"Camila Modificada\",\r\n  \"primerApellido\": \"Zubía\",\r\n  \"segundoApellido\": \"Higuera\",\r\n  \"correo\": \"cami.zubia@gmail.com\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/E-commerce_equipo4/api/perfil",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "E-commerce_equipo4",
+            "api",
+            "perfil"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Obtener Perfil",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYW1pLnp1YmlhQGdtYWlsLmNvbSIsImlhdCI6MTc3NzI2OTYxMywiZXhwIjoxNzc3MjczMjEzfQ.I0PewFU77ZQ1iFhBsHpLqjD3QP6wtP6VutAXsNx-Bhs",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/E-commerce_equipo4/api/perfil",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "E-commerce_equipo4",
+            "api",
+            "perfil"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Eliminar del Carrito",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYW1pLnp1YmlhQGdtYWlsLmNvbSIsImlhdCI6MTc3NzI2OTYxMywiZXhwIjoxNzc3MjczMjEzfQ.I0PewFU77ZQ1iFhBsHpLqjD3QP6wtP6VutAXsNx-Bhs",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/E-commerce_equipo4/api/carrito?idProducto=1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "E-commerce_equipo4",
+            "api",
+            "carrito"
+          ],
+          "query": [
+            {
+              "key": "idProducto",
+              "value": "1"
+            }
           ]
         }
       },
