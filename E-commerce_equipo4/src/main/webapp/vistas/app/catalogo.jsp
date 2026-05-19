@@ -115,15 +115,6 @@
 
         <script>
             window.CONTEXT_PATH = '${pageContext.request.contextPath}';
-
-            document.querySelectorAll('.btn-categoria').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    document.querySelectorAll('.btn-categoria').forEach(b => b.classList.remove('active'));
-                    e.currentTarget.classList.add('active');
-                    document.getElementById('select-categoria').value = e.currentTarget.getAttribute('data-cat');
-                    document.getElementById('btn-buscar').click();
-                });
-            });
         </script>
 
         <script type="module" src="${pageContext.request.contextPath}/js/app/busqueda.js"></script>
