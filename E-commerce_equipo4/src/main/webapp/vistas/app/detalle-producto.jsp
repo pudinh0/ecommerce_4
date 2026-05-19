@@ -15,17 +15,17 @@
 
             <section class="panel-usuario">
                 <header class="encabezado-panel">
-                    <h2>Resenas</h2>
+                    <h2>Reseñas</h2>
                 </header>
 
                 <div id="lista-resenas" class="lista-resenas">
-                    <p class="msg-vacio">Cargando resenas...</p>
+                    <p class="msg-vacio">Cargando reseñas...</p>
                 </div>
 
                 <form id="form-resenia" class="formulario-cliente">
                     <input id="id-producto-hidden" type="hidden">
                     <div class="form-group">
-                        <label for="select-calificacion">Calificacion</label>
+                        <label for="select-calificacion">Calificación</label>
                         <select id="select-calificacion" class="form-control" required>
                             <option value="5">5 estrellas</option>
                             <option value="4">4 estrellas</option>
@@ -38,7 +38,7 @@
                         <label for="txt-comentario">Comentario</label>
                         <textarea id="txt-comentario" class="form-control" rows="4" required></textarea>
                     </div>
-                    <button class="btn btn--primary" type="submit">Agregar resena</button>
+                    <button class="btn btn--primary" type="submit">Agregar reseña</button>
                 </form>
             </section>
         </main>

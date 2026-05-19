@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             return `${window.CONTEXT_PATH}/assets/img/logo.png`;
         }
         return producto.rutaImagen.startsWith('http')
-            ? producto.rutaImagen
-            : `${window.CONTEXT_PATH}/${producto.rutaImagen}`;
+                ? producto.rutaImagen
+                : `${window.CONTEXT_PATH}/${producto.rutaImagen}`;
     };
 
     const agregarAlCarrito = async () => {
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({ idProducto, cantidad: 1 })
+            body: JSON.stringify({idProducto, cantidad: 1})
         });
 
         if (respuesta.ok) {
@@ -58,13 +58,21 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <figure>
                     <img src="${imagenProducto(producto)}" alt="${producto.nombre}">
                 </figure>
-                <div>
-                    <p class="categoria">${producto.categoria?.nombre || 'Producto'}</p>
+
+                <div class="detalle-producto-info">
+                    <p class="categoria">${producto.categoria|| 'Peluche'}</p>
                     <h1>${producto.nombre}</h1>
-                    <p>${producto.descripcion || 'Sin descripcion disponible.'}</p>
+                    <p class="detalle-producto-descripcion">${producto.descripcion}</p>
+
                     <strong class="precio-detalle">${formatearPrecio(producto.precio)}</strong>
-                    <span class="stock-detalle">Stock disponible: ${producto.stock}</span>
-                    <button id="btn-detalle-carrito" class="btn btn--primary" type="button">Agregar al carrito</button>
+                    <p class="stock-detalle">Stock disponible: <span>${producto.stock} piezas</span></p>
+
+                    <div class="compra-contenedor">
+                        <input type="number" class="cant-input" value="1" min="1" max="${producto.stock}" id="cantidadProducto">
+                        <button id="btn-detalle-carrito" class="btn-detalle-carrito" type="button">
+                            Agregar al carrito
+                        </button>
+                    </div>
                 </div>
             </article>
         `;
@@ -82,13 +90,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const resenas = await respuesta.json();
         listaResenas.innerHTML = resenas.length
-            ? resenas.map(resena => `
+                ? resenas.map(resena => `
                 <article class="resena-card">
                     <strong>${resena.calificacion || 0}/5</strong>
                     <p>${resena.comentario || ''}</p>
                 </article>
             `).join('')
-            : '<p class="msg-vacio">Este producto aun no tiene resenas.</p>';
+                : '<p class="msg-vacio">Este producto aun no tiene resenas.</p>';
     } catch (error) {
         console.error(error);
         listaResenas.innerHTML = '<p class="msg-vacio">No se pudieron cargar las resenas.</p>';
