@@ -20,13 +20,13 @@ public class ProductoDTO {
     public TamanoPeluche tamano;
     public String rutaImagen;
     public String categoria;
-    public int stock;
+    public Integer stock;
     public List<ReseniaDTO> resenias;
 
     public ProductoDTO() {
     }
 
-    public ProductoDTO(Long id, String nombre, double precio, String descripcion, TamanoPeluche tamano, String rutaImagen, String categoria, int stock, List<ReseniaDTO> resenias) {
+    public ProductoDTO(Long id, String nombre, double precio, String descripcion, TamanoPeluche tamano, String rutaImagen, String categoria, Integer stock, List<ReseniaDTO> resenias) {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
@@ -86,11 +86,11 @@ public class ProductoDTO {
         this.categoria = categoria;
     }
 
-    public int getStock() {
+    public Integer getStock() {
         return stock;
     }
 
-    public void setStock(int stock) {
+    public void setStock(Integer stock) {
         this.stock = stock;
     }
 
@@ -109,5 +109,5 @@ public class ProductoDTO {
     public void setResenias(List<ReseniaDTO> resenias) {
         this.resenias = resenias;
     }
-
+    
 }

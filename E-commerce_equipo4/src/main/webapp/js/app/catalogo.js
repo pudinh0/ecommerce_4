@@ -1,9 +1,8 @@
-
 import { renderizarFiltrosCategorias, renderizarProductos } from '../ui/catalogoUI.js';
 import { mostrarAlerta } from '../ui/alertaUI.js';
 
 const crearHeaders = (token, incluirJson = false) => {
-    const headers = { 'Accept': 'application/json' };
+    const headers = {'Accept': 'application/json'};
     if (incluirJson) {
         headers['Content-Type'] = 'application/json';
     }
@@ -111,7 +110,15 @@ const actualizarContenedorDerecho = (carrito) => {
 
     items.forEach(item => {
         const article = document.createElement('article');
+        article.className = 'item-carrito-tarjeta';
+
+        const stockReal = item.producto.stock !== undefined ? item.producto.stock : (item.producto.inventario || 99);
+
+        article.dataset.stock = stockReal;
+        article.dataset.cantidad = item.cantidad;
+
         const img = item.producto.rutaImagen.startsWith('http') ? item.producto.rutaImagen : `${window.CONTEXT_PATH}/${item.producto.rutaImagen}`;
+        const idItemNormalizado = item.idItemCarrito || item.id || '';
 
         article.innerHTML = `
             <img src="${img}" alt="${item.producto.nombre}">
@@ -123,19 +130,23 @@ const actualizarContenedorDerecho = (carrito) => {
                 <form method="POST">
                     <input type="hidden" name="accion" value="disminuir">
                     <input type="hidden" name="idProducto" value="${item.producto.id}">
-                    <input type="hidden" name="idItem" value="${item.idItemCarrito || ''}">
+                    <input type="hidden" name="idItem" value="${idItemNormalizado}">
                     <button type="submit">-</button>
                 </form>
+                
                 <span>${item.cantidad}</span>
-                <form method="POST">
+                
+                <form class="form-item-carrito">
                     <input type="hidden" name="accion" value="aumentar">
                     <input type="hidden" name="idProducto" value="${item.producto.id}">
-                    <button type="submit">+</button>
+                    <input type="hidden" name="idItem" value="${idItemNormalizado}">
+                    <button type="submit" class="btn-aumentar">+</button>
                 </form>
+                
                 <form method="POST">
                     <input type="hidden" name="accion" value="eliminar">
                     <input type="hidden" name="idProducto" value="${item.producto.id}">
-                    <input type="hidden" name="idItem" value="${item.idItemCarrito || ''}">
+                    <input type="hidden" name="idItem" value="${idItemNormalizado}">
                     <button type="submit" aria-label="Eliminar producto">x</button>
                 </form>
             </div>
@@ -146,26 +157,25 @@ const actualizarContenedorDerecho = (carrito) => {
 
 function asignarEventosFiltro(todosLosProductos, contenedorProductos) {
     const botonesFiltro = document.querySelectorAll('.btn-filtro');
-    
+
     botonesFiltro.forEach(boton => {
         boton.addEventListener('click', (e) => {
             botonesFiltro.forEach(b => b.classList.remove('activo'));
             e.target.classList.add('activo');
-            
+
             const categoriaSeleccionada = boton.dataset.categoria;
-            
-            // 1. ¡CRUCIAL! Limpiar el contenedor antes de pintar los productos filtrados
+
             if (contenedorProductos) {
                 contenedorProductos.innerHTML = '';
             }
-            
+
             if (categoriaSeleccionada === 'todos') {
-                renderizarProductos(todosLosProductos, contenedorProductos); 
+                renderizarProductos(todosLosProductos, contenedorProductos);
             } else {
-                const productosFiltrados = todosLosProductos.filter(producto => 
+                const productosFiltrados = todosLosProductos.filter(producto =>
                     producto.categoria && producto.categoria.toLowerCase().trim() === categoriaSeleccionada
                 );
-                renderizarProductos(productosFiltrados, contenedorProductos); 
+                renderizarProductos(productosFiltrados, contenedorProductos);
             }
         });
     });
@@ -174,9 +184,10 @@ function asignarEventosFiltro(todosLosProductos, contenedorProductos) {
 const obtenerProductosDesdeAPI = async () => {
     const res = await fetch(`${window.CONTEXT_PATH}/api/productos`, {
         method: 'GET',
-        headers: { 'Accept': 'application/json' }
+        headers: {'Accept': 'application/json'}
     });
-    if (!res.ok) throw new Error('Error al cargar productos');
+    if (!res.ok)
+        throw new Error('Error al cargar productos');
     return await res.json();
 };
 
@@ -201,7 +212,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.error("Error al inicializar el catálogo:", error);
         }
     }
-    
+
     window.addEventListener('carritoActualizado', async () => {
         try {
             actualizarContenedorDerecho(await obtenerCarritoServidor(localStorage.getItem('jwt_token')));
@@ -225,8 +236,18 @@ document.addEventListener('DOMContentLoaded', async () => {
             const idProducto = form.querySelector('input[name="idProducto"]')?.value;
             const idItem = form.querySelector('input[name="idItem"]')?.value;
 
+            const tarjetaArticulo = form.closest('.item-carrito-tarjeta');
+            const stockDisponible = parseInt(tarjetaArticulo?.dataset.stock || 0);
+            const cantidadActual = parseInt(tarjetaArticulo?.dataset.cantidad || 0);
+            console.log("DATOS CAPTURADOS -> Producto:", idProducto, "Cantidad en Carrito:", cantidadActual, "Stock Disponible:", stockDisponible);
             try {
                 if (accion === 'aumentar') {
+                    if (cantidadActual >= stockDisponible) {
+                        mostrarAlerta(`¡Lo sentimos! Solo quedan ${stockDisponible} unidades disponibles de este peluche.`, 'error');
+                        if (btn)
+                            btn.disabled = false;
+                        return;
+                    }
                     await cambiarCantidadAPI(idProducto, 1, token);
                 } else if (accion === 'disminuir') {
                     await cambiarCantidadAPI(idProducto, -1, token);
@@ -244,4 +265,5 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         });
     }
+
 });

@@ -48,23 +48,26 @@ public class CarritoMapper {
         ItemCarritoDTO dto = new ItemCarritoDTO();
         dto.setIdItemCarrito(item.getIdItemCarrito());
         dto.setCantidad(item.getCantidad());
-        dto.setProducto(productoToDTO(item.getProducto()));
+        dto.setProducto(toDTO(item.getProducto()));
 
         dto.setSubtotal(item.getSubtotal());
 
         return dto;
     }
-
-    private ProductoDTO productoToDTO(Producto producto) {
+    
+    public ProductoDTO toDTO(Producto producto) {
         if (producto == null) {
             return null;
         }
         ProductoDTO dto = new ProductoDTO();
         dto.setId(producto.getIdProducto());
         dto.setNombre(producto.getNombre());
+        dto.setCategoria(producto.getCategoria());
+        dto.setTamano(producto.getTamano());
         dto.setPrecio(producto.getPrecio());
+        dto.setDescripcion(producto.getDescripcion());
         dto.setRutaImagen(producto.getRutaImagen());
+        dto.setStock(producto.getStock());
         return dto;
     }
-
 }

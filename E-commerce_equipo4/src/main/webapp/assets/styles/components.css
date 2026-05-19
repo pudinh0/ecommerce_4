@@ -1630,3 +1630,8 @@ nav li, a{
 .card-producto{
     max-width: 20rem;
 }
+
+#toast-contenedor{
+    background: var(--color-primario);
+    border-radius: 15px;
+}
